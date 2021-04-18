@@ -21,16 +21,16 @@
             <Rectangle2D />
          </viewport>
         </ImageView>
-        <TextField fx:id="username" alignment="CENTER" layoutX="481.0" layoutY="330.0" minWidth="-Infinity" promptText="USERNAME">
+        <TextField fx:id="username" alignment="CENTER" layoutX="481.0" layoutY="330.0" onKeyReleased="#infoFilled" minWidth="-Infinity" promptText="USERNAME">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>
         </TextField>
-        <PasswordField fx:id="password" alignment="CENTER" layoutX="481.0" layoutY="400.0" promptText="PASSWORD">
+        <PasswordField fx:id="password" alignment="CENTER" layoutX="481.0" layoutY="400.0" onKeyReleased="#infoFilled" promptText="PASSWORD">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font></PasswordField>
-        <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" layoutX="618.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: ff64ce;" text="LOGIN" textFill="#a5fcea">
+        <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" layoutX="618.0" layoutY="470.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: ff64ce;" text="LOGIN" textFill="#a5fcea">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>

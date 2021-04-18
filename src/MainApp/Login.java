@@ -7,7 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.sql.*;
+
 import java.io.IOException;
+import java.util.Objects;
 
 public class Login {
     public TextField username;
@@ -22,16 +25,18 @@ public class Login {
 
     public Button register;
 
+    public Connection dbLink;
+
 
     public void initialize() {
         login.setDisable(true);
 
-        exit.setOnMouseClicked(e->{
+        /*exit.setOnMouseClicked(e->{
             Stage stage = (Stage) exit.getScene().getWindow();
             stage.close();
-        });
+        });*/
 
-        register.setOnMouseClicked(e->{
+        /*register.setOnMouseClicked(e->{
             FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/createAccount.fxml"));
             Parent root = null;
             try {
@@ -55,7 +60,21 @@ public class Login {
                 d.printStackTrace();
             }
 
-        });
+        });*/
+
+        String schemaName = "test";
+        String databaseUser = "dumanyoroporc";
+        String databasePassword = "lbycpd2PROJECT";
+
+        String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -68,11 +87,73 @@ public class Login {
         String user = username.getText();
         String pass = password.getText();
 
+        String checkCredentials = "SELECT * FROM personal_info where username= '" + user +"' AND password= '"+pass+"'";
+
+        try{
+
+            Statement line = dbLink.createStatement();
+            ResultSet queryRes = line.executeQuery(checkCredentials);
+
+            int count = 0;
+            while(queryRes.next()) count++;
+
+            System.out.println(count);
+            if(count == 1){
+
+                username.setText("");
+                password.setText("");
+
+                FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml"));
+                Parent root;
+
+                try {
+                    root = main.load();
+                    Stage stage = (Stage) login.getScene().getWindow();
+                    root.setOnMousePressed(e->{
+                        x = e.getSceneX();
+                        y = e.getSceneY();
+                    });
+
+                    root.setOnMouseDragged(e->{
+                        stage.setX(e.getScreenX()-x);
+                        stage.setY(e.getScreenY()-y);
+                    });
+                    stage.setTitle("Expenditure");
+                    stage.setScene(new Scene(root));
+
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //login successful
+
+            }
+            else{
+
+                try {
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/errorLogin.fxml")));
+                    Stage primaryStage = new Stage();
+                    primaryStage.setTitle("Greened");
+                    primaryStage.setScene(new Scene(root));
+                    primaryStage.show();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
 
+                username.setText("");
+                password.setText("");
 
+            }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
 
     }
-
 
 }
