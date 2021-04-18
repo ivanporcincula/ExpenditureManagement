@@ -132,15 +132,6 @@ public class Login {
             }
             else{
 
-                try {
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GUI/errorLogin.fxml")));
-                    Stage primaryStage = new Stage();
-                    primaryStage.setTitle("Greened");
-                    primaryStage.setScene(new Scene(root));
-                    primaryStage.show();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
 
 
                 username.setText("");
