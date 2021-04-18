@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainApp.Login">
     <children>
         <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -21,16 +21,16 @@
             <Rectangle2D />
          </viewport>
         </ImageView>
-        <TextField alignment="CENTER" layoutX="481.0" layoutY="330.0" minWidth="-Infinity" promptText="USERNAME">
+        <TextField fx:id="username" alignment="CENTER" layoutX="481.0" layoutY="330.0" minWidth="-Infinity" promptText="USERNAME">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>
         </TextField>
-        <PasswordField alignment="CENTER" layoutX="481.0" layoutY="400.0" promptText="PASSWORD">
+        <PasswordField fx:id="password" alignment="CENTER" layoutX="481.0" layoutY="400.0" promptText="PASSWORD">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font></PasswordField>
-        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="618.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: ff64ce;" text="LOGIN" textFill="#a5fcea">
+        <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" layoutX="618.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: ff64ce;" text="LOGIN" textFill="#a5fcea">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>

@@ -8,11 +8,24 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    private double x;
+    private double y;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/createAccount"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/login.fxml"));
+
+        root.setOnMousePressed(e->{
+            x = e.getSceneX();
+            y = e.getSceneY();
+        });
+
+        root.setOnMouseDragged(e->{
+            primaryStage.setX(e.getScreenX()-x);
+            primaryStage.setY(e.getScreenY()-y);
+        });
+        primaryStage.setTitle("Expenditure Management");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
