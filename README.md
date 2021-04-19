@@ -55,6 +55,8 @@ Additional files to access the database through IntelliJ IDEA:
 7. Locate the folder of the MySQL Connector and click it once, then press OK.
 8. Then press Apply and OK.
 
+Scene Builder can be downloaded here: https://gluonhq.com/products/scene-builder/
+
 **REVISION LOGS AND INFORMATION ABOUT CONTRIBUTORS**
 
 
