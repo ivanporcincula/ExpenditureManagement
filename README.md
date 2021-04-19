@@ -13,12 +13,19 @@ The developers made us of Java as their programming language of choice. The code
 **REQUIREMENTS OR INDEPENDENCIES USED**
 
 IntelliJ IDEA
+
 AWS Toolkit
+
 MySQL Workbench
+
 AWS MySQL Free Tier
+
 JavaFX
+
 JavaFX SDK Library
+
 MySQL Connector Java
+
 Scene Builder
 
 
