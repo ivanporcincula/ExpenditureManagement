@@ -17,9 +17,9 @@
             <image>
                 <Image url="@monrec-logo.png" />
             </image>
-         <viewport>
-            <Rectangle2D />
-         </viewport>
+            <viewport>
+                <Rectangle2D />
+            </viewport>
         </ImageView>
         <TextField fx:id="username" alignment="CENTER" layoutX="481.0" layoutY="330.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="USERNAME">
             <font>

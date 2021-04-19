@@ -15,45 +15,45 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
-        <TextField fx:id="username" alignment="CENTER" layoutX="502.0" layoutY="345.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="USERNAME">
+        <TextField fx:id="username" alignment="CENTER" layoutX="497.0" layoutY="276.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="USERNAME">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>
         </TextField>
-      <TextField fx:id="password" alignment="CENTER" layoutX="500.0" layoutY="415.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="PASSWORD">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="personalName" alignment="CENTER" layoutX="500.0" layoutY="485.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="FULL NAME">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="initialSavings" alignment="CENTER" layoutX="500.0" layoutY="555.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="INITIAL SAVINGS">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </TextField>
+        <TextField fx:id="password" alignment="CENTER" layoutX="495.0" layoutY="346.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="PASSWORD">
+            <font>
+                <Font name="Moon Light" size="30.0" />
+            </font>
+        </TextField>
+        <TextField fx:id="personalName" alignment="CENTER" layoutX="495.0" layoutY="416.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="FULL NAME">
+            <font>
+                <Font name="Moon Light" size="30.0" />
+            </font>
+        </TextField>
+        <TextField fx:id="initialSavings" alignment="CENTER" layoutX="495.0" layoutY="486.0" minWidth="-Infinity" onKeyReleased="#infoFilled" promptText="INITIAL SAVINGS">
+            <font>
+                <Font name="Moon Light" size="30.0" />
+            </font>
+        </TextField>
         <Button fx:id="done" alignment="CENTER" contentDisplay="CENTER" layoutX="697.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#register" style="-fx-background-color: ff64ce;" text="DONE" textFill="#a5fcea">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>
         </Button>
-      <Button fx:id="cancel" alignment="CENTER" contentDisplay="CENTER" layoutX="547.0" layoutY="680.0" maxHeight="65.0" maxWidth="129.0" minHeight="53.0" minWidth="128.87" mnemonicParsing="false" prefHeight="65.0" prefWidth="129.0" style="-fx-background-color: ff64ce;" text="CANCEL" textFill="#a5fcea">
-         <font>
-            <Font name="Moon Light" size="25.574" />
-         </font>
-      </Button>
-      <ImageView fitHeight="365.0" fitWidth="365.0" layoutX="506.0" layoutY="-20.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@monrec-logo.png" />
-         </image>
-      </ImageView>
-      <Text fx:id="sysMessage" fill="#ff64ce" layoutX="477.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="411.26953125">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
+        <Button fx:id="cancel" alignment="CENTER" contentDisplay="CENTER" layoutX="547.0" layoutY="680.0" maxHeight="65.0" maxWidth="121.87" minHeight="53.0" minWidth="121.87" mnemonicParsing="false" prefHeight="65.0" prefWidth="122.0" style="-fx-background-color: ff64ce;" text="CANCEL" textFill="#a5fcea">
+            <font>
+                <Font name="Moon Light" size="24.0" />
+            </font>
+        </Button>
+        <ImageView fitHeight="365.0" fitWidth="365.0" layoutX="506.0" layoutY="-20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@monrec-logo.png" />
+            </image>
+        </ImageView>
+        <Text fx:id="sysMessage" fill="#ff64ce" layoutX="477.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="411.26953125">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Text>
     </children>
 </Pane>
