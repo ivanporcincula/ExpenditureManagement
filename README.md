@@ -3,7 +3,7 @@
 
 INTRODUCTION
 
-ExpenditureManagement is a project in partial fulfillment of the requirements of LBYCPD2 EQ1 under Engr. Dino Ligutan. The project is developed Yuan Patrick E. Dumandan, Ivan Daniel C. Porcincula, and Arthur Kenji T. Yoro II. They are students of Engr. Ligutan in De La Salle University-Manila.
+ExpenditureManagement is a project in partial fulfillment of the requirements of LBYCPD2 EQ1 under Engr. Dino Ligutan. The project is developed Yuan Patrick E. Dumandan, Ivan Daniel C. Porcincula, and Arthur Kenji T. Yoro II. They are students of Engr. Dino Ligutan in De La Salle University-Manila.
 
 The main product of the project is the Monrec software, the name is in short of Money Recorder, which is essentially the essence of the software. The software aims to aid the user with their finances, giving them the ability to input and keep track of their savings, expenses, and income.
 
@@ -14,3 +14,11 @@ REQUIREMENTS INDEPENDENCIES USED
 ENVIRONMENT SETUP
 
 REVISION LOGS AND INFORMATION ABOUT CONTRIBUTORS
+
+<4/19/2021| v0.1 beta> Added codes for the login, register, with corresponding GUI code for the Dashboard.
+
+Yuan Patrick E Dumandan - currently taking up BS Computer Engineering in De La Salle University-Manila
+
+Ivan Daniel C. Porcincula - currently taking up BS Computer Engineering in De La Salle University-Manila
+
+Arthur Kenji T. Yoro II - currently taking up BS Computer Engineering in De La Salle University-Manila
