@@ -57,10 +57,11 @@ Additional files to access the database through IntelliJ IDEA:
 
 **REVISION LOGS AND INFORMATION ABOUT CONTRIBUTORS**
 
+
 <4/19/2021| v0.1 beta> Added codes for the login, register, with corresponding GUI code for the Dashboard.
 
-Yuan Patrick E Dumandan - currently taking up BS Computer Engineering in De La Salle University-Manila
+Yuan Patrick E Dumandan - currently taking up BS Computer Engineering in De La Salle University-Manila. He completed his Secondary Education in Marist School Marikina.
 
-Ivan Daniel C. Porcincula - currently taking up BS Computer Engineering in De La Salle University-Manila
+Ivan Daniel C. Porcincula - currently taking up BS Computer Engineering in De La Salle University-Manila. He completed his Secondary Education in the University of Santo Tomas Manila.
 
-Arthur Kenji T. Yoro II - currently taking up BS Computer Engineering in De La Salle University-Manila
+Arthur Kenji T. Yoro II - currently taking up BS Computer Engineering in De La Salle University-Manila. He completed his Secondary Education in Claret School of Quezon City.
