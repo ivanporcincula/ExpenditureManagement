@@ -31,8 +31,9 @@ public class Register {
 
     public void initialize() {
 
-        done.setDisable(true);
+        done.setDisable(true); //is disabled until the user types in all fields
 
+        // if cancel button is clicked, it will go back to the login screen.
         cancel.setOnMouseClicked(e->{
 
             FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml"));
@@ -50,7 +51,7 @@ public class Register {
                     stage.setX(d.getScreenX()-x);
                     stage.setY(d.getScreenY()-y);
                 });
-                stage.setTitle("Expenditure");
+                stage.setTitle("Monrec");
                 stage.setScene(new Scene(root));
 
                 stage.show();
@@ -59,10 +60,12 @@ public class Register {
             }
         });
 
+        //To connect to the AWS MySQL Database Instance
         String schemaName = "test";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
 
+        //url of the database instance host
         String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
 
         try{
@@ -77,19 +80,27 @@ public class Register {
 
     public void register(){
 
+
+        //get the text that the user typed
         String user = username.getText();
         String pass = password.getText();
         String pName = personalName.getText();
         String savings = initialSavings.getText();
         double initSavings = Double.parseDouble(savings);
 
+
+        //to create a statement in MySQL through IntelliJ and execute it through query.
+        //username is selected from the database as it will serve as a flag to determine whether the username already exists or not.
         String checkCredentials = "SELECT * FROM personal_info where username= '" + user +"'";
 
+
+        //MySQL statement to add the new user to the table of the database.
         String statement = "INSERT INTO personal_info(username, password, initialSavings, customerName) VALUES ('";
         String values = user + "','" + pass + "'," + initSavings + ",'"+pName+"')";
         String addUser = statement + values;
         try{
 
+            //to create a statement in MySQL through IntelliJ and execute it through query.
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkCredentials);
 
@@ -99,6 +110,9 @@ public class Register {
             System.out.println(count);
 
 
+            //to determine whether the username/password exists or is correct.
+            // 1 means the username is already taken.
+            // 0 means the username is not yet taken..
             if(count == 1){
                 //if username is taken
                 username.setText("");
@@ -126,9 +140,10 @@ public class Register {
             e.printStackTrace();
             e.getCause();
         }
-
     }
 
+
+    //method to check whether if one field is empty. if one field is empty then the login button is disabled
     public void infoFilled(){
         if (!username.getText().isEmpty() && !password.getText().isEmpty() && !personalName.getText().isEmpty() && !initialSavings.getText().isEmpty()) done.setDisable(false);
         else done.setDisable(true);

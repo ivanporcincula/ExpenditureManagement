@@ -23,9 +23,7 @@ public class Login {
     public TextField password;
 
     public Button login;
-
     public Button exit;
-
     public Button register;
 
     public Connection dbLink;
@@ -34,16 +32,15 @@ public class Login {
 
 
     public void initialize() {
-        login.setDisable(true);
+        login.setDisable(true); //is disabled until the user types in both fields of username and password
 
         /*exit.setOnMouseClicked(e->{
             Stage stage = (Stage) exit.getScene().getWindow();
             stage.close();
         });*/
 
+        //Opens the GUI for account creation
         register.setOnMouseClicked(e->{
-
-            System.out.println("AHHH" + 7);
             FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/createAccount.fxml"));
             Parent root = null;
             try {
@@ -69,38 +66,48 @@ public class Login {
 
         });
 
+        //To connect to the AWS MySQL Database Instance
         String schemaName = "test";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
 
+        //url of the database instance host
         String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
-
         }catch(Exception e){
             e.printStackTrace();
         }
 
     }
 
+    //method to check whether the username or password is empty. if one is empty then the login button is disabled
     public void infoFilled(){
         login.setDisable(username.getText().isEmpty() || password.getText().isEmpty());
     }
 
     public void login(){
 
+        //get the text that the user typed
         String user = username.getText();
         String pass = password.getText();
 
+
+        //this is a MySQL syntax/statement
+        //username and password are both selected from the database as the username-password combination must be correct
         String checkCredentials = "SELECT * FROM personal_info where username= '" + user +"' AND password= '"+pass+"'";
 
         try{
 
+            //to create a statement in MySQL through IntelliJ and execute it through query.
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkCredentials);
 
+            //to determine whether the username/password exists or is correct.
+            // 1 means the username and password combination is correct.
+            // 0 means either the username and password combination is incorrect or the account does not exist.
             int count = 0;
             while(queryRes.next()) count++;
 
@@ -110,9 +117,11 @@ public class Login {
                 username.setText("");
                 password.setText("");
 
-                FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml"));
+                FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml")); //loads the dashboard
                 Parent root;
 
+
+                //opens the dashboard
                 try {
                     root = main.load();
                     Stage stage = (Stage) login.getScene().getWindow();
@@ -125,22 +134,18 @@ public class Login {
                         stage.setX(e.getScreenX()-x);
                         stage.setY(e.getScreenY()-y);
                     });
-                    stage.setTitle("Expenditure");
+                    stage.setTitle("Monrec");
                     stage.setScene(new Scene(root));
-
                     stage.show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                //login successful
 
             }
             else{
-
                 errorLogin.setText("Invalid username or password combination! Please try again.");
-
                 username.setText("");
                 password.setText("");
                 login.setDisable(true);
@@ -151,7 +156,5 @@ public class Login {
             e.printStackTrace();
             e.getCause();
         }
-
     }
-
 }

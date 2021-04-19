@@ -25,7 +25,7 @@ public class Main extends Application {
             primaryStage.setX(e.getScreenX()-x);
             primaryStage.setY(e.getScreenY()-y);
         });
-        primaryStage.setTitle("Expenditure Management");
+        primaryStage.setTitle("Monrec");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
