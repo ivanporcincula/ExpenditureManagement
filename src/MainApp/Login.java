@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -13,11 +14,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Login {
-    public TextField username;
-    public TextField password;
+
 
     private double x;
     private double y;
+
+    public TextField username;
+    public TextField password;
 
     public Button login;
 
@@ -26,6 +29,8 @@ public class Login {
     public Button register;
 
     public Connection dbLink;
+
+    public Text errorLogin;
 
 
     public void initialize() {
@@ -36,7 +41,9 @@ public class Login {
             stage.close();
         });*/
 
-        /*register.setOnMouseClicked(e->{
+        register.setOnMouseClicked(e->{
+
+            System.out.println("AHHH" + 7);
             FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/createAccount.fxml"));
             Parent root = null;
             try {
@@ -60,7 +67,7 @@ public class Login {
                 d.printStackTrace();
             }
 
-        });*/
+        });
 
         String schemaName = "test";
         String databaseUser = "dumanyoroporc";
@@ -132,11 +139,11 @@ public class Login {
             }
             else{
 
-
+                errorLogin.setText("Invalid username or password combination! Please try again.");
 
                 username.setText("");
                 password.setText("");
-
+                login.setDisable(true);
             }
 
         }
