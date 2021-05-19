@@ -61,7 +61,7 @@ public class Register {
         });
 
         //To connect to the AWS MySQL Database Instance
-        String schemaName = "test";
+        String schemaName = "user";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
 
@@ -79,8 +79,6 @@ public class Register {
     }
 
     public void register(){
-
-
         //get the text that the user typed
         String user = username.getText();
         String pass = password.getText();
@@ -92,8 +90,6 @@ public class Register {
         //to create a statement in MySQL through IntelliJ and execute it through query.
         //username is selected from the database as it will serve as a flag to determine whether the username already exists or not.
         String checkCredentials = "SELECT * FROM personal_info where username= '" + user +"'";
-
-
         //MySQL statement to add the new user to the table of the database.
         String statement = "INSERT INTO personal_info(username, password, initialSavings, customerName) VALUES ('";
         String values = user + "','" + pass + "'," + initSavings + ",'"+pName+"')";

@@ -6,9 +6,6 @@ public class Income {
     private double Work;
     private double totalIncome;
 
-    public void addIncome(){
-
-    }
 
     public void removeIncome(){
 

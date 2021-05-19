@@ -26,19 +26,15 @@ public class Login {
     public Button exit;
     public Button register;
 
+
     public Connection dbLink;
+    public Connection newDbLink;
 
     public Text errorLogin;
 
 
     public void initialize() {
         login.setDisable(true); //is disabled until the user types in both fields of username and password
-
-        /*exit.setOnMouseClicked(e->{
-            Stage stage = (Stage) exit.getScene().getWindow();
-            stage.close();
-        });*/
-
         //Opens the GUI for account creation
         register.setOnMouseClicked(e->{
             FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/createAccount.fxml"));
@@ -67,7 +63,7 @@ public class Login {
         });
 
         //To connect to the AWS MySQL Database Instance
-        String schemaName = "test";
+        String schemaName = "user";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
 
@@ -77,9 +73,15 @@ public class Login {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
+            newDbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        /*exit.setOnMouseClicked(e->{
+            Stage stage = (Stage) exit.getScene().getWindow();
+            stage.close();
+        });*/
 
     }
 
@@ -93,14 +95,14 @@ public class Login {
         //get the text that the user typed
         String user = username.getText();
         String pass = password.getText();
-
+        String customerName="";
+        double initSavings=0;
 
         //this is a MySQL syntax/statement
         //username and password are both selected from the database as the username-password combination must be correct
         String checkCredentials = "SELECT * FROM personal_info where username= '" + user +"' AND password= '"+pass+"'";
 
         try{
-
             //to create a statement in MySQL through IntelliJ and execute it through query.
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkCredentials);
@@ -109,17 +111,31 @@ public class Login {
             // 1 means the username and password combination is correct.
             // 0 means either the username and password combination is incorrect or the account does not exist.
             int count = 0;
-            while(queryRes.next()) count++;
+            while(queryRes.next()) {
+                count++;
+                customerName = queryRes.getString("customerName");
+                initSavings = queryRes.getDouble("initialSavings");
+                System.out.println(customerName);
+            }
 
             System.out.println(count);
             if(count == 1){
-
                 username.setText("");
                 password.setText("");
 
+                String statement = "INSERT INTO user.logs(username, initialSavings, customerName) VALUES ('"+user+"'," + initSavings + ",'"+customerName+"')";
+
+                try{
+                    Statement newAcc = newDbLink.createStatement();
+                    newAcc.executeUpdate(statement);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    e.getCause();
+                }
+
                 FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml")); //loads the dashboard
                 Parent root;
-
 
                 //opens the dashboard
                 try {
@@ -150,7 +166,6 @@ public class Login {
                 password.setText("");
                 login.setDisable(true);
             }
-
         }
         catch(Exception e){
             e.printStackTrace();
