@@ -50,7 +50,7 @@
                 <Font name="Moon Light" size="24.0" />
             </font>
         </Button>
-        <Text fx:id="sysMessage" fill="#ff64ce" layoutX="477.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="411.26953125">
+        <Text fx:id="sysMessage" fill="#ff64ce" layoutX="475.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="411.26953125">
             <font>
                 <Font size="14.0" />
             </font>
