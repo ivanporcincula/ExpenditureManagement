@@ -23,12 +23,12 @@ public class Dashboard {
     private String customerName;
     private String currentUser;
     private double savingsUponRegistration;
-    private double savings;
     private double totalExpenses;
     private double totalIncome;
     private double budgetLeft;
     private double savingsGoalDaily;
     private double savingsGoalWeekly;
+    private double savingsMonthly;
 
     public ImageView logout;
     public Text displayName;
@@ -85,7 +85,7 @@ public class Dashboard {
         budgetLeft = budgetLeft + savingsUponRegistration;
 
         //first time login after registration
-        if (savingsUponRegistration != 0){
+        if (savingsUponRegistration > 0){
             //String selectToRemove = "SELECT * FROM personal_info where username= '" + currentUser +"'";
             String changeInitialSavings = "REPLACE INTO personal_info(username, initialSavings) VALUES('"+currentUser+"',"+0+"";
 
@@ -99,14 +99,12 @@ public class Dashboard {
             }
         }
 
-
         //displayName.setText(customerName);
-        //displaySavings.setText(""+savings);
-
         updateTotalIncome();
         updateTotalExpenses();
         updateSavingsGoalDaily();
         updateSavingsGoalWeekly();
+        updateSavingsMonthly();
         updateBudgetLeft();
 
     }
@@ -208,8 +206,6 @@ public class Dashboard {
 
         totalIncome = total;
         displayTotalIncome.setText(""+total);
-
-
     }
 
     public void updateBudgetLeft(){
@@ -224,6 +220,12 @@ public class Dashboard {
 
     public void updateSavingsGoalWeekly(){
 
+    }
+
+    public void updateSavingsMonthly(){
+        savingsMonthly = totalIncome - totalExpenses;
+        if(savingsMonthly < 0 ) savingsMonthly =0;
+        displaySavings.setText(""+ savingsMonthly);
     }
 
     public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }
