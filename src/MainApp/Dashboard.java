@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,9 +27,8 @@ public class Dashboard {
     private double totalExpenses;
     private double totalIncome;
     private double budgetLeft;
-    private double savingsGoal;
+    private double savingsGoalDaily;
     private double savingsGoalWeekly;
-    private double savingsGoalMonthly;
 
     public ImageView logout;
     public Text displayName;
@@ -36,13 +36,12 @@ public class Dashboard {
     public Text displayTotalExpenses;
     public Text displayTotalIncome;
     public Text displayBudgetLeft;
-    public Text displaySavingsGoal;
+    public Text displaySavingsGoalDaily;
     public Text displaySavingsGoalWeekly;
-    public Text displaySavingsGoalMonthly;
+    public Text displaySavingsMonthly;
+    public TextField monthlyGoal;
     public Button incomeButton;
     public Button expensesButton;
-
-
 
 
     public Connection dbLink;
@@ -66,10 +65,10 @@ public class Dashboard {
         }catch(Exception e){
             e.printStackTrace();
         }
+
         String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
 
         try{
-
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkLog);
 
@@ -83,12 +82,30 @@ public class Dashboard {
             e.getCause();
         }
 
+        budgetLeft = budgetLeft + savingsUponRegistration;
+
+        //first time login after registration
+        if (savingsUponRegistration != 0){
+            //String selectToRemove = "SELECT * FROM personal_info where username= '" + currentUser +"'";
+            String changeInitialSavings = "REPLACE INTO personal_info(username, initialSavings) VALUES('"+currentUser+"',"+0+"";
+
+            try{
+                Statement zero = dbLink.createStatement();
+                zero.executeUpdate(changeInitialSavings);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
+
+
         //displayName.setText(customerName);
+        //displaySavings.setText(""+savings);
 
         updateTotalIncome();
         updateTotalExpenses();
-        updateSavingsGoal();
-        updateSavingsGoalMonthly();
+        updateSavingsGoalDaily();
         updateSavingsGoalWeekly();
         updateBudgetLeft();
 
@@ -153,14 +170,12 @@ public class Dashboard {
             e.printStackTrace();
         }
 
-
-
     }
 
 
     public void updateTotalExpenses(){
 
-        String checkTotal= "SELECT amount FROM expenses";
+        String checkTotal= "SELECT amount FROM expenses where username= '"+currentUser+"'";
         double total = 0;
 
         try{
@@ -173,38 +188,37 @@ public class Dashboard {
             e.getCause();
 
         }
-
-        displayTotalIncome.setText(""+total);
-
-
-
+        totalExpenses = total;
+        displayTotalExpenses.setText(""+total);
     }
 
     public void updateTotalIncome(){
 
-        String checkTotal= "SELECT amount FROM income";
+        String checkTotal= "SELECT amount FROM income where username= '"+currentUser+"'";
         double total = 0;
 
         try{
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkTotal);
-
             while(queryRes.next()) total += queryRes.getDouble("amount");
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
-
         }
 
+        totalIncome = total;
         displayTotalIncome.setText(""+total);
+
 
     }
 
     public void updateBudgetLeft(){
+        budgetLeft = budgetLeft + totalIncome - totalExpenses;
+        displayBudgetLeft.setText(""+budgetLeft);
 
     }
 
-    public void updateSavingsGoal(){
+    public void updateSavingsGoalDaily(){
 
     }
 
@@ -212,13 +226,8 @@ public class Dashboard {
 
     }
 
-    public void updateSavingsGoalMonthly(){
+    public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }
 
-    }
-
-    public void changeScreen(){
-
-    }
 
     public void logout(){
 
