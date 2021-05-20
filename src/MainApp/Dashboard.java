@@ -1,11 +1,13 @@
 package MainApp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -30,7 +32,7 @@ public class Dashboard {
     private double savingsGoalWeekly;
     private double savingsMonthly;
 
-    public ImageView logout;
+    //public ImageView logout;
     public Text displayName;
     public Text displaySavings;
     public Text displayTotalExpenses;
@@ -45,6 +47,8 @@ public class Dashboard {
 
 
     public Connection dbLink;
+
+    public Button logout;
 
 
 
@@ -85,7 +89,7 @@ public class Dashboard {
         budgetLeft = budgetLeft + savingsUponRegistration;
 
         //first time login after registration
-        if (savingsUponRegistration > 0){
+       /* if (savingsUponRegistration > 0){
             //String selectToRemove = "SELECT * FROM personal_info where username= '" + currentUser +"'";
             String changeInitialSavings = "REPLACE INTO personal_info(username, initialSavings) VALUES('"+currentUser+"',"+0+"";
 
@@ -105,13 +109,16 @@ public class Dashboard {
         updateSavingsGoalDaily();
         updateSavingsGoalWeekly();
         updateSavingsMonthly();
-        updateBudgetLeft();
+        updateBudgetLeft();*/
 
     }
 
-    public void addExpense(){
-        System.out.println(customerName);
-        System.out.println(savingsUponRegistration);
+    public void off(MouseEvent event){
+        if(event.getSource() != logout){
+            System.out.println("AH");
+        }
+
+
     }
 
 
