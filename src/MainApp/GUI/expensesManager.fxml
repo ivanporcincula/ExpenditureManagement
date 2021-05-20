@@ -16,30 +16,30 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="80.0" layoutX="364.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@income%20icon.png" />
-         </image>
-      </ImageView>
-        <Text fill="#ff64ce" layoutX="461.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INCOME">
+        <ImageView fitHeight="150.0" fitWidth="60.0" layoutX="363.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@expenses%20icon.png" />
+            </image>
+        </ImageView>
+        <Text fill="#ff64ce" layoutX="435.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expense">
             <font>
                 <Font name="Moon Light" size="50.0" />
             </font>
         </Text>
-        <Text layoutX="661.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MANAGER">
+        <Text layoutX="662.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MANAGER">
             <font>
                 <Font name="Moon Light" size="50.0" />
             </font>
         </Text>
-      <TextField alignment="CENTER" layoutX="445.0" layoutY="248.0" prefHeight="93.0" prefWidth="368.0" promptText="INCOME AMOUNT">
+      <TextField alignment="CENTER" layoutX="455.0" layoutY="258.0" prefHeight="93.0" prefWidth="368.0" promptText="EXPENSE AMOUNT">
          <font>
             <Font name="Moon Light" size="30.0" />
          </font>
       </TextField>
-        <Button layoutX="556.0" layoutY="468.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="146.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="ADD" textAlignment="CENTER" textFill="#a5fcea">
-            <font>
-                <Font name="Moon Bold" size="20.0" />
-            </font>
+      <Button layoutX="566.0" layoutY="478.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="146.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="ADD" textAlignment="CENTER" textFill="#a5fcea">
+         <font>
+            <Font name="Moon Bold" size="20.0" />
+         </font>
          <graphic>
             <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -47,7 +47,7 @@
                </image>
             </ImageView>
          </graphic>
-        </Button>
-      <ComboBox layoutX="468.0" layoutY="368.0" prefHeight="67.0" prefWidth="322.0" />
+      </Button>
+      <ComboBox layoutX="478.0" layoutY="378.0" prefHeight="67.0" prefWidth="322.0" />
     </children>
 </Pane>
