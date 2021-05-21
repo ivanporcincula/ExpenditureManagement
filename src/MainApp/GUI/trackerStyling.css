@@ -1,0 +1,24 @@
+.table-view .column-header-background .label{
+    -fx-background-color: #ff64ce;
+    -fx-font-family: Moon;
+    -fx-font-weight:normal;
+    -fx-font-size:20px;
+    -fx-text-fill: #a5fcea;
+    -fx-text-alignment: center;
+}
+
+.table-view .table-cell{
+    -fx-font-weight:normal;
+    -fx-font-family: Moon;
+    -fx-font-size:20px;
+    -fx-text-alignment: center;
+    -fx-text-fill: black;
+}
+
+.table-row-cell{
+    -fx-background-color: white;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: light grey;
+}
