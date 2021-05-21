@@ -15,6 +15,8 @@ import java.sql.Statement;
 
 public class Expense {
 
+    private String currentUser;
+
     public TableView<Money> generalTable;
     public TableView<Money> categoricalTable;
 
@@ -27,8 +29,8 @@ public class Expense {
 
     public Button general;
     public Button food;
-    public Button entertainment;
     public Button transportation;
+
     public Button grocery;
     public Button health;
     public Button education;
@@ -56,27 +58,70 @@ public class Expense {
             e.printStackTrace();
         }
 
+        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
+
+        try{
+
+            Statement line = dbLink.createStatement();
+            ResultSet queryRes = line.executeQuery(checkLog);
+
+            while(queryRes.next()) currentUser=queryRes.getString("username");
+
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        System.out.println(currentUser);
+
 
         loadGeneralTable();
 
         general.setOnMouseClicked(e->{
-
+            loadGeneralTable();
             generalTable.setVisible(true);
-
-
+            categoricalTable.setVisible(false);
 
         });
 
         food.setOnMouseClicked(e->{
             generalTable.setVisible(false);
-
-
+            categoricalTable.setVisible(true);
         });
 
-        entertainment.setOnMouseClicked(e->{
+        transportation.setOnMouseClicked(e->{
             generalTable.setVisible(false);
-
+            categoricalTable.setVisible(true);
         });
+
+        grocery.setOnMouseClicked(e->{
+            generalTable.setVisible(false);
+            categoricalTable.setVisible(true);
+        });
+
+        health.setOnMouseClicked(e->{
+            generalTable.setVisible(false);
+            categoricalTable.setVisible(true);
+        });
+        education.setOnMouseClicked(e->{
+            generalTable.setVisible(false);
+            categoricalTable.setVisible(true);
+        });
+        utilities.setOnMouseClicked(e->{
+            generalTable.setVisible(false);
+            categoricalTable.setVisible(true);
+        });
+        work.setOnMouseClicked(e->{
+            generalTable.setVisible(false);
+            categoricalTable.setVisible(true);
+        });
+        miscellaneous.setOnMouseClicked(e->{
+            generalTable.setVisible(false);
+            categoricalTable.setVisible(true);
+        });
+
+
+
 
 
     }
@@ -86,7 +131,7 @@ public class Expense {
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM 'income'";
+            String query = "SELECT * FROM historyExpenses";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -139,7 +184,7 @@ public class Expense {
         }
 
         try{
-            String query = "SELECT * FROM 'income' where category="+category;
+            String query = "SELECT * FROM historyExpenses WHERE category='"+category+"' AND username='"+currentUser+"'";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -166,7 +211,7 @@ public class Expense {
                 "Work", "Miscellaneous"};
         for(String s : categories){
             try{
-                String query = "SELECT * FROM 'income' where category="+s;
+                String query = "SELECT * FROM historyExpenses category='"+s+"' AND username='"+currentUser+"'";
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 
@@ -196,7 +241,7 @@ public class Expense {
             else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
 
 
-            String delete = "DELETE FROM 'user' where date="+added.getDatetime() ;
+            String delete = "DELETE FROM historyExpenses WHERE date="+added.getDatetime()+" AND username='"+currentUser+"'" ;
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 

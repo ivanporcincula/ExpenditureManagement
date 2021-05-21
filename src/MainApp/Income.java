@@ -15,9 +15,7 @@ import java.sql.*;
 
 public class Income {
 
-    private double Allowance;
-    private double Work;
-    private double totalIncome;
+    private String currentUser;
 
     public TableView<Money> generalTable;
     public TableView<Money> categoricalTable;
@@ -52,6 +50,22 @@ public class Income {
             e.printStackTrace();
         }
 
+        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
+
+        try{
+
+            Statement line = dbLink.createStatement();
+            ResultSet queryRes = line.executeQuery(checkLog);
+
+            while(queryRes.next()) currentUser=queryRes.getString("username");
+
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        System.out.println(currentUser);
+
 
         loadGeneralTable();
 
@@ -80,7 +94,7 @@ public class Income {
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM 'income'";
+            String query = "SELECT * FROM historyIncome";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -118,7 +132,7 @@ public class Income {
 
 
         try{
-            String query = "SELECT * FROM 'income' where category="+category;
+            String query = "SELECT * FROM historyIncome where category="+category;
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -143,7 +157,7 @@ public class Income {
 
         for(String s : categories){
             try{
-                String query = "SELECT * FROM 'income' where category="+s;
+                String query = " SELECT * FROM historyIncome where category="+s;
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 

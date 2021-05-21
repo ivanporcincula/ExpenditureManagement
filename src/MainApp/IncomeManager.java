@@ -22,19 +22,14 @@ public class IncomeManager {
     public ComboBox<String> category;
 
     private Connection dbLink;
-    private ObservableList<String> arrayCategory;
     public Button add;
     public Button back;
 
     public void initialize(){
 
         add.setDisable(true);
+        category.getItems().addAll("Allowance", "Work");
 
-        arrayCategory = FXCollections.observableArrayList("Allowance", "Work");
-        category = new ComboBox(arrayCategory);
-        category.setPromptText("Please select a category...");
-        category.setItems(arrayCategory);
-        category.setEditable(true);
 
         //To connect to the AWS MySQL Database Instance
         String schemaName = "user";
@@ -65,6 +60,8 @@ public class IncomeManager {
             e.getCause();
         }
 
+        System.out.println(currentUser);
+
 
     }
 
@@ -73,16 +70,22 @@ public class IncomeManager {
         String inc = amount.getText();
         double amt = Double.parseDouble(inc);
         String categ = category.getSelectionModel().getSelectedItem();
-        String statement = "INSERT INTO income(date, username, category, amt) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','"+categ+"',"+amt+")";
+        String statement = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','"+categ+"',"+amt+")";
+        String statement1 = "INSERT INTO historyIncome(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','"+categ+"',"+amt+")";
 
         try{
             Statement line = dbLink.createStatement();
+            Statement line1 = dbLink.createStatement();
             line.executeUpdate(statement);
+            line1.executeUpdate(statement1);
         }catch (Exception e){
             e.printStackTrace();
             e.getCause();
         }
+        amount.setText("");
     }
+
+
 
     public void infoFilled(){
         add.setDisable(amount.getText().isEmpty() || category.getSelectionModel().getSelectedItem().isEmpty());

@@ -5,17 +5,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 
-public class Dashboard {
+public class Dashboard{
 
     private double x;
     private double y;
@@ -45,8 +44,8 @@ public class Dashboard {
     public Text displaySavingsWeekly;
     public Text displaySavingsMonthly;
     public TextField monthlyGoal;
-    public Button incomeButton;
-    public Button expensesButton;
+    public ImageView incomeButton;
+    public ImageView expensesButton;
 
 
     public Connection dbLink;
@@ -55,7 +54,7 @@ public class Dashboard {
 
 
 
-    public void initialize(){
+    public void initialize() throws Exception {
 
 
         //To connect to the AWS MySQL Database Instance
@@ -94,22 +93,21 @@ public class Dashboard {
         //it is updated every time a user makes a transaction in the application
         budgetLeft = savingsUponRegistration;
 
-        //displayName.setText(customerName);
-
+        displayName.setText(customerName);
 
         resetMonth = resetMonthlyCycle();
-        //System.out.println(resetMonthlyCycle());
+
         if(resetMonth){
+            System.out.println("HELLO");
             //reset();
         }
         else{
-            //updateTotalExpenses();
-            //updateTotalIncome();
-            //updateSavingsMonthly();
-            //displayInfo();
+            updateTotalExpenses();
+            updateTotalIncome();
+            displayInfo();
         }
 
-        //updateBudgetLeft();
+        updateBudgetLeft();
 
     }
 
@@ -118,7 +116,7 @@ public class Dashboard {
 
         budgetLeft = budgetLeft + totalIncome - totalExpenses;
 
-        String changeInitialSavings = "UPDATE personal_info SET initialSavings = "+budgetLeft+" WHERE username="+currentUser;
+        String changeInitialSavings = "UPDATE personal_info SET initialSavings= "+budgetLeft+" WHERE username='"+currentUser+"'";
 
         try{
             Statement zero = dbLink.createStatement();
@@ -128,83 +126,119 @@ public class Dashboard {
             e.printStackTrace();
             e.getCause();
         }
+
+        displayBudgetLeft.setText(String.valueOf(budgetLeft));
     }
 
     public void updateTotalExpenses(){
 
-        String extractingExpenses= "SELECT EXTRACT(YEAR_MONTH from date) as Month_Year, sum(Amount) as Total FROM expenses WHERE username ='"+currentUser+"'";
-        try{
-            Statement table = dbLink.createStatement();
-            ResultSet rq = table.executeQuery(extractingExpenses);
+        if(!expensesTableIsEmpty()){
 
-            while(rq.next()){
-                getDate = rq.getInt("Month_Year");
-                totalExpenses = rq.getDouble("Total");
+            String extractingExpenses= "SELECT EXTRACT(YEAR_MONTH from date) as Month_Year, sum(Amount) as Total FROM expenses WHERE username ='"+currentUser+"'";
+            try{
+                Statement table = dbLink.createStatement();
+                ResultSet rq = table.executeQuery(extractingExpenses);
 
-                String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsMonthly) " +
-                        "VALUES ("+getDate+","+currentUser+","+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")" +
-                        "ON DUPLICATE KEY UPDATE totalExpenses="+totalExpenses+",savingsProgress="+(totalIncome-totalExpenses)+"";
-                try{
-                    Statement query = dbLink.createStatement();
-                    query.executeUpdate(update);
+                while(rq.next()){
+
+                    getDate = rq.getInt("Month_Year");
+                    totalExpenses = rq.getDouble("Total");
+
+                    String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
+                            "VALUES ("+getDate+",'"+currentUser+"',"+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")" +
+                            "ON DUPLICATE KEY UPDATE totalIncome="+totalIncome+",savingsProgress="+(totalIncome-totalExpenses)+"";
+                    try{
+                        Statement query = dbLink.createStatement();
+
+                        query.executeUpdate(update);
+                        System.out.println("FUCK");
 
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                    e.getCause();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        e.getCause();
+                    }
                 }
+
+            }catch(Exception e){
+                e.printStackTrace();
+                e.getCause();
             }
 
-        }catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
+            String update = "DELETE FROM expenses";
+            try{
+                Statement query = dbLink.createStatement();
+                query.executeUpdate(update);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                e.getCause();
+            }
+
         }
+
+
+
 
     }
 
 
     public void updateTotalIncome(){
 
-        String extractingIncome= "SELECT EXTRACT(YEAR_MONTH from date) as Month_Year, sum(Amount) as Total FROM income WHERE username ='"+currentUser+"'";
-        try{
-            Statement table = dbLink.createStatement();
-            ResultSet rq = table.executeQuery(extractingIncome);
+        if(!incomeTableIsEmpty()){
 
-            while(rq.next()){
-                getDate = rq.getInt("Month_Year");
-                totalIncome = rq.getDouble("Total");
+            String extractingIncome= "SELECT EXTRACT(YEAR_MONTH from date) as Month_Year, sum(Amount) as Total FROM income WHERE username ='"+currentUser+"'";
 
-                String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsMonthly) " +
-                        "VALUES ("+getDate+","+currentUser+","+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")" +
-                        "ON DUPLICATE KEY UPDATE totalIncome="+totalIncome+",savingsProgress="+(totalIncome-totalExpenses)+"";
-                try{
-                    Statement query = dbLink.createStatement();
-                    query.executeUpdate(update);
+            try{
+                Statement table = dbLink.createStatement();
+                ResultSet rq = table.executeQuery(extractingIncome);
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                    e.getCause();
+                while(rq.next()){
+                    getDate = rq.getInt("Month_Year");
+                    totalIncome = rq.getDouble("Total");
+
+                    String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
+                            "VALUES ("+getDate+",'"+currentUser+"',"+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")" +
+                            "ON DUPLICATE KEY UPDATE totalIncome="+totalIncome+",savingsProgress="+(totalIncome-totalExpenses)+"";
+                    try{
+                        Statement query = dbLink.createStatement();
+                        System.out.println("YOU");
+                        query.executeUpdate(update);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        e.getCause();
+                    }
                 }
+
+            }catch(Exception e){
+                e.printStackTrace();
+                e.getCause();
             }
 
-        }catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
+            String update = "DELETE FROM income";
+            try{
+                Statement query = dbLink.createStatement();
+                query.executeUpdate(update);
+            }catch (Exception e){
+                e.printStackTrace();
+                e.getCause();
+            }
         }
 
     }
 
-    private boolean resetMonthlyCycle(){
-        String checkRows = "SELECT * FROM dashboard";
+    private boolean incomeTableIsEmpty(){
+        String check = "SELECT * FROM income where username='"+currentUser+"'";
+
+        int counter=0;
 
         try{
             Statement count = dbLink.createStatement();
-            ResultSet set = count.executeQuery(checkRows);
-            while(set.next()) size++;
+            ResultSet set = count.executeQuery(check);
+            while(set.next()) counter++;
 
-            if(size == 0) newSize=newSize+1;
-
-            return size==newSize;
+            if(counter == 0) return true;
 
         }catch (Exception e){
             e.printStackTrace();
@@ -212,6 +246,66 @@ public class Dashboard {
         }
 
         return false;
+
+    }
+
+    private boolean expensesTableIsEmpty(){
+        String check = "SELECT * FROM expenses where username='"+currentUser+"'";
+        int counter=0;
+
+        try{
+            Statement count = dbLink.createStatement();
+            ResultSet set = count.executeQuery(check);
+            while(set.next()) counter++;
+
+            if(counter == 0) return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    private boolean resetMonthlyCycle() throws  SQLException,Exception {
+        String checkRows = "SELECT * FROM dashboard where username='"+currentUser+"'";
+        ArrayList<Integer> newMonth = new ArrayList<>();
+
+        Statement count = dbLink.createStatement();
+        ResultSet set = count.executeQuery(checkRows);
+
+        while(set.next()){
+            int date = set.getInt("month_year");
+            newMonth.add(date);
+        }
+
+        String insertStatement = "INSERT INTO tableSizes(username, size) VALUES ('"+currentUser+"',"+newMonth.size()+")";
+        Statement insert = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        insert.executeUpdate(insertStatement);
+
+        String sizeStatement = "SELECT * FROM tableSizes where username='"+currentUser+"'";
+        Statement checkSize = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet checking = checkSize.executeQuery(sizeStatement);
+
+        checking.afterLast();
+        checking.previous();
+        int latestSize = checking.getInt("size");
+
+        if(checking.previous()){
+            System.out.println("INSIDE");
+            checking.previous();
+            int previousSize = checking.getInt("size");
+            if(latestSize > previousSize) {
+                String update = "DELETE FROM tableSizes where username='"+currentUser+"'";
+                Statement query = dbLink.createStatement();
+                query.executeUpdate(update);
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+
     }
 
 
@@ -230,7 +324,7 @@ public class Dashboard {
         displayTotalIncome.setText(String.valueOf(totalIncome));
         displaySavings.setText(String.valueOf(totalIncome-totalExpenses));
         displayTotalExpenses.setText(String.valueOf(totalExpenses));
-        displayBudgetLeft.setText(String.valueOf(budgetLeft));
+
     }
 
     public void off(MouseEvent event){

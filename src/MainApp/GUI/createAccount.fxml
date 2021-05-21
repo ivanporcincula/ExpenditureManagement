@@ -16,7 +16,7 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
-        <ImageView fitHeight="518.0" fitWidth="518.0" layoutX="410.0" layoutY="-67.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="336.0" fitWidth="385.0" layoutX="491.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@monrec-logo.png" />
             </image>
@@ -26,7 +26,7 @@
                 <Font name="Moon Light" size="30.0" />
             </font>
         </TextField>
-      <PasswordField fx:id="password" alignment="CENTER" layoutX="496.0" layoutY="437.0" prefHeight="65.0" onKeyReleased="#infoFilled" prefWidth="372.0" promptText="PASSWORD">
+      <PasswordField fx:id="password" alignment="CENTER" layoutX="496.0" layoutY="437.0" onKeyReleased="#infoFilled" prefHeight="65.0" prefWidth="372.0" promptText="PASSWORD">
          <font>
             <Font size="30.0" />
          </font>
