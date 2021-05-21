@@ -138,7 +138,6 @@ public class Register {
         }
     }
 
-
     //method to check whether if one field is empty. if one field is empty then the login button is disabled
     public void infoFilled(){
         if (!username.getText().isEmpty() && !password.getText().isEmpty() && !personalName.getText().isEmpty() && !initialSavings.getText().isEmpty()) done.setDisable(false);

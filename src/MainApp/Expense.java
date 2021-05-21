@@ -18,8 +18,6 @@ public class Expense {
     public TableView<Money> generalTable;
     public TableView<Money> categoricalTable;
 
-
-
     public TableColumn<Money, String> dateCol;
     public TableColumn<Money, String> categoryCol;
     public TableColumn<Money, String> amountCol;
@@ -32,13 +30,10 @@ public class Expense {
     public Button entertainment;
     public Button transportation;
     public Button grocery;
-    public Button furniture;
-    public Button clothes;
-    public Button houseMaintenance;
     public Button health;
+    public Button education;
+    public Button utilities;
     public Button work;
-    public Button bills;
-    public Button hobbies;
     public Button miscellaneous;
 
     private Money added;
@@ -127,23 +122,17 @@ public class Expense {
         else if(event.getSource() == grocery){
             category = grocery.getText();
         }
-        else if(event.getSource() == furniture){
-            category = furniture.getText();
+        else if(event.getSource() == health){
+            category = health.getText();
         }
-        else if(event.getSource() == clothes){
-            category = clothes.getText();
+        else if(event.getSource() == education){
+            category = education.getText();
         }
-        else if(event.getSource() == houseMaintenance){
-            category = houseMaintenance.getText();
+        else if(event.getSource() == utilities){
+            category = utilities.getText();
         }
         else if(event.getSource() == work){
             category = work.getText();
-        }
-        else if(event.getSource() == bills){
-            category = bills.getText();
-        }
-        else if(event.getSource() == hobbies){
-            category = hobbies.getText();
         }
         else if(event.getSource() == miscellaneous){
             category = miscellaneous.getText();
@@ -172,9 +161,9 @@ public class Expense {
 
         moneyList.clear();
 
-        String[] categories = {"Food", "Entertainment", "Transportation",
-                "Grocery", "Furniture", "Clothes", "House Maintenance",
-                "Work", "Bills","Hobbies","Miscellaneous"};
+        String[] categories = {"Food", "Transportation",
+                "Grocery", "Health", "Education", "Utilities",
+                "Work", "Miscellaneous"};
         for(String s : categories){
             try{
                 String query = "SELECT * FROM 'income' where category="+s;

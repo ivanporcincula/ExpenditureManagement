@@ -18,7 +18,6 @@ public class IncomeManager {
     private String currentUser;
     private double x;
     private double y;
-
     public TextField amount;
     public ComboBox<String> category;
 
@@ -113,7 +112,6 @@ public class IncomeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 

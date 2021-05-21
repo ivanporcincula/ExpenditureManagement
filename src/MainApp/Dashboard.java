@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class Dashboard {
 
@@ -31,6 +30,10 @@ public class Dashboard {
     private double savingsGoalWeekly;
     private double savingsGoalMonthly;
     private double savingsProgress;
+    private int getDate;
+    private int size;
+    private int newSize = size + 1;
+    private boolean resetMonth = false;
 
     //public ImageView logout;
     public Text displayName;
@@ -38,8 +41,8 @@ public class Dashboard {
     public Text displayTotalExpenses;
     public Text displayTotalIncome;
     public Text displayBudgetLeft;
-    public Text displaySavingsGoalDaily;
-    public Text displaySavingsGoalWeekly;
+    public Text displaySavingsDaily;
+    public Text displaySavingsWeekly;
     public Text displaySavingsMonthly;
     public TextField monthlyGoal;
     public Button incomeButton;
@@ -87,19 +90,29 @@ public class Dashboard {
             e.getCause();
         }
 
-        //the initial savings is the same the budget left that the user has
+        //the initial savings is the same as the budget left that the user has
         //it is updated every time a user makes a transaction in the application
         budgetLeft = savingsUponRegistration;
 
         //displayName.setText(customerName);
 
-        updateTotalIncome();
-        updateTotalExpenses();
-        updateBudgetLeft();
-        updateSavingsMonthly();
 
+        resetMonth = resetMonthlyCycle();
+        //System.out.println(resetMonthlyCycle());
+        if(resetMonth){
+            //reset();
+        }
+        else{
+            //updateTotalExpenses();
+            //updateTotalIncome();
+            //updateSavingsMonthly();
+            //displayInfo();
+        }
+
+        //updateBudgetLeft();
 
     }
+
 
     public void updateBudgetLeft(){
 
@@ -115,16 +128,15 @@ public class Dashboard {
             e.printStackTrace();
             e.getCause();
         }
-        displayBudgetLeft.setText(String.valueOf(budgetLeft));
     }
 
     public void updateTotalExpenses(){
-        int getDate ;
 
         String extractingExpenses= "SELECT EXTRACT(YEAR_MONTH from date) as Month_Year, sum(Amount) as Total FROM expenses WHERE username ='"+currentUser+"'";
         try{
             Statement table = dbLink.createStatement();
             ResultSet rq = table.executeQuery(extractingExpenses);
+
             while(rq.next()){
                 getDate = rq.getInt("Month_Year");
                 totalExpenses = rq.getDouble("Total");
@@ -132,6 +144,15 @@ public class Dashboard {
                 String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsMonthly) " +
                         "VALUES ("+getDate+","+currentUser+","+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")" +
                         "ON DUPLICATE KEY UPDATE totalExpenses="+totalExpenses+",savingsProgress="+(totalIncome-totalExpenses)+"";
+                try{
+                    Statement query = dbLink.createStatement();
+                    query.executeUpdate(update);
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    e.getCause();
+                }
             }
 
         }catch(Exception e){
@@ -139,14 +160,10 @@ public class Dashboard {
             e.getCause();
         }
 
-        displayTotalExpenses.setText(String.valueOf(totalExpenses));
-
     }
 
 
     public void updateTotalIncome(){
-
-        int getDate;
 
         String extractingIncome= "SELECT EXTRACT(YEAR_MONTH from date) as Month_Year, sum(Amount) as Total FROM income WHERE username ='"+currentUser+"'";
         try{
@@ -160,23 +177,67 @@ public class Dashboard {
                 String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsMonthly) " +
                         "VALUES ("+getDate+","+currentUser+","+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")" +
                         "ON DUPLICATE KEY UPDATE totalIncome="+totalIncome+",savingsProgress="+(totalIncome-totalExpenses)+"";
+                try{
+                    Statement query = dbLink.createStatement();
+                    query.executeUpdate(update);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    e.getCause();
+                }
             }
+
 
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
         }
 
-        displayTotalIncome.setText(String.valueOf(totalIncome));
+    }
 
+    private boolean resetMonthlyCycle(){
+        String checkRows = "SELECT * FROM dashboard";
+
+        try{
+            Statement count = dbLink.createStatement();
+            ResultSet set = count.executeQuery(checkRows);
+            while(set.next()) size++;
+
+            if(size == 0) newSize=newSize+1;
+
+            return size==newSize;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+
+    public void reset(){
+
+        totalExpenses=0;
+        totalIncome=0;
+        displayTotalIncome.setText(String.valueOf(totalIncome));
+        displaySavings.setText(String.valueOf(totalIncome-totalExpenses));
+        displayTotalExpenses.setText(String.valueOf(totalExpenses));
+        newSize=newSize+1;
+
+    }
+
+    private void displayInfo(){
+        displayTotalIncome.setText(String.valueOf(totalIncome));
+        displaySavings.setText(String.valueOf(totalIncome-totalExpenses));
+        displayTotalExpenses.setText(String.valueOf(totalExpenses));
+        displayBudgetLeft.setText(String.valueOf(budgetLeft));
     }
 
     public void off(MouseEvent event){
         if(event.getSource() != logout){
             System.out.println("AH");
         }
-
-
     }
 
 
@@ -235,13 +296,13 @@ public class Dashboard {
 
     }
 
+    public void displaySavingsPeriodically(){
 
 
+    }
 
-    public void updateSavingsMonthly(){
-        savingsGoalMonthly = totalIncome - totalExpenses;
-        if(savingsGoalMonthly < 0 ) savingsGoalMonthly =0;
-        displaySavings.setText(""+ savingsGoalMonthly);
+    public void saveNewGoal(){
+
     }
 
     public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }

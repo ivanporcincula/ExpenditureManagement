@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import java.sql.*;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class Login {
 
@@ -25,7 +24,6 @@ public class Login {
     public Button login;
     public Button exit;
     public Button register;
-
 
     public Connection dbLink;
     public Connection newDbLink;
@@ -115,10 +113,9 @@ public class Login {
                 count++;
                 customerName = queryRes.getString("customerName");
                 initSavings = queryRes.getDouble("initialSavings");
-                System.out.println(customerName);
+                //System.out.println(customerName);
             }
 
-            System.out.println(count);
             if(count == 1){
                 username.setText("");
                 password.setText("");
@@ -157,7 +154,6 @@ public class Login {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
             }
             else{

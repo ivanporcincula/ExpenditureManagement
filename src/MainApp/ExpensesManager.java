@@ -29,9 +29,7 @@ public class ExpensesManager {
 
     public void initialize(){
         add.setDisable(true);
-        arrayCategory = FXCollections.observableArrayList("Food", "Entertainment", "Transportation",
-                "Grocery", "Furniture", "Clothes", "House Maintenance",
-                "Work", "Bills","Hobbies","Miscellaneous");
+        arrayCategory = FXCollections.observableArrayList("Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work", "Miscellaneous");
         category = new ComboBox(arrayCategory);
         category.setPromptText("Please select a category...");
         category.setItems(arrayCategory);

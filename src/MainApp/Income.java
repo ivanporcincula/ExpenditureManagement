@@ -191,10 +191,4 @@ public class Income {
 
     }
 
-
-
-
-    public void changeScreen(){
-
-    }
 }
