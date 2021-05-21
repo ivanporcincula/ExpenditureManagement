@@ -187,7 +187,6 @@ public class Dashboard {
                 }
             }
 
-
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
@@ -235,7 +234,7 @@ public class Dashboard {
     }
 
     public void off(MouseEvent event){
-        if(event.getSource() != logout){
+        if(event.getSource() == logout){
             System.out.println("AH");
         }
     }
@@ -310,10 +309,20 @@ public class Dashboard {
 
     public void logout(){
 
+        String update = "DELETE FROM logs";
+        try{
+            Statement query = dbLink.createStatement();
+            query.executeUpdate(update);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml")); //loads the dashboard
         Parent root;
 
-        //opens the dashboard
+        //logout
         try {
             root = main.load();
             Stage stage = (Stage) logout.getScene().getWindow();
@@ -335,7 +344,11 @@ public class Dashboard {
         }
 
 
+
+
     }
+
+
 
 
 }
