@@ -7,6 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Main extends Application {
 
     private double x;
@@ -14,6 +19,21 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        Integer value = 201202;
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMM");
+        Date date = originalFormat.parse(value.toString());
+
+        SimpleDateFormat newFormat = new SimpleDateFormat("MMM yyyy");
+        String formatedDate = newFormat.format(date);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int week = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        System.out.println(week);
+
+
         Parent root = FXMLLoader.load(getClass().getResource("GUI/login.fxml"));
 
         root.setOnMousePressed(e->{
