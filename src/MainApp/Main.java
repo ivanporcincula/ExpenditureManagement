@@ -7,8 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,7 +35,6 @@ public class Main extends Application {
         int week = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         System.out.println(week);
-
 
         Parent root = FXMLLoader.load(getClass().getResource("GUI/login.fxml"));
 

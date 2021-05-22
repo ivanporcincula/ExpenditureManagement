@@ -116,7 +116,6 @@ public class IncomeManager {
             e.getCause();
         }
 
-
         amount.setText("");
     }
 
