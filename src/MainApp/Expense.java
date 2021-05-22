@@ -1,10 +1,9 @@
 package MainApp;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -40,6 +39,11 @@ public class Expense {
     public Button utilities;
     public Button work;
     public Button miscellaneous;
+    public Button edit;
+
+    public ComboBox<String> newCategory;
+    public TextField newAmount;
+    public Button save;
 
     private Money added;
 
@@ -60,6 +64,14 @@ public class Expense {
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        newCategory.setVisible(false);
+        newAmount.setVisible(false);
+        save.setVisible(false);
+        newCategory.getItems().addAll("Food", "Transportation",
+                "Grocery", "Health", "Education", "Utilities",
+                "Work", "Miscellaneous");
+        save.disableProperty().bind(newAmount.textProperty().isEmpty().or(newCategory.valueProperty().isNull()));
 
         loggedInUser();
 
@@ -89,6 +101,7 @@ public class Expense {
 
         generalTable.setVisible(true);
         categoricalTable.setVisible(false);
+        edit.disableProperty().bind(Bindings.isEmpty(generalTable.getSelectionModel().getSelectedItems()));
 
         moneyList.clear();
 
@@ -119,6 +132,7 @@ public class Expense {
 
         generalTable.setVisible(false);
         categoricalTable.setVisible(true);
+        edit.disableProperty().bind(Bindings.isEmpty(categoricalTable.getSelectionModel().getSelectedItems()));
 
         moneyList.clear();
         String changeCase = "";
@@ -253,8 +267,9 @@ public class Expense {
             e.getCause();
         }
 
-        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
+        //update the budget
 
+        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
         try{
             Statement readPesonalInfoStatement = dbLink.createStatement();
@@ -284,6 +299,23 @@ public class Expense {
     }
 
     public void editExpense(){
+
+        newCategory.setVisible(true);
+        newAmount.setVisible(true);
+        save.setVisible(true);
+        edit.disableProperty().bind(Bindings.isNotEmpty(generalTable.getSelectionModel().getSelectedItems()));
+        if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
+        else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
+
+    }
+
+    public void save(){
+
+        newCategory.setVisible(false);
+        newAmount.setVisible(false);
+        save.setVisible(false);
+        generalTable.getSelectionModel().clearSelection();
+        edit.disableProperty().bind(Bindings.isEmpty(generalTable.getSelectionModel().getSelectedItems()));
 
     }
 
