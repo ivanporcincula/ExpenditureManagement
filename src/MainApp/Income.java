@@ -94,7 +94,7 @@ public class Income {
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM historyIncome";
+            String query = "SELECT * FROM income";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -132,7 +132,7 @@ public class Income {
 
 
         try{
-            String query = "SELECT * FROM historyIncome where category="+category;
+            String query = "SELECT * FROM income where category="+category;
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -157,7 +157,7 @@ public class Income {
 
         for(String s : categories){
             try{
-                String query = " SELECT * FROM historyIncome where category="+s;
+                String query = " SELECT * FROM income where category="+s;
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 
@@ -187,7 +187,7 @@ public class Income {
             if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
             else if(categoricalTable.isVisible()) added=categoricalTable.getSelectionModel().getSelectedItem();
 
-            String delete = "DELETE FROM 'user' where date="+added.getDatetime() ;
+            String delete = "DELETE FROM income where date="+added.getDatetime() ;
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 

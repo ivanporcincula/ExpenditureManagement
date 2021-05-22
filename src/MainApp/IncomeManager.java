@@ -68,7 +68,7 @@ public class IncomeManager {
     public void addIncome(){
 
 
-        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
+        double readInitPersonal = 0, newBudgetPersonalInfo;
 
         String inc = amount.getText();
         double amt = Double.parseDouble(inc);

@@ -17,24 +17,24 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
-      <Text layoutX="1011.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi!" wrappingWidth="40.0">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fx:id="displayName" fill="#ff64ce" layoutX="1055.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER_NAME">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fx:id="displayBudgetLeft" fill="#ff64ce" layoutX="359.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX">
-         <font>
-            <Font name="Moon Light" size="60.0" />
-         </font>
-      </Text>
-      <Text layoutX="421.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BALANCE">
+      <Text layoutX="1084.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi!" wrappingWidth="40.0">
          <font>
             <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="displayName" fill="#ff64ce" layoutX="1114.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER_NAME">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="displayBudgetLeft" fill="#ff64ce" layoutX="627.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="645.6953125">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="465.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BALANCE">
+         <font>
+            <Font size="30.0" />
          </font>
       </Text>
       <ImageView fx:id="incomeButton" fitHeight="150.0" fitWidth="150.0" layoutX="269.0" layoutY="222.0" onMouseClicked="#income" pickOnBounds="true" preserveRatio="true">
@@ -57,17 +57,17 @@
             <Font name="Moon Light" size="30.0" />
          </font>
       </Text>
-      <ImageView fitHeight="126.0" fitWidth="126.0" layoutX="590.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="131.0" fitWidth="158.0" layoutX="308.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icon-wallet.png" />
          </image>
       </ImageView>
-      <Text fx:id="displaySavings" fill="#ff64ce" layoutX="738.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX">
+      <Text fx:id="displaySavings" fill="#ff64ce" layoutX="680.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="597.6953125">
          <font>
-            <Font size="60.0" />
+            <Font size="30.0" />
          </font>
       </Text>
-      <Text layoutX="723.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAVINGS PROGRESS" textAlignment="CENTER" wrappingWidth="220.0">
+      <Text layoutX="463.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAVINGS PROGRESS" wrappingWidth="195.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -87,7 +87,7 @@
             <Font name="Moon Light" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="displaySavingsDaily" fill="#ff64ce" layoutX="906.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX">
+      <Text fx:id="displaySavingsDaily" fill="#ff64ce" layoutX="904.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="360.84765625">
          <font>
             <Font name="Moon Light" size="30.0" />
          </font>
@@ -102,7 +102,7 @@
             <Font name="Moon Light" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="displaySavingsWeekly" fill="#ff64ce" layoutX="906.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX">
+      <Text fx:id="displaySavingsWeekly" fill="#ff64ce" layoutX="904.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="360.84765625">
          <font>
             <Font name="Moon Light" size="30.0" />
          </font>
@@ -117,9 +117,89 @@
             <Font name="Moon Light" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="displaySavingsMonthly" fill="#ff64ce" layoutX="906.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX">
+      <Text fx:id="displaySavingsMonthly" fill="#ff64ce" layoutX="904.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="360.84765625">
          <font>
             <Font name="Moon Light" size="30.0" />
+         </font>
+      </Text>
+      <Pane prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@monrec-logo.png" />
+               </image>
+            </ImageView>
+            <Text fill="#ff64ce" layoutX="120.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONREC" textAlignment="CENTER">
+               <font>
+                  <Font name="Moon Light" size="45.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff64ce" height="30.0" layoutX="25.0" layoutY="8.0" rotate="90.0" stroke="#ff64ce" strokeType="INSIDE" width="10.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
+         </children></Pane>
+      <ImageView fitHeight="115.0" fitWidth="134.0" layoutX="207.0" layoutY="563.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icon-income.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="115.0" fitWidth="105.0" layoutX="705.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icon-expenses.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="displayTotalIncome" fill="#ff64ce" layoutX="378.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+         <font>
+            <Font name="Moon Light" size="40.0" />
+         </font>
+      </Text>
+      <Text fx:id="displayTotalExpenses" fill="#ff64ce" layoutX="847.0" layoutY="627.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="434.0">
+         <font>
+            <Font name="Moon Light" size="40.0" />
+         </font>
+      </Text>
+      <Text layoutX="348.0" layoutY="646.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL INCOME " textAlignment="CENTER" wrappingWidth="110.419921875">
+         <font>
+            <Font name="Moon Light" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="813.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL EXPENSES" textAlignment="CENTER" wrappingWidth="120.0">
+         <font>
+            <Font name="Moon Light" size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="605.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="658.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="880.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="880.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="880.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="348.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Text>
+      <Text fill="#ff64ce" layoutX="817.0" layoutY="627.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+         <font>
+            <Font size="40.0" />
          </font>
       </Text>
       <VBox layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
@@ -156,50 +236,5 @@
             </Button>
          </children>
       </VBox>
-      <Pane prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
-         <children>
-            <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@monrec-logo.png" />
-               </image>
-            </ImageView>
-            <Text fill="#ff64ce" layoutX="120.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONREC" textAlignment="CENTER">
-               <font>
-                  <Font name="Moon Light" size="45.0" />
-               </font>
-            </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff64ce" height="30.0" layoutX="25.0" layoutY="8.0" rotate="90.0" stroke="#ff64ce" strokeType="INSIDE" width="10.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
-         </children></Pane>
-      <ImageView fitHeight="115.0" fitWidth="134.0" layoutX="380.0" layoutY="535.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icon-income.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="115.0" fitWidth="105.0" layoutX="750.0" layoutY="544.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@icon-expenses.png" />
-         </image>
-      </ImageView>
-      <Text fx:id="displayTotalIncome" fill="#ff64ce" layoutX="529.0" layoutY="616.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" textAlignment="CENTER">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text fx:id="displayTotalExpenses" fill="#ff64ce" layoutX="880.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" textAlignment="CENTER">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text layoutX="543.0" layoutY="637.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL INCOME " textAlignment="CENTER" wrappingWidth="110.419921875">
-         <font>
-            <Font name="Moon Light" size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="890.0" layoutY="637.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL EXPENSES" textAlignment="CENTER" wrappingWidth="120.0">
-         <font>
-            <Font name="Moon Light" size="15.0" />
-         </font>
-      </Text>
     </children>
 </Pane>

@@ -24,17 +24,14 @@ public class Dashboard{
 
     private String customerName;
     private String currentUser;
-    private double savingsUponRegistration;
+    private String month_year;
     private double totalExpenses;
     private double totalIncome;
     private double savingsGoalDaily;
     private double savingsGoalWeekly;
     private double savingsGoalMonthly;
     private double savingsProgress;
-    private String month_year;
-    private boolean resetMonth = false;
 
-    //public ImageView logout;
     public Text displayName;
     public Text displaySavings;
     public Text displayTotalExpenses;
@@ -46,7 +43,6 @@ public class Dashboard{
     public TextField monthlyGoal;
     public ImageView incomeButton;
     public ImageView expensesButton;
-
 
     public Connection dbLink;
 
@@ -77,14 +73,11 @@ public class Dashboard{
         //the initial savings is the same as the budget left that the user has
         //it is updated every time a user makes a transaction in the application
 
-        //resetMonth = resetMonthlyCycle();
-
+        if(resetMonth()) reset();
 
         displayTotalExpenses();
         displayTotalIncome();
         updatedDashboardDb();
-
-
         displayBudgetLeft();
 
     }
@@ -172,6 +165,7 @@ public class Dashboard{
 
         displaySavings.setText(String.valueOf(totalIncome-totalExpenses));
 
+
     }
 
 
@@ -214,6 +208,8 @@ public class Dashboard{
                 e.getCause();
             }
         }
+
+
     }
 
     private boolean resetMonth(){
@@ -224,7 +220,24 @@ public class Dashboard{
         compare.add(Calendar.DATE, -1);
         String yesterday = dateFormat.format(compare.getTime());
 
-        return today != yesterday;
+        return !today.equals(yesterday);
+
+    }
+
+    private void reset(){
+
+        String statement = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','None', 0)";
+        String statement1 = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','None', 0)";
+
+        try{
+            Statement line = dbLink.createStatement();
+            Statement line1 = dbLink.createStatement();
+            line.executeUpdate(statement);
+            line1.executeUpdate(statement1);
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
 
     }
     public void income(){
@@ -329,7 +342,6 @@ public class Dashboard{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 

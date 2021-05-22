@@ -131,7 +131,7 @@ public class Expense {
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM historyExpenses";
+            String query = "SELECT * FROM expenses";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -184,7 +184,7 @@ public class Expense {
         }
 
         try{
-            String query = "SELECT * FROM historyExpenses WHERE category='"+category+"' AND username='"+currentUser+"'";
+            String query = "SELECT * FROM expenses WHERE category='"+category+"' AND username='"+currentUser+"'";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -211,7 +211,7 @@ public class Expense {
                 "Work", "Miscellaneous"};
         for(String s : categories){
             try{
-                String query = "SELECT * FROM historyExpenses category='"+s+"' AND username='"+currentUser+"'";
+                String query = "SELECT * FROM expenses category='"+s+"' AND username='"+currentUser+"'";
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 
@@ -241,7 +241,7 @@ public class Expense {
             else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
 
 
-            String delete = "DELETE FROM historyExpenses WHERE date="+added.getDatetime()+" AND username='"+currentUser+"'" ;
+            String delete = "DELETE FROM expenses WHERE date="+added.getDatetime()+" AND username='"+currentUser+"'" ;
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 
