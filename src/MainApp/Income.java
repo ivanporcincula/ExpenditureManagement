@@ -188,12 +188,15 @@ public class Income {
 
     public void removeIncome(){
 
+
         try{
 
             if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
             else if(categoricalTable.isVisible()) added=categoricalTable.getSelectionModel().getSelectedItem();
 
-            String delete = "DELETE FROM income WHERE date="+added.getDatetime()+" AND username='"+currentUser+"'";
+            System.out.println(added.getAmount());
+
+            String delete = "DELETE FROM income WHERE date='"+added.getDatetime()+"' AND username='"+currentUser+"'";
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 
@@ -204,6 +207,34 @@ public class Income {
             e.printStackTrace();
             e.getCause();
         }
+
+        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
+
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
+        try{
+            Statement readPesonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            while(readPersonalInfoQuery.next()){
+                readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newBudgetPersonalInfo = readInitPersonal - added.getAmount();
+        String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+currentUser+"'";
+
+        try{
+            Statement writePersonalInfoStatement = dbLink.createStatement();
+            writePersonalInfoStatement.executeUpdate(writePersonalInfoUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
     }
 
     public void editIncome(){

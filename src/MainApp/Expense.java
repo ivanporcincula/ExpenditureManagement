@@ -211,7 +211,7 @@ public class Expense {
                 "Work", "Miscellaneous"};
         for(String s : categories){
             try{
-                String query = "SELECT * FROM expenses category='"+s+"' AND username='"+currentUser+"'";
+                String query = "SELECT * FROM expenses  WHERE category='"+s+"' AND username='"+currentUser+"'";
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 
@@ -241,7 +241,7 @@ public class Expense {
             else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
 
 
-            String delete = "DELETE FROM expenses WHERE date="+added.getDatetime()+" AND username='"+currentUser+"'" ;
+            String delete = "DELETE FROM expenses WHERE date='"+added.getDatetime()+"' AND username='"+currentUser+"'" ;
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 
@@ -249,6 +249,34 @@ public class Expense {
             refreshCategory();
 
         }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
+
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
+        try{
+            Statement readPesonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+
+            while(readPersonalInfoQuery.next()){
+                readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newBudgetPersonalInfo = readInitPersonal + added.getAmount();
+        String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+currentUser+"'";
+
+        try{
+            Statement writePersonalInfoStatement = dbLink.createStatement();
+            writePersonalInfoStatement.executeUpdate(writePersonalInfoUpdate);
+
+        }catch (Exception e){
             e.printStackTrace();
             e.getCause();
         }

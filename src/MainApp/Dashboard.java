@@ -166,9 +166,11 @@ public class Dashboard{
             e.printStackTrace();
             e.getCause();
         }
-
-        displaySavings.setText(String.valueOf(totalIncome-totalExpenses));
-
+        savingsProgress = totalIncome - totalExpenses;
+        if(savingsProgress < 0){
+            savingsProgress = 0;
+        }
+        displaySavings.setText(String.valueOf(savingsProgress));
 
     }
 
@@ -193,7 +195,7 @@ public class Dashboard{
 
         if(count==0 && month_year != null){
             String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
-                    "VALUES ('"+ month_year +"','"+ currentUser + "',"+(totalIncome-totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
+                    "VALUES ('"+ month_year +"','"+ currentUser + "',"+(totalIncome - totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
             try{
                 Statement query = dbLink.createStatement();
                 query.executeUpdate(update);
@@ -203,7 +205,7 @@ public class Dashboard{
             }
         }
         else{
-            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome-totalExpenses)+", totalExpenses="+totalExpenses+", totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+currentUser+"'";
+            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+currentUser+"'";
             try{
                 Statement query = dbLink.createStatement();
                 query.executeUpdate(updateValues);
