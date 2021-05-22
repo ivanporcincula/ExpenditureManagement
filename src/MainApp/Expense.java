@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Locale;
 
 public class Expense {
 
@@ -24,13 +25,15 @@ public class Expense {
     public TableColumn<Money, String> categoryCol;
     public TableColumn<Money, String> amountCol;
 
+    public TableColumn<Money, String> date1Col;
+    public TableColumn<Money, String> amount1Col;
+
     private Connection dbLink;
     private ObservableList<Money> moneyList = FXCollections.observableArrayList();
 
     public Button general;
     public Button food;
     public Button transportation;
-
     public Button grocery;
     public Button health;
     public Button education;
@@ -58,80 +61,39 @@ public class Expense {
             e.printStackTrace();
         }
 
-        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
-
-        try{
-
-            Statement line = dbLink.createStatement();
-            ResultSet queryRes = line.executeQuery(checkLog);
-
-            while(queryRes.next()) currentUser=queryRes.getString("username");
-
-        }catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
+        loggedInUser();
 
         System.out.println(currentUser);
 
 
         loadGeneralTable();
 
-        general.setOnMouseClicked(e->{
-            loadGeneralTable();
-            generalTable.setVisible(true);
-            categoricalTable.setVisible(false);
 
-        });
+    }
 
-        food.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
+    private void loggedInUser(){
+        //to check which user is currently logged in
+        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
+        try{
 
-        transportation.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-
-        grocery.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-
-        health.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-        education.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-        utilities.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-        work.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-        miscellaneous.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-
-
-
-
-
+            Statement line = dbLink.createStatement();
+            ResultSet queryRes = line.executeQuery(checkLog);
+            while(queryRes.next()) currentUser=queryRes.getString("username");
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 
     public void loadGeneralTable(){
 
+        generalTable.setVisible(true);
+        categoricalTable.setVisible(false);
+
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM expenses";
+            String query = "SELECT * FROM expenses WHERE username='"+currentUser+"'";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -145,9 +107,9 @@ public class Expense {
             e.printStackTrace();
             e.getCause();
         }
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("datetime"));
+        date1Col.setCellValueFactory(new PropertyValueFactory<>("datetime"));
         categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
-        amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        amount1Col.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
     }
 
@@ -155,33 +117,71 @@ public class Expense {
 
     public void loadCategoryTable(MouseEvent event){
 
+        generalTable.setVisible(false);
+        categoricalTable.setVisible(true);
+
         moneyList.clear();
+        String changeCase = "";
         String category = "";
 
         if(event.getSource() == food){
-            category = food.getText();
+            changeCase = food.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == transportation){
-            category = transportation.getText();
+            changeCase = transportation.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == grocery){
-            category = grocery.getText();
+            changeCase = grocery.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == health){
-            category = health.getText();
+            changeCase = health.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == education){
-            category = education.getText();
+            changeCase = education.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == utilities){
-            category = utilities.getText();
+            changeCase = utilities.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == work){
-            category = work.getText();
+            changeCase = work.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == miscellaneous){
-            category = miscellaneous.getText();
+            changeCase = miscellaneous.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
+
+        System.out.println(category);
 
         try{
             String query = "SELECT * FROM expenses WHERE category='"+category+"' AND username='"+currentUser+"'";

@@ -1,7 +1,5 @@
 package MainApp;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,7 +26,7 @@ public class ExpensesManager {
     public Button back;
 
     public void initialize(){
-        add.setDisable(true);
+        add.disableProperty().bind(amount.textProperty().isEmpty().or(category.valueProperty().isNull()));
         category.getItems().addAll("Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work", "Miscellaneous");
 
         //To connect to the AWS MySQL Database Instance
@@ -85,9 +83,6 @@ public class ExpensesManager {
         }
 
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
-
-
-
         try{
             Statement readPesonalInfoStatement = dbLink.createStatement();
             ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
@@ -113,10 +108,6 @@ public class ExpensesManager {
         }
 
         amount.setText("");
-    }
-
-    public void infoFilled(){
-        add.setDisable(amount.getText().isEmpty() || category.getSelectionModel().getSelectedItem().isEmpty());
     }
 
     public void back(){

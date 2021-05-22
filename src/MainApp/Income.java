@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.Locale;
 
 public class Income {
 
@@ -19,9 +20,14 @@ public class Income {
 
     public TableView<Money> generalTable;
     public TableView<Money> categoricalTable;
-    public TableColumn<Money, String> dateCol;
+
     public TableColumn<Money, String> categoryCol;
+
+    public TableColumn<Money, String> dateCol;
     public TableColumn<Money, String> amountCol;
+
+    public TableColumn<Money, String> date1Col;
+    public TableColumn<Money, String> amount1Col;
 
     private Connection dbLink;
     private ObservableList<Money> moneyList = FXCollections.observableArrayList();
@@ -50,51 +56,37 @@ public class Income {
             e.printStackTrace();
         }
 
-        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
+        loggedInUser();
 
+        System.out.println(currentUser);
+
+        loadGeneralTable();
+
+    }
+
+    private void loggedInUser(){
+        //to check which user is currently logged in
+        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
         try{
 
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkLog);
-
             while(queryRes.next()) currentUser=queryRes.getString("username");
-
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
         }
-
-        System.out.println(currentUser);
-
-
-        loadGeneralTable();
-
-        general.setOnMouseClicked(e->{
-            generalTable.setVisible(true);
-            categoricalTable.setVisible(false);
-
-        });
-
-        allowance.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-
-        work.setOnMouseClicked(e->{
-            generalTable.setVisible(false);
-            categoricalTable.setVisible(true);
-        });
-
-
-
     }
 
     public void loadGeneralTable(){
 
+        generalTable.setVisible(true);
+        categoricalTable.setVisible(false);
+
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM income";
+            String query = "SELECT * FROM income WHERE username='"+currentUser+"'" ;
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -110,9 +102,9 @@ public class Income {
             e.getCause();
         }
 
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("datetime"));
+        date1Col.setCellValueFactory(new PropertyValueFactory<>("datetime"));
         categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
-        amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        amount1Col.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
     }
 
@@ -120,19 +112,35 @@ public class Income {
 
     public void loadCategoryTable(MouseEvent event){
 
+        generalTable.setVisible(false);
+        categoricalTable.setVisible(true);
+
         moneyList.clear();
-        String category = "";
+        String changeCase;
+        String category="";
+
+
 
         if(event.getSource() == allowance){
-            category = allowance.getText();
+            changeCase = allowance.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
         else if(event.getSource() == work){
-            category = work.getText();
+            changeCase = work.getText();
+            String firstLetter = changeCase.substring(0,1);
+            String remainingLetters = changeCase.substring(1,changeCase.length());
+            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
+            category = firstLetter + remainingLetters;
         }
+
+        System.out.println(category);
 
 
         try{
-            String query = "SELECT * FROM income where category="+category;
+            String query = "SELECT * FROM income WHERE category='"+category+"' AND username='"+currentUser+"'";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -157,7 +165,7 @@ public class Income {
 
         for(String s : categories){
             try{
-                String query = " SELECT * FROM income where category="+s;
+                String query = " SELECT * FROM income WHERE category='"+s+"' AND username='"+currentUser+"'";
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 
@@ -176,9 +184,7 @@ public class Income {
 
         }
 
-
     }
-
 
     public void removeIncome(){
 
@@ -187,7 +193,7 @@ public class Income {
             if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
             else if(categoricalTable.isVisible()) added=categoricalTable.getSelectionModel().getSelectedItem();
 
-            String delete = "DELETE FROM income where date="+added.getDatetime() ;
+            String delete = "DELETE FROM income WHERE date="+added.getDatetime()+" AND username='"+currentUser+"'";
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 

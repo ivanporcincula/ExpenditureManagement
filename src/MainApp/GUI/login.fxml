@@ -34,19 +34,19 @@
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font></PasswordField>
-        <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="538.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: ff64ce;" text="LOGIN" textFill="#a5fcea">
+        <Button fx:id="login" alignment="CENTER" contentDisplay="CENTER" layoutX="619.0" layoutY="542.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="LOGIN" textFill="#a5fcea">
             <font>
                 <Font name="Moon Light" size="30.0" />
             </font>
         </Button>
-        <Button fx:id="register" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="608.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="CREATE AN ACCOUNT" textAlignment="CENTER" textOverrun="CLIP">
+        <Button fx:id="register" alignment="CENTER" contentDisplay="CENTER" layoutX="541.0" layoutY="612.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="CREATE AN ACCOUNT" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font name="Moon Light" size="25.0" />
             </font>
         </Button>
-        <Text fx:id="errorLogin" fill="#ff64ce" layoutX="495.0" layoutY="686.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="411.26953125">
+        <Text fx:id="errorLogin" fill="#ff64ce" layoutX="399.0" layoutY="689.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="576.26953125">
             <font>
-                <Font name="Moon Light" size="30.0" />
+                <Font size="21.0" />
             </font>
         </Text>
     </children>

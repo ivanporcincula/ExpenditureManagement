@@ -46,6 +46,10 @@ public class Dashboard{
 
     public Connection dbLink;
 
+    public Button dashboard;
+    public Button incomeTracker;
+    public Button expensesTracker;
+    public Button statisticalReport;
     public Button logout;
 
 
@@ -306,20 +310,69 @@ public class Dashboard{
 
     public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }
 
+    public void dashboard(){
 
-    public void logout(){
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml")); //loads the dashboard
+        Parent root;
 
-        String update = "DELETE FROM logs";
-        try{
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(update);
+        //logout
+        try {
+            root = main.load();
+            Stage stage = (Stage) dashboard.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
 
-        }catch (Exception e){
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
             e.printStackTrace();
-            e.getCause();
         }
 
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml")); //loads the dashboard
+
+
+    }
+
+    public void incomeTracker(){
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeTracker.fxml")); //loads the income tracker
+        Parent root;
+
+        //logout
+        try {
+            root = main.load();
+            Stage stage = (Stage) logout.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    public void expensesTracker(){
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml")); //loads the expenses tracker
         Parent root;
 
         //logout
@@ -344,8 +397,50 @@ public class Dashboard{
         }
 
     }
+    public void statisticalReport(){
 
 
 
+    }
+
+
+
+    public void logout(){
+
+        String update = "DELETE FROM logs";
+        try{
+            Statement query = dbLink.createStatement();
+            query.executeUpdate(update);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml")); //loads login
+        Parent root;
+
+        //logout
+        try {
+            root = main.load();
+            Stage stage = (Stage) logout.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

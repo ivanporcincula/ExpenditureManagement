@@ -26,8 +26,7 @@ public class IncomeManager {
     public Button back;
 
     public void initialize(){
-
-        add.setDisable(true);
+        add.disableProperty().bind(amount.textProperty().isEmpty().or(category.valueProperty().isNull()));
         category.getItems().addAll("Allowance", "Work");
 
 
@@ -120,11 +119,6 @@ public class IncomeManager {
     }
 
 
-
-
-    public void infoFilled(){
-        add.setDisable(amount.getText().isEmpty() || category.getSelectionModel().getSelectedItem().isEmpty());
-    }
 
     public void back(){
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml")); //loads the dashboard

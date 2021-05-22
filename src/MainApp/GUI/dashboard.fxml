@@ -205,25 +205,25 @@
       <VBox layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button mnemonicParsing="false" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" style="-fx-background-color: ff64ce;" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button layoutX="10.0" layoutY="46.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button layoutX="10.0" layoutY="82.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="Stat report" textAlignment="CENTER" textFill="#a5fcea">
+            <Button layoutX="10.0" layoutY="82.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>

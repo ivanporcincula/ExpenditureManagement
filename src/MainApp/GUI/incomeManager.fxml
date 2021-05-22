@@ -31,7 +31,7 @@
                 <Font name="Moon Light" size="50.0" />
             </font>
         </Text>
-      <TextField fx:id="amount" alignment="CENTER" layoutX="501.0" layoutY="296.0" onKeyReleased="#infoFilled" prefHeight="70.0" prefWidth="277.0" promptText="INCOME AMOUNT">
+      <TextField fx:id="amount" alignment="CENTER" layoutX="501.0" layoutY="296.0"  prefHeight="70.0" prefWidth="277.0" promptText="INCOME AMOUNT">
          <font>
             <Font name="Moon Light" size="30.0" />
          </font>
@@ -48,7 +48,7 @@
             </ImageView>
          </graphic>
         </Button>
-      <ComboBox fx:id="category" layoutX="501.0" layoutY="386.0" prefHeight="70.0" onKeyReleased="#infoFilled" prefWidth="277.0" promptText="Please select a category..." />
+      <ComboBox fx:id="category" layoutX="501.0" layoutY="386.0" prefHeight="70.0" prefWidth="277.0" promptText="Please select a category..." />
         <Button layoutX="1138.0" layoutY="640.0" mnemonicParsing="false" style="-fx-background-color: ff64ce;" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
             <font>
                 <Font name="Moon Light" size="20.0" />

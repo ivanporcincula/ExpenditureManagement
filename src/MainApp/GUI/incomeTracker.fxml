@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:controller="MainApp.Income" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainApp.Income">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -33,32 +33,44 @@
                <Font name="Moon Light" size="50.0" />
            </font>
        </Text>
-       <TableView layoutX="-3.0" layoutY="187.0" prefHeight="533.0" prefWidth="1286.0" style="-fx-background-color: transparent;" stylesheets="@trackerStyling.css">
-           <columns>
-               <TableColumn maxWidth="768.0" minWidth="768.0" prefWidth="768.0" sortType="DESCENDING" style="-fx-background-color: ff64ce;" text="Date &amp; Time" />
-               <TableColumn maxWidth="521.0" minWidth="521.0" prefWidth="521.0" style="-fx-background-color: ff64ce; -fx-font-color: a5fcea;" text="Amount" />
-           </columns>
-       </TableView>
+      <TableView fx:id="generalTable" layoutX="-1.0" layoutY="187.0" prefHeight="491.0" prefWidth="1282.0" style="-fx-background-color: transparent;" stylesheets="@tableStyling.css">
+         <columns>
+            <TableColumn fx:id="date1Col" maxWidth="768.0" minWidth="319.0" prefWidth="425.0" sortType="DESCENDING" style="-fx-background-color: ff64ce;" text="Date &amp; Time" />
+            <TableColumn fx:id="categoryCol" maxWidth="876.0" minWidth="261.0" prefWidth="432.0" style="-fx-background-color: ff64ce; -fx-font-color: a5fcea;" text="Category" />
+            <TableColumn fx:id="amount1Col" maxWidth="507.0" prefWidth="507.0" style="-fx-background-color: ff64ce; -fx-font-color: a5fcea;" text="Amount" />
+         </columns>
+      </TableView>
+      <TableView fx:id="categoricalTable" layoutY="187.0" prefHeight="491.0" prefWidth="1282.0" style="-fx-background-color: transparent;" stylesheets="@tableStyling.css" visible="false">
+         <columns>
+            <TableColumn fx:id="dateCol" maxWidth="768.0" minWidth="486.0" prefWidth="600.0" sortType="DESCENDING" style="-fx-background-color: ff64ce;" text="Date &amp; Time" />
+            <TableColumn fx:id="amountCol" maxWidth="679.0" minWidth="521.0" prefWidth="679.0" style="-fx-background-color: ff64ce; -fx-font-color: a5fcea;" text="Amount" />
+         </columns>
+      </TableView>
        <HBox layoutY="156.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" style="-fx-background-color: a5fcea;">
            <children>
-               <Button maxHeight="44.0" maxWidth="427.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="427.0" style="-fx-background-color: a5fcea;" text="GENERAL" textFill="#ff64ce">
+               <Button fx:id="general" maxHeight="44.0" maxWidth="427.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#loadGeneralTable" prefHeight="44.0" prefWidth="427.0" style="-fx-background-color: a5fcea;" text="GENERAL" textFill="#ff64ce">
                    <font>
                        <Font name="Moon Light" size="15.0" />
                    </font>
                </Button>
                <Separator blendMode="MULTIPLY" maxHeight="25.0" maxWidth="3.0" minHeight="25.0" minWidth="3.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="3.0" />
-               <Button layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="427.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="427.0" style="-fx-background-color: a5fcea;" text="ALLOWANCE" textFill="#ff64ce">
+               <Button fx:id="allowance" layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="427.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="34.0" prefWidth="427.0" style="-fx-background-color: a5fcea;" text="ALLOWANCE" textFill="#ff64ce">
                    <font>
                        <Font name="Moon Light" size="15.0" />
                    </font>
                </Button>
                <Separator blendMode="MULTIPLY" maxHeight="25.0" maxWidth="3.0" minHeight="25.0" minWidth="3.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="3.0" />
-               <Button layoutX="437.0" layoutY="10.0" maxHeight="56.0" maxWidth="427.0" minHeight="25.0" minWidth="421.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="421.0" style="-fx-background-color: a5fcea;" text="SALARY" textFill="#ff64ce">
+               <Button fx:id="work" layoutX="437.0" layoutY="10.0" maxHeight="56.0" maxWidth="427.0" minHeight="25.0" minWidth="421.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="56.0" prefWidth="421.0" style="-fx-background-color: a5fcea;" text="WORK" textFill="#ff64ce">
                    <font>
                        <Font name="Moon Light" size="15.0" />
                    </font>
                </Button>
            </children>
        </HBox>
+      <Button layoutX="1152.0" layoutY="681.0" mnemonicParsing="false" onMouseClicked="#removeIncome" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="DELETE" textFill="#a5fcea">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
