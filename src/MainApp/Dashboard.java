@@ -24,14 +24,11 @@ public class Dashboard{
     private double savingsUponRegistration;
     private double totalExpenses;
     private double totalIncome;
-    private double budgetLeft;
     private double savingsGoalDaily;
     private double savingsGoalWeekly;
     private double savingsGoalMonthly;
     private double savingsProgress;
     private int getDate;
-    private int size;
-    private int newSize = size + 1;
     private boolean resetMonth = false;
 
     //public ImageView logout;
@@ -70,28 +67,13 @@ public class Dashboard{
             dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
         }catch(Exception e){
             e.printStackTrace();
+
+
         }
-
-        //to check which user is currently logged in
-        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
-
-        try{
-            Statement line = dbLink.createStatement();
-            ResultSet queryRes = line.executeQuery(checkLog);
-
-            while(queryRes.next()) {
-                currentUser=queryRes.getString("username");
-                savingsUponRegistration=queryRes.getDouble("initialSavings");
-                customerName=queryRes.getString("customerName");
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
+        loggedInUser();
 
         //the initial savings is the same as the budget left that the user has
         //it is updated every time a user makes a transaction in the application
-        budgetLeft = savingsUponRegistration;
 
         displayName.setText(customerName);
 
@@ -99,7 +81,7 @@ public class Dashboard{
 
         if(resetMonth){
             System.out.println("HELLO");
-            //reset();
+            reset();
         }
         else{
             updateTotalExpenses();
@@ -111,23 +93,47 @@ public class Dashboard{
 
     }
 
+    private void loggedInUser(){
+
+        //to check which user is currently logged in
+        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
+
+        try{
+            Statement line = dbLink.createStatement();
+            ResultSet queryRes = line.executeQuery(checkLog);
+
+            while(queryRes.next()) {
+                currentUser=queryRes.getString("username");
+                customerName=queryRes.getString("customerName");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
+
 
     public void updateBudgetLeft(){
 
-        budgetLeft = budgetLeft + totalIncome - totalExpenses;
+        double readInitPersonal=0;
 
-        String changeInitialSavings = "UPDATE personal_info SET initialSavings= "+budgetLeft+" WHERE username='"+currentUser+"'";
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
 
         try{
-            Statement zero = dbLink.createStatement();
-            zero.executeUpdate(changeInitialSavings);
+            Statement readPesonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+
+            while(readPersonalInfoQuery.next()){
+                readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
+            }
 
         }catch (Exception e){
             e.printStackTrace();
             e.getCause();
         }
 
-        displayBudgetLeft.setText(String.valueOf(budgetLeft));
+        displayBudgetLeft.setText(String.valueOf(readInitPersonal));
     }
 
     public void updateTotalExpenses(){
@@ -151,7 +157,6 @@ public class Dashboard{
                         Statement query = dbLink.createStatement();
 
                         query.executeUpdate(update);
-                        System.out.println("FUCK");
 
 
                     }catch (Exception e){
@@ -176,8 +181,6 @@ public class Dashboard{
             }
 
         }
-
-
 
 
     }
@@ -284,6 +287,8 @@ public class Dashboard{
         Statement insert = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         insert.executeUpdate(insertStatement);
 
+        newMonth.clear();
+
         String sizeStatement = "SELECT * FROM tableSizes where username='"+currentUser+"'";
         Statement checkSize = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet checking = checkSize.executeQuery(sizeStatement);
@@ -293,13 +298,21 @@ public class Dashboard{
         int latestSize = checking.getInt("size");
 
         if(checking.previous()){
-            System.out.println("INSIDE");
+
             checking.previous();
             int previousSize = checking.getInt("size");
+            System.out.println(latestSize);
+            System.out.println(previousSize);
             if(latestSize > previousSize) {
+                System.out.println("INSIDE");
                 String update = "DELETE FROM tableSizes where username='"+currentUser+"'";
                 Statement query = dbLink.createStatement();
                 query.executeUpdate(update);
+
+                String insertStatement1 = "INSERT INTO tableSizes(username, size) VALUES ('"+currentUser+"',"+latestSize+")";
+                Statement insert1 = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                insert1.executeUpdate(insertStatement1);
+                insert1.executeUpdate(insertStatement1);
                 return true;
             }
             else return false;
@@ -316,7 +329,6 @@ public class Dashboard{
         displayTotalIncome.setText(String.valueOf(totalIncome));
         displaySavings.setText(String.valueOf(totalIncome-totalExpenses));
         displayTotalExpenses.setText(String.valueOf(totalExpenses));
-        newSize=newSize+1;
 
     }
 

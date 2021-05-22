@@ -67,6 +67,9 @@ public class IncomeManager {
 
     public void addIncome(){
 
+
+        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
+
         String inc = amount.getText();
         double amt = Double.parseDouble(inc);
         String categ = category.getSelectionModel().getSelectedItem();
@@ -82,8 +85,41 @@ public class IncomeManager {
             e.printStackTrace();
             e.getCause();
         }
+
+
+        //reading and updating the budget left/initial savings
+
+
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
+
+        try{
+            Statement readPesonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            while(readPersonalInfoQuery.next()){
+                readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newBudgetPersonalInfo = amt + readInitPersonal;
+        String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+currentUser+"'";
+
+        try{
+            Statement writePersonalInfoStatement = dbLink.createStatement();
+            writePersonalInfoStatement.executeUpdate(writePersonalInfoUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+
         amount.setText("");
     }
+
 
 
 
