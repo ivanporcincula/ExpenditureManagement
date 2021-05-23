@@ -194,6 +194,7 @@ public class ExpenseTracker {
             category = firstLetter + remainingLetters;
         }
 
+        System.out.println(category);
         try{
             String query = "SELECT * FROM expenses WHERE category='"+category+"' AND username='"+ username +"'";
             Statement line = dbLink.createStatement();

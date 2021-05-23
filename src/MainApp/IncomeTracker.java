@@ -304,6 +304,8 @@ public class IncomeTracker {
             edit.disableProperty().bind(Bindings.isEmpty(categoricalTable.getSelectionModel().getSelectedItems()));
         }
 
+        loadGeneralTable();
+
     }
 
     /* BUTTONS FROM THE SIDE MENU */

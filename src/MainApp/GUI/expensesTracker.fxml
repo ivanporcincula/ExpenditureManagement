@@ -98,7 +98,7 @@
                </font>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button fx:id="transportation" maxHeight="25.0" maxWidth="147.0" minHeight="25.0" minWidth="130.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: a5fcea;" text="TRANSPORTATION" textFill="#ff64ce">
+            <Button fx:id="transportation" maxHeight="25.0" maxWidth="147.0" minHeight="25.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: a5fcea;" text="TRANSPORTATION" textFill="#ff64ce">
                <font>
                   <Font size="13.0" />
                </font>
