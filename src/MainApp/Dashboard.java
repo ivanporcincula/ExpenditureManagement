@@ -1,13 +1,18 @@
 package MainApp;
 
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.*;
@@ -50,6 +55,10 @@ public class Dashboard{
     public Button statisticalReport;
     public Button logout;
 
+    public Pane openMenu;
+    public Pane closeMenu;
+    public VBox menu;
+
     public void initialize(String username, String customerName) throws Exception {
         this.username = username;
         this.customerName = customerName;
@@ -65,11 +74,10 @@ public class Dashboard{
             dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
         }catch(Exception e){
             e.printStackTrace();
-
-
         }
 
-        /*Every money displayed on the dashboard is reset to 0, except for the budget*/
+        sideMenu();
+        /*Every money displayed on the dashboard is reset to 0 if a new month emerges, except for the budget*/
         if(resetMonth()) reset();
 
         displayTotalExpenses();
@@ -77,6 +85,8 @@ public class Dashboard{
         updatedDashboardDb();
         displayBudgetLeft();
     }
+
+
 
 
     private void displayBudgetLeft(){
@@ -287,6 +297,43 @@ public class Dashboard{
             e.printStackTrace();
         }
 
+    }
+
+    private void sideMenu(){
+
+        menu.setTranslateX(-306);
+
+        openMenu.setOnMouseClicked(e->{
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(menu);
+            slide.setToX(0);
+
+            slide.play();
+
+            menu.setTranslateX(-306);
+
+            slide.setOnFinished((ActionEvent d)->{
+                openMenu.setVisible(false);
+                closeMenu.setVisible(true);
+            });
+        });
+
+        closeMenu.setOnMouseClicked(e->{
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(menu);
+            slide.setToX(-306);
+
+            slide.play();
+
+            menu.setTranslateX(0);
+
+            slide.setOnFinished((ActionEvent d)->{
+                openMenu.setVisible(true);
+                closeMenu.setVisible(false);
+            });
+        });
     }
 
 

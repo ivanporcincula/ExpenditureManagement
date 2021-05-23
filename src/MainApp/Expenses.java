@@ -1,12 +1,17 @@
 package MainApp;
 
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.*;
@@ -32,6 +37,10 @@ public class Expenses {
     public Button statisticalReport;
     public Button logout;
 
+    public Pane openMenu;
+    public Pane closeMenu;
+    public VBox menu;
+
     public void initialize(String username, String customerName) throws Exception {
         this.username = username;
         this.customerName = customerName;
@@ -51,6 +60,8 @@ public class Expenses {
             e.printStackTrace();
         }
 
+        sideMenu();
+        /*Add button binding to disable when either of the two is empty and input of categories to a combo box*/
         add.disableProperty().bind(amount.textProperty().isEmpty().or(category.valueProperty().isNull()));
         category.getItems().addAll("Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work", "Miscellaneous");
 
@@ -104,13 +115,49 @@ public class Expenses {
         amount.setText("");
     }
 
+    private void sideMenu(){
+
+        menu.setTranslateX(-306);
+
+        openMenu.setOnMouseClicked(e->{
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(menu);
+            slide.setToX(0);
+
+            slide.play();
+
+            menu.setTranslateX(-306);
+
+            slide.setOnFinished((ActionEvent d)->{
+                openMenu.setVisible(false);
+                closeMenu.setVisible(true);
+            });
+        });
+
+        closeMenu.setOnMouseClicked(e->{
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(menu);
+            slide.setToX(-306);
+
+            slide.play();
+
+            menu.setTranslateX(0);
+
+            slide.setOnFinished((ActionEvent d)->{
+                openMenu.setVisible(true);
+                closeMenu.setVisible(false);
+            });
+        });
+    }
+
     /* BUTTONS FROM THE SIDE MENU */
     public void dashboard() throws Exception {
 
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml"));
         Parent root;
 
-        //logout
         try {
             root = main.load();
             Dashboard sendUser = main.getController();
@@ -172,10 +219,9 @@ public class Expenses {
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml"));
         Parent root;
 
-        //logout
         try {
             root = main.load();
-            Expenses sendUser = main.getController();
+            ExpenseTracker sendUser = main.getController();
             sendUser.initialize(username,customerName);
             Stage stage = (Stage) expensesTracker.getScene().getWindow();
             root.setOnMousePressed(e->{
@@ -194,6 +240,32 @@ public class Expenses {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void logout(){
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml"));
+        Parent root;
+
+        //logout
+        try {
+            root = main.load();
+            Stage stage = (Stage) logout.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

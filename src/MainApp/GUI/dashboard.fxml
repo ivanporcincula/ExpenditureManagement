@@ -17,6 +17,37 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
+      <Pane fx:id="openMenu" prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@monrec-logo.png" />
+               </image>
+            </ImageView>
+            <Text fill="#ff64ce" layoutX="120.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONREC" textAlignment="CENTER">
+               <font>
+                  <Font name="Moon Light" size="45.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff64ce" height="30.0" layoutX="25.0" layoutY="8.0" rotate="90.0" stroke="#ff64ce" strokeType="INSIDE" width="10.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
+         </children></Pane>
+      <Pane fx:id="closeMenu" prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;" visible="false">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@monrec-logo.png" />
+               </image>
+            </ImageView>
+            <Text fill="#ff64ce" layoutX="120.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONREC" textAlignment="CENTER">
+               <font>
+                  <Font name="Moon Light" size="45.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff64ce" height="30.0" layoutX="25.0" layoutY="8.0" rotate="90.0" stroke="#ff64ce" strokeType="INSIDE" width="10.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
+         </children>
+      </Pane>
       <Text layoutX="1084.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi!" wrappingWidth="40.0">
          <font>
             <Font size="20.0" />
@@ -122,21 +153,6 @@
             <Font name="Moon Light" size="30.0" />
          </font>
       </Text>
-      <Pane prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
-         <children>
-            <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@monrec-logo.png" />
-               </image>
-            </ImageView>
-            <Text fill="#ff64ce" layoutX="120.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONREC" textAlignment="CENTER">
-               <font>
-                  <Font name="Moon Light" size="45.0" />
-               </font>
-            </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff64ce" height="30.0" layoutX="25.0" layoutY="8.0" rotate="90.0" stroke="#ff64ce" strokeType="INSIDE" width="10.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
-         </children></Pane>
       <ImageView fitHeight="115.0" fitWidth="134.0" layoutX="207.0" layoutY="563.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icon-income.png" />
@@ -202,7 +218,7 @@
             <Font size="40.0" />
          </font>
       </Text>
-      <VBox layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
+      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />
             <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">

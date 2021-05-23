@@ -1,15 +1,21 @@
 package MainApp;
 
+import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.Locale;
@@ -49,6 +55,10 @@ public class IncomeTracker {
     public Button statisticalReport;
     public Button logout;
 
+    public Pane openMenu;
+    public Pane closeMenu;
+    public VBox menu;
+
     public void initialize(String username, String customerName) throws Exception {
         this.username = username;
         this.customerName = customerName;
@@ -66,6 +76,7 @@ public class IncomeTracker {
             e.printStackTrace();
         }
 
+        sideMenu();
         newCategory.setVisible(false);
         newAmount.setVisible(false);
         save.setVisible(false);
@@ -308,13 +319,49 @@ public class IncomeTracker {
 
     }
 
+    private void sideMenu(){
+
+        menu.setTranslateX(-306);
+
+        openMenu.setOnMouseClicked(e->{
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(menu);
+            slide.setToX(0);
+
+            slide.play();
+
+            menu.setTranslateX(-306);
+
+            slide.setOnFinished((ActionEvent d)->{
+                openMenu.setVisible(false);
+                closeMenu.setVisible(true);
+            });
+        });
+
+        closeMenu.setOnMouseClicked(e->{
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(menu);
+            slide.setToX(-306);
+
+            slide.play();
+
+            menu.setTranslateX(0);
+
+            slide.setOnFinished((ActionEvent d)->{
+                openMenu.setVisible(true);
+                closeMenu.setVisible(false);
+            });
+        });
+    }
+
     /* BUTTONS FROM THE SIDE MENU */
     public void dashboard() throws Exception {
 
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml"));
         Parent root;
 
-        //logout
         try {
             root = main.load();
             Dashboard sendUser = main.getController();
@@ -376,10 +423,9 @@ public class IncomeTracker {
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml"));
         Parent root;
 
-        //logout
         try {
             root = main.load();
-            Expenses sendUser = main.getController();
+            ExpenseTracker sendUser = main.getController();
             sendUser.initialize(username,customerName);
             Stage stage = (Stage) expensesTracker.getScene().getWindow();
             root.setOnMousePressed(e->{
@@ -398,6 +444,32 @@ public class IncomeTracker {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void logout(){
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml"));
+        Parent root;
+
+        //logout
+        try {
+            root = main.load();
+            Stage stage = (Stage) logout.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
