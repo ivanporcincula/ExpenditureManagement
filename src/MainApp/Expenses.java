@@ -76,12 +76,9 @@ public class Expenses {
         double amt = Double.parseDouble(inc);
         String categ = category.getSelectionModel().getSelectedItem();
         String statement = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','"+categ+"',"+amt+")";
-        String statement1 = "INSERT INTO historyExpenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','"+categ+"',"+amt+")";
         try{
             Statement line = dbLink.createStatement();
-            Statement line1 = dbLink.createStatement();
             line.executeUpdate(statement);
-            line1.executeUpdate(statement1);
         }catch (Exception e){
             e.printStackTrace();
             e.getCause();
@@ -101,6 +98,9 @@ public class Expenses {
         }
 
         newBudgetPersonalInfo = readInitPersonal - amt;
+
+        if(newBudgetPersonalInfo < 0) newBudgetPersonalInfo = 0;
+
         String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+ username +"'";
 
         try{

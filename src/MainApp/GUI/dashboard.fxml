@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -103,7 +104,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="784.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Savings" textAlignment="CENTER">
+      <Text layoutX="720.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAVINGS GOAL" textAlignment="CENTER">
          <font>
             <Font name="Moon Light" size="40.0" />
          </font>
@@ -252,5 +253,16 @@
             </Button>
          </children>
       </VBox>
+      <Button fx:id="edit" layoutX="791.0" layoutY="280.0" mnemonicParsing="false" onAction="#editGoal" prefHeight="25.0" prefWidth="105.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="EDIT" textFill="#a5fcea">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <TextField fx:id="monthlyGoal" alignment="CENTER" layoutX="742.0" layoutY="483.0" prefHeight="30.0" prefWidth="202.0" promptText="MONTHLY GOAL ONLY" style="-fx-background-radius: 20;" />
+      <Button fx:id="save" layoutX="787.0" layoutY="520.0" mnemonicParsing="false" onAction="#saveNewGoal" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="SAVE" textFill="#a5fcea">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
     </children>
 </Pane>

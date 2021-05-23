@@ -17,8 +17,11 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Dashboard{
 
@@ -49,6 +52,10 @@ public class Dashboard{
     public ImageView incomeButton;
     public ImageView expensesButton;
 
+
+    public Button save;
+    public Button edit;
+
     public Button dashboard;
     public Button incomeTracker;
     public Button expensesTracker;
@@ -77,6 +84,7 @@ public class Dashboard{
         }
 
         sideMenu();
+
         /*Every money displayed on the dashboard is reset to 0 if a new month emerges, except for the budget*/
         if(resetMonth()) reset();
 
@@ -84,6 +92,10 @@ public class Dashboard{
         displayTotalIncome();
         updatedDashboardDb();
         displayBudgetLeft();
+        displayGoalsPeriodically();
+
+        monthlyGoal.setVisible(false);
+        save.setVisible(false);
     }
 
 
@@ -93,6 +105,7 @@ public class Dashboard{
 
         double readInitPersonal=0;
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
+        DecimalFormat roundOff = new DecimalFormat("#.00");
 
         try{
             Statement readPesonalInfoStatement = dbLink.createStatement();
@@ -105,12 +118,13 @@ public class Dashboard{
             e.printStackTrace();
             e.getCause();
         }
-        displayBudgetLeft.setText(String.valueOf(readInitPersonal));
+        displayBudgetLeft.setText(roundOff.format(readInitPersonal));
     }
 
     private void displayTotalExpenses(){
 
         String extractExpenses = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM expenses WHERE username='"+ username +"' GROUP BY MONTH(date), YEAR(date)";
+        DecimalFormat roundOff = new DecimalFormat("#.00");
 
         try{
             Statement expensesStatement = dbLink.createStatement();
@@ -120,7 +134,7 @@ public class Dashboard{
                 totalExpenses = expensesSet.getDouble("Total");
             }
 
-            displayTotalExpenses.setText(String.valueOf(totalExpenses));
+            displayTotalExpenses.setText(roundOff.format(totalExpenses));
 
         }catch(Exception e){
             e.printStackTrace();
@@ -132,6 +146,7 @@ public class Dashboard{
     private void displayTotalIncome(){
 
         String extractIncome = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM income WHERE username='"+ username +"' GROUP BY MONTH(date), YEAR(date)";
+        DecimalFormat roundOff = new DecimalFormat("#.00");
 
         try{
             Statement incomeStatement = dbLink.createStatement();
@@ -141,7 +156,7 @@ public class Dashboard{
                 totalIncome = incomeSet.getDouble("Total");
             }
 
-            displayTotalIncome.setText(String.valueOf(totalIncome));
+            displayTotalIncome.setText(roundOff.format(totalIncome));
 
         }catch(Exception e){
             e.printStackTrace();
@@ -151,8 +166,7 @@ public class Dashboard{
         if(savingsProgress < 0){
             savingsProgress = 0;
         }
-        displaySavings.setText(String.valueOf(savingsProgress));
-
+        displaySavings.setText(roundOff.format(savingsProgress));
     }
 
 
@@ -226,16 +240,78 @@ public class Dashboard{
     }
 
 
-    public void displaySavingsPeriodically(){
+    public void editGoal(){
+        monthlyGoal.setVisible(true);
+        save.setVisible(true);
+    }
 
+    public void saveNewGoal() throws ParseException {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
+        Date date = originalFormat.parse(month_year);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        DecimalFormat roundOff = new DecimalFormat("#.00");
+
+        int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+
+        String monthlyGoalText = monthlyGoal.getText();
+        savingsGoalMonthly = Double.parseDouble(monthlyGoalText);
+        savingsGoalWeekly = savingsGoalMonthly / weeks;
+        savingsGoalDaily = savingsGoalMonthly / days;
+
+        String updateValues = "UPDATE dashboard SET savingsGoalMonthly="+savingsGoalMonthly+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
+        try{
+            Statement query = dbLink.createStatement();
+            query.executeUpdate(updateValues);
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        displaySavingsMonthly.setText(roundOff.format(savingsGoalMonthly));
+        displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
+        displaySavingsDaily.setText(roundOff.format(savingsGoalDaily));
+
+        monthlyGoal.setVisible(false);
+        save.setVisible(false);
 
     }
 
-    public void saveNewGoal(){
+    private void displayGoalsPeriodically() throws ParseException {
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
+        Date date = originalFormat.parse(month_year);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+        DecimalFormat roundOff = new DecimalFormat("#.00");
+
+        String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+ username +"'";
+
+        try{
+            Statement dashboardStatement = dbLink.createStatement();
+            ResultSet dashboardSet = dashboardStatement.executeQuery(dashboard);
+            while(dashboardSet.next()){
+                savingsGoalMonthly = dashboardSet.getDouble("savingsGoalMonthly");
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        savingsGoalWeekly = savingsGoalMonthly / weeks;
+        savingsGoalDaily = savingsGoalMonthly / days;
+
+        displaySavingsMonthly.setText(roundOff.format(savingsGoalMonthly));
+        displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
+        displaySavingsDaily.setText(roundOff.format(savingsGoalDaily));
 
     }
 
-    public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }
 
     public void income(){
 
@@ -298,6 +374,7 @@ public class Dashboard{
         }
 
     }
+
 
     private void sideMenu(){
 

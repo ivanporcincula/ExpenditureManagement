@@ -23,16 +23,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Integer value = 201202;
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMM");
-        Date date = originalFormat.parse(value.toString());
-
-        SimpleDateFormat newFormat = new SimpleDateFormat("MMM yyyy");
-        String formatedDate = newFormat.format(date);
+        /*Integer value = 201202;
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
+        Date date = originalFormat.parse("June 2021");
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int week = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        System.out.println(week);*/
 
 
 
