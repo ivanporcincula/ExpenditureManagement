@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -14,17 +13,18 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Dashboard{
 
+    private String customerName;
+    private String username;
+    private String month_year;
+    private Connection dbLink;
+
     private double x;
     private double y;
 
-    private String customerName;
-    private String currentUser;
-    private String month_year;
     private double totalExpenses;
     private double totalIncome;
     private double savingsGoalDaily;
@@ -44,26 +44,22 @@ public class Dashboard{
     public ImageView incomeButton;
     public ImageView expensesButton;
 
-    public Connection dbLink;
-
     public Button dashboard;
     public Button incomeTracker;
     public Button expensesTracker;
     public Button statisticalReport;
     public Button logout;
 
+    public void initialize(String username, String customerName) throws Exception {
+        this.username = username;
+        this.customerName = customerName;
+        displayName.setText(customerName);
 
-
-    public void initialize() throws Exception {
-
-        //To connect to the AWS MySQL Database Instance
+        /*To connect to the AWS MySQL Database Instance*/
         String schemaName = "user";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
-
-        //url of the database instance host
         String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
-
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
@@ -72,45 +68,21 @@ public class Dashboard{
 
 
         }
-        loggedInUser();
 
-        //the initial savings is the same as the budget left that the user has
-        //it is updated every time a user makes a transaction in the application
-
+        /*Every money displayed on the dashboard is reset to 0, except for the budget*/
         if(resetMonth()) reset();
 
         displayTotalExpenses();
         displayTotalIncome();
         updatedDashboardDb();
         displayBudgetLeft();
-
-    }
-
-    private void loggedInUser(){
-
-        //to check which user is currently logged in
-        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
-
-        try{
-            Statement line = dbLink.createStatement();
-            ResultSet queryRes = line.executeQuery(checkLog);
-
-            while(queryRes.next()) {
-                currentUser=queryRes.getString("username");
-                customerName=queryRes.getString("customerName");
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
-        displayName.setText(customerName);
     }
 
 
     private void displayBudgetLeft(){
 
         double readInitPersonal=0;
-        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
 
         try{
             Statement readPesonalInfoStatement = dbLink.createStatement();
@@ -119,7 +91,6 @@ public class Dashboard{
             while(readPersonalInfoQuery.next()){
                 readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
             }
-
         }catch (Exception e){
             e.printStackTrace();
             e.getCause();
@@ -129,7 +100,7 @@ public class Dashboard{
 
     private void displayTotalExpenses(){
 
-        String extractExpenses = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM expenses WHERE username='"+currentUser+"' GROUP BY MONTH(date), YEAR(date)";
+        String extractExpenses = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM expenses WHERE username='"+ username +"' GROUP BY MONTH(date), YEAR(date)";
 
         try{
             Statement expensesStatement = dbLink.createStatement();
@@ -150,7 +121,7 @@ public class Dashboard{
 
     private void displayTotalIncome(){
 
-        String extractIncome = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM income WHERE username='"+currentUser+"' GROUP BY MONTH(date), YEAR(date)";
+        String extractIncome = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM income WHERE username='"+ username +"' GROUP BY MONTH(date), YEAR(date)";
 
         try{
             Statement incomeStatement = dbLink.createStatement();
@@ -177,10 +148,8 @@ public class Dashboard{
 
     private void updatedDashboardDb(){
 
-        String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+currentUser+"'";
+        String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+ username +"'";
         int count=0;
-
-
         try{
             Statement dashboardStatement = dbLink.createStatement();
             ResultSet dashboardSet = dashboardStatement.executeQuery(dashboard);
@@ -195,7 +164,7 @@ public class Dashboard{
 
         if(count==0 && month_year != null){
             String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
-                    "VALUES ('"+ month_year +"','"+ currentUser + "',"+(totalIncome - totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
+                    "VALUES ('"+ month_year +"','"+ username + "',"+(totalIncome - totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
             try{
                 Statement query = dbLink.createStatement();
                 query.executeUpdate(update);
@@ -205,7 +174,7 @@ public class Dashboard{
             }
         }
         else{
-            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+currentUser+"'";
+            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
             try{
                 Statement query = dbLink.createStatement();
                 query.executeUpdate(updateValues);
@@ -214,7 +183,6 @@ public class Dashboard{
                 e.getCause();
             }
         }
-
 
     }
 
@@ -232,8 +200,8 @@ public class Dashboard{
 
     private void reset(){
 
-        String statement = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','None', 0)";
-        String statement1 = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+currentUser+"','None', 0)";
+        String statement = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','None', 0)";
+        String statement1 = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','None', 0)";
 
         try{
             Statement line = dbLink.createStatement();
@@ -246,14 +214,28 @@ public class Dashboard{
         }
 
     }
+
+
+    public void displaySavingsPeriodically(){
+
+
+    }
+
+    public void saveNewGoal(){
+
+    }
+
+    public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }
+
     public void income(){
 
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeManager.fxml")); //loads the dashboard
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeManager.fxml"));
         Parent root;
 
-        //opens the dashboard
         try {
             root = main.load();
+            Income sendUser = main.getController();
+            sendUser.initialize(username,customerName);
             Stage stage = (Stage) incomeButton.getScene().getWindow();
             root.setOnMousePressed(e->{
                 x = e.getSceneX();
@@ -270,17 +252,21 @@ public class Dashboard{
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
+
     public void expense(){
 
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesManager.fxml")); //loads the dashboard
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesManager.fxml"));
         Parent root;
 
-        //opens the dashboard
         try {
             root = main.load();
+            Expenses sendUser = main.getController();
+            sendUser.initialize(username,customerName);
             Stage stage = (Stage) expensesButton.getScene().getWindow();
             root.setOnMousePressed(e->{
                 x = e.getSceneX();
@@ -297,29 +283,24 @@ public class Dashboard{
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
 
-    public void displaySavingsPeriodically(){
 
+    /* BUTTONS FROM THE SIDE MENU */
+    public void dashboard() throws Exception {
 
-    }
-
-    public void saveNewGoal(){
-
-    }
-
-    public void enter(){ displaySavingsMonthly.setText(monthlyGoal.getText()); }
-
-    public void dashboard(){
-
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml")); //loads the dashboard
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml"));
         Parent root;
 
         //logout
         try {
             root = main.load();
+            Dashboard sendUser = main.getController();
+            sendUser.initialize(username,customerName);
             Stage stage = (Stage) dashboard.getScene().getWindow();
             root.setOnMousePressed(e->{
                 x = e.getSceneX();
@@ -337,20 +318,21 @@ public class Dashboard{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
+
+
+
 
     public void incomeTracker(){
 
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeTracker.fxml")); //loads the income tracker
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeTracker.fxml"));
         Parent root;
 
-        //logout
         try {
             root = main.load();
-            Stage stage = (Stage) logout.getScene().getWindow();
+            IncomeTracker sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) incomeTracker.getScene().getWindow();
             root.setOnMousePressed(e->{
                 x = e.getSceneX();
                 y = e.getSceneY();
@@ -366,21 +348,22 @@ public class Dashboard{
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
-
     }
 
     public void expensesTracker(){
 
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml")); //loads the expenses tracker
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml"));
         Parent root;
 
         //logout
         try {
             root = main.load();
-            Stage stage = (Stage) logout.getScene().getWindow();
+            Expenses sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) expensesTracker.getScene().getWindow();
             root.setOnMousePressed(e->{
                 x = e.getSceneX();
                 y = e.getSceneY();
@@ -396,30 +379,18 @@ public class Dashboard{
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
+
     public void statisticalReport(){
 
 
-
     }
 
-
-
     public void logout(){
-
-        String update = "DELETE FROM logs";
-        try{
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(update);
-
-        }catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml")); //loads login
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml"));
         Parent root;
 
         //logout
@@ -442,7 +413,5 @@ public class Dashboard{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

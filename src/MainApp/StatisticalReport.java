@@ -10,6 +10,10 @@ public class StatisticalReport {
     private double cumulativeBalance;
     private PieChart categoricalGraph;
 
+    public void initialize(String username){
+
+    }
+
     public void sortByAscending(){
 
     }

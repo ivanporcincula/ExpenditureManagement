@@ -94,7 +94,6 @@ public class Login {
         String user = username.getText();
         String pass = password.getText();
         String customerName="";
-        double initSavings=0;
 
         //this is a MySQL syntax/statement
         //username and password are both selected from the database as the username-password combination must be correct
@@ -112,7 +111,6 @@ public class Login {
             while(queryRes.next()) {
                 count++;
                 customerName = queryRes.getString("customerName");
-                initSavings = queryRes.getDouble("initialSavings");
                 //System.out.println(customerName);
             }
 
@@ -120,16 +118,6 @@ public class Login {
                 username.setText("");
                 password.setText("");
 
-                String statement = "INSERT INTO user.logs(username, initialSavings, customerName) VALUES ('"+user+"'," + initSavings + ",'"+customerName+"')";
-
-                try{
-                    Statement newAcc = newDbLink.createStatement();
-                    newAcc.executeUpdate(statement);
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                    e.getCause();
-                }
 
                 FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml")); //loads the dashboard
                 Parent root;
@@ -137,6 +125,8 @@ public class Login {
                 //opens the dashboard
                 try {
                     root = main.load();
+                    Dashboard sendUser = main.getController();
+                    sendUser.initialize(user,customerName);
                     Stage stage = (Stage) login.getScene().getWindow();
                     root.setOnMousePressed(e->{
                         x = e.getSceneX();
@@ -154,7 +144,6 @@ public class Login {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
             else{
                 errorLogin.setText("Invalid username or password combination! Please try again.");

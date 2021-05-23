@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 
-public class Income {
+public class Expenses {
 
     private String username;
     private String customerName;
@@ -36,10 +36,12 @@ public class Income {
         this.username = username;
         this.customerName = customerName;
 
-        /*To connect to the AWS MySQL Database Instance*/
+        //To connect to the AWS MySQL Database Instance
         String schemaName = "user";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
+
+        //url of the database instance host
         String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
 
         try{
@@ -49,32 +51,32 @@ public class Income {
             e.printStackTrace();
         }
 
-        /*Add button binding to disable when either of the two is empty and input of categories to a combo box*/
         add.disableProperty().bind(amount.textProperty().isEmpty().or(category.valueProperty().isNull()));
-        category.getItems().addAll("Allowance", "Work");
+        category.getItems().addAll("Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work", "Miscellaneous");
+
 
     }
 
-    public void addIncome(){
-        double readInitPersonal = 0, newBudgetPersonalInfo;
+    public void addExpense(){
+
+        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
 
         String inc = amount.getText();
         double amt = Double.parseDouble(inc);
         String categ = category.getSelectionModel().getSelectedItem();
-        String statement = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','"+categ+"',"+amt+")";
-
+        String statement = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','"+categ+"',"+amt+")";
+        String statement1 = "INSERT INTO historyExpenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','"+categ+"',"+amt+")";
         try{
             Statement line = dbLink.createStatement();
+            Statement line1 = dbLink.createStatement();
             line.executeUpdate(statement);
-
+            line1.executeUpdate(statement1);
         }catch (Exception e){
             e.printStackTrace();
             e.getCause();
         }
 
-        /*Reading and updating the budget left/initial savings*/
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
-
         try{
             Statement readPesonalInfoStatement = dbLink.createStatement();
             ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
@@ -87,7 +89,7 @@ public class Income {
             e.getCause();
         }
 
-        newBudgetPersonalInfo = amt + readInitPersonal;
+        newBudgetPersonalInfo = readInitPersonal - amt;
         String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+ username +"'";
 
         try{
@@ -195,4 +197,5 @@ public class Income {
             e.printStackTrace();
         }
     }
+
 }

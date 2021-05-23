@@ -3,53 +3,59 @@ package MainApp;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.IOException;
+import java.sql.*;
 import java.util.Locale;
 
-public class Expense {
+public class IncomeTracker {
 
-    private String currentUser;
+    private String username;
+    private String customerName;
+    private Money added;
+    private Connection dbLink;
+    private ObservableList<Money> moneyList = FXCollections.observableArrayList();
+
+    private double x;
+    private double y;
 
     public TableView<Money> generalTable;
     public TableView<Money> categoricalTable;
 
-    public TableColumn<Money, String> dateCol;
     public TableColumn<Money, String> categoryCol;
+
+    public TableColumn<Money, String> dateCol;
     public TableColumn<Money, String> amountCol;
 
     public TableColumn<Money, String> date1Col;
     public TableColumn<Money, String> amount1Col;
 
-    private Connection dbLink;
-    private ObservableList<Money> moneyList = FXCollections.observableArrayList();
-
     public Button general;
-    public Button food;
-    public Button transportation;
-    public Button grocery;
-    public Button health;
-    public Button education;
-    public Button utilities;
+    public Button allowance;
     public Button work;
-    public Button miscellaneous;
     public Button edit;
 
     public ComboBox<String> newCategory;
     public TextField newAmount;
     public Button save;
 
-    private Money added;
+    public Button dashboard;
+    public Button incomeTracker;
+    public Button expensesTracker;
+    public Button statisticalReport;
+    public Button logout;
 
+    public void initialize(String username, String customerName) throws Exception {
+        this.username = username;
+        this.customerName = customerName;
 
-
-    public void initialize(){
         //To connect to the AWS MySQL Database Instance
         String schemaName = "user";
         String databaseUser = "dumanyoroporc";
@@ -68,18 +74,14 @@ public class Expense {
         newCategory.setVisible(false);
         newAmount.setVisible(false);
         save.setVisible(false);
-        newCategory.getItems().addAll("Food", "Transportation",
-                "Grocery", "Health", "Education", "Utilities",
-                "Work", "Miscellaneous");
+        newCategory.getItems().addAll("Allowance", "Work");
         save.disableProperty().bind(newAmount.textProperty().isEmpty().or(newCategory.valueProperty().isNull()));
 
         loggedInUser();
 
-        System.out.println(currentUser);
-
+        System.out.println(username);
 
         loadGeneralTable();
-
 
     }
 
@@ -90,7 +92,7 @@ public class Expense {
 
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkLog);
-            while(queryRes.next()) currentUser=queryRes.getString("username");
+            while(queryRes.next()) username =queryRes.getString("username");
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
@@ -101,12 +103,13 @@ public class Expense {
 
         generalTable.setVisible(true);
         categoricalTable.setVisible(false);
+
         edit.disableProperty().bind(Bindings.isEmpty(generalTable.getSelectionModel().getSelectedItems()));
 
         moneyList.clear();
 
         try{
-            String query = "SELECT * FROM expenses WHERE username='"+currentUser+"'";
+            String query = "SELECT * FROM income WHERE username='"+ username +"'" ;
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -116,10 +119,12 @@ public class Expense {
                         queryRes.getDouble("amount")));
                 generalTable.setItems(moneyList);
             }
+
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
         }
+
         date1Col.setCellValueFactory(new PropertyValueFactory<>("datetime"));
         categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
         amount1Col.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -132,49 +137,15 @@ public class Expense {
 
         generalTable.setVisible(false);
         categoricalTable.setVisible(true);
+
         edit.disableProperty().bind(Bindings.isEmpty(categoricalTable.getSelectionModel().getSelectedItems()));
 
         moneyList.clear();
-        String changeCase = "";
-        String category = "";
+        String changeCase;
+        String category="";
 
-        if(event.getSource() == food){
-            changeCase = food.getText();
-            String firstLetter = changeCase.substring(0,1);
-            String remainingLetters = changeCase.substring(1,changeCase.length());
-            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
-            category = firstLetter + remainingLetters;
-        }
-        else if(event.getSource() == transportation){
-            changeCase = transportation.getText();
-            String firstLetter = changeCase.substring(0,1);
-            String remainingLetters = changeCase.substring(1,changeCase.length());
-            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
-            category = firstLetter + remainingLetters;
-        }
-        else if(event.getSource() == grocery){
-            changeCase = grocery.getText();
-            String firstLetter = changeCase.substring(0,1);
-            String remainingLetters = changeCase.substring(1,changeCase.length());
-            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
-            category = firstLetter + remainingLetters;
-        }
-        else if(event.getSource() == health){
-            changeCase = health.getText();
-            String firstLetter = changeCase.substring(0,1);
-            String remainingLetters = changeCase.substring(1,changeCase.length());
-            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
-            category = firstLetter + remainingLetters;
-        }
-        else if(event.getSource() == education){
-            changeCase = education.getText();
-            String firstLetter = changeCase.substring(0,1);
-            String remainingLetters = changeCase.substring(1,changeCase.length());
-            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
-            category = firstLetter + remainingLetters;
-        }
-        else if(event.getSource() == utilities){
-            changeCase = utilities.getText();
+        if(event.getSource() == allowance){
+            changeCase = allowance.getText();
             String firstLetter = changeCase.substring(0,1);
             String remainingLetters = changeCase.substring(1,changeCase.length());
             remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
@@ -187,18 +158,12 @@ public class Expense {
             remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
             category = firstLetter + remainingLetters;
         }
-        else if(event.getSource() == miscellaneous){
-            changeCase = miscellaneous.getText();
-            String firstLetter = changeCase.substring(0,1);
-            String remainingLetters = changeCase.substring(1,changeCase.length());
-            remainingLetters = remainingLetters.toLowerCase(Locale.ROOT);
-            category = firstLetter + remainingLetters;
-        }
 
         System.out.println(category);
 
+
         try{
-            String query = "SELECT * FROM expenses WHERE category='"+category+"' AND username='"+currentUser+"'";
+            String query = "SELECT * FROM income WHERE category='"+category+"' AND username='"+ username +"'";
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(query);
 
@@ -219,13 +184,11 @@ public class Expense {
     public void refreshCategory(){
 
         moneyList.clear();
+        String[] categories = {"Allowance", "Work"};
 
-        String[] categories = {"Food", "Transportation",
-                "Grocery", "Health", "Education", "Utilities",
-                "Work", "Miscellaneous"};
         for(String s : categories){
             try{
-                String query = "SELECT * FROM expenses  WHERE category='"+s+"' AND username='"+currentUser+"'";
+                String query = " SELECT * FROM income WHERE category='"+s+"' AND username='"+ username +"'";
                 Statement line = dbLink.createStatement();
                 ResultSet queryRes = line.executeQuery(query);
 
@@ -246,16 +209,17 @@ public class Expense {
 
     }
 
+    public void removeIncome(){
 
-    public void removeExpense(){
 
         try{
 
             if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
-            else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
+            else if(categoricalTable.isVisible()) added=categoricalTable.getSelectionModel().getSelectedItem();
 
+            System.out.println(added.getAmount());
 
-            String delete = "DELETE FROM expenses WHERE date='"+added.getDatetime()+"' AND username='"+currentUser+"'" ;
+            String delete = "DELETE FROM income WHERE date='"+added.getDatetime()+"' AND username='"+ username +"'";
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
 
@@ -267,14 +231,12 @@ public class Expense {
             e.getCause();
         }
 
-        //update the budget
-
         double readInitPersonal = 0, newBudgetPersonalInfo = 0;
-        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+currentUser+"'";
+
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
         try{
             Statement readPesonalInfoStatement = dbLink.createStatement();
             ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
-
             while(readPersonalInfoQuery.next()){
                 readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
             }
@@ -284,8 +246,8 @@ public class Expense {
             e.getCause();
         }
 
-        newBudgetPersonalInfo = readInitPersonal + added.getAmount();
-        String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+currentUser+"'";
+        newBudgetPersonalInfo = readInitPersonal - added.getAmount();
+        String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+ username +"'";
 
         try{
             Statement writePersonalInfoStatement = dbLink.createStatement();
@@ -298,12 +260,14 @@ public class Expense {
 
     }
 
-    public void editExpense(){
+    public void editIncome(){
 
         newCategory.setVisible(true);
         newAmount.setVisible(true);
         save.setVisible(true);
         edit.disableProperty().bind(Bindings.isNotEmpty(generalTable.getSelectionModel().getSelectedItems()));
+
+
         if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
         else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
 
@@ -319,4 +283,97 @@ public class Expense {
 
     }
 
+    /* BUTTONS FROM THE SIDE MENU */
+    public void dashboard() throws Exception {
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/dashboard.fxml"));
+        Parent root;
+
+        //logout
+        try {
+            root = main.load();
+            Dashboard sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) dashboard.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    public void incomeTracker(){
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeTracker.fxml"));
+        Parent root;
+
+        try {
+            root = main.load();
+            IncomeTracker sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) incomeTracker.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void expensesTracker(){
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml"));
+        Parent root;
+
+        //logout
+        try {
+            root = main.load();
+            Expenses sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) expensesTracker.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
