@@ -34,7 +34,7 @@ public class Main extends Application {
         cal.setTime(date);
         int week = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        System.out.println(week);
+
 
         Parent root = FXMLLoader.load(getClass().getResource("GUI/login.fxml"));
 
