@@ -76,8 +76,8 @@ public class Income {
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
 
         try{
-            Statement readPesonalInfoStatement = dbLink.createStatement();
-            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            Statement readPersonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPersonalInfoStatement.executeQuery(readPersonalInfoUpdate);
             while(readPersonalInfoQuery.next()){
                 readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
             }

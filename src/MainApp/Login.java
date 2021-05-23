@@ -17,7 +17,9 @@ public class Login {
 
     private double x;
     private double y;
+    private Connection dbLink;
 
+    public Text errorLogin;
     public TextField username;
     public TextField password;
 
@@ -25,13 +27,19 @@ public class Login {
     public Button exit;
     public Button register;
 
-    public Connection dbLink;
-    public Connection newDbLink;
-
-    public Text errorLogin;
-
-
     public void initialize() {
+        /*To connect to the AWS MySQL Database Instance*/
+        String schemaName = "user";
+        String databaseUser = "dumanyoroporc";
+        String databasePassword = "lbycpd2PROJECT";
+        String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         login.setDisable(true); //is disabled until the user types in both fields of username and password
         //Opens the GUI for account creation
         register.setOnMouseClicked(e->{
@@ -60,21 +68,6 @@ public class Login {
 
         });
 
-        //To connect to the AWS MySQL Database Instance
-        String schemaName = "user";
-        String databaseUser = "dumanyoroporc";
-        String databasePassword = "lbycpd2PROJECT";
-
-        //url of the database instance host
-        String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
-
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
-            newDbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 
         /*exit.setOnMouseClicked(e->{
             Stage stage = (Stage) exit.getScene().getWindow();
@@ -111,7 +104,6 @@ public class Login {
             while(queryRes.next()) {
                 count++;
                 customerName = queryRes.getString("customerName");
-                //System.out.println(customerName);
             }
 
             if(count == 1){

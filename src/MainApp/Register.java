@@ -18,6 +18,7 @@ import java.sql.Statement;
 public class Register {
     private double x;
     private double y;
+    private Connection dbLink;
 
     public TextField username;
     public PasswordField password;
@@ -27,14 +28,24 @@ public class Register {
     public Button cancel;
     public Button done;
 
-    private Connection dbLink;
-    private Connection newDbLink;
+
 
     public void initialize() {
+        /*To connect to the AWS MySQL Database Instance*/
+        String schemaName = "user";
+        String databaseUser = "dumanyoroporc";
+        String databasePassword = "lbycpd2PROJECT";
+        String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
 
-        done.setDisable(true); //is disabled until the user types in all fields
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
-        // if cancel button is clicked, it will go back to the login screen.
+
+        /*If cancel button is clicked, it will go back to the login screen.*/
         cancel.setOnMouseClicked(e->{
 
             FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/login.fxml"));
@@ -60,27 +71,11 @@ public class Register {
                 d.printStackTrace();
             }
         });
-
-        //To connect to the AWS MySQL Database Instance
-        String schemaName = "user";
-        String databaseUser = "dumanyoroporc";
-        String databasePassword = "lbycpd2PROJECT";
-
-        //url of the database instance host
-        String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
-
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            dbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
-            newDbLink = DriverManager.getConnection(databaseURL,databaseUser,databasePassword);
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        done.setDisable(true); //is disabled until the user types in all fields
     }
 
     public void register(){
-        //get the text that the user typed
+        /* Get the text that the user typed*/
         String user = username.getText();
         String pass = password.getText();
         String pName = personalName.getText();
@@ -88,38 +83,33 @@ public class Register {
         double initSavings = Double.parseDouble(savings);
 
 
-        //to create a statement in MySQL through IntelliJ and execute it through query.
-        //username is selected from the database as it will serve as a flag to determine whether the username already exists or not.
+        /*To create a statement in MySQL through IntelliJ and execute it through query.
+        username is selected from the database as it will serve as a flag to determine whether the username already exists or not.*/
         String checkCredentials = "SELECT * FROM personal_info where username= '" + user +"'";
-        //MySQL statement to add the new user to the table of the database.
+
+        /*MySQL statement to add the new user to the table of the database.*/
         String statement = "INSERT INTO personal_info(username, password, initialSavings, customerName) VALUES ('";
         String values = user + "','" + pass + "'," + initSavings + ",'"+pName+"')";
         String addUser = statement + values;
         try{
 
-            //to create a statement in MySQL through IntelliJ and execute it through query.
+            /*To create a statement in MySQL through IntelliJ and execute it through query.*/
             Statement line = dbLink.createStatement();
             ResultSet queryRes = line.executeQuery(checkCredentials);
 
             int count = 0;
             while(queryRes.next()) count++;
 
-            System.out.println(count);
-
-
-            //to determine whether the username/password exists or is correct.
-            // 1 means the username is already taken.
-            // 0 means the username is not yet taken..
+            /*To determine whether the username/password exists or is correct.
+             1 means the username is already taken else, 0 means the username is not yet taken..
+             */
             if(count == 1){
-                //if username is taken
                 username.setText("");
                 sysMessage.setText("That username has been taken. Please choose another username.");
             }
             else{
-                //if the username is not yet registered
-
                 try{
-                    Statement newAcc = newDbLink.createStatement();
+                    Statement newAcc = dbLink.createStatement();
                     newAcc.executeUpdate(addUser);
                     sysMessage.setText("Registered successfully!");
 
@@ -139,7 +129,7 @@ public class Register {
         }
     }
 
-    //method to check whether if one field is empty. if one field is empty then the login button is disabled
+    /* Method to check whether if one field is empty. if one field is empty then the login button is disabled */
     public void infoFilled(){
         if (!username.getText().isEmpty() && !password.getText().isEmpty() && !personalName.getText().isEmpty() && !initialSavings.getText().isEmpty()) done.setDisable(false);
         else done.setDisable(true);

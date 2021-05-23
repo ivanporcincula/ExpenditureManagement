@@ -8,8 +8,6 @@ public class Money {
     private String category;
     private double amount;
 
-
-
     public Money(Timestamp datetime, String category, double amount){
         this.datetime = datetime;
         this.category = category;

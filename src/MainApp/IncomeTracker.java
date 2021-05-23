@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.Locale;
@@ -30,10 +29,8 @@ public class IncomeTracker {
     public TableView<Money> categoricalTable;
 
     public TableColumn<Money, String> categoryCol;
-
     public TableColumn<Money, String> dateCol;
     public TableColumn<Money, String> amountCol;
-
     public TableColumn<Money, String> date1Col;
     public TableColumn<Money, String> amount1Col;
 
@@ -56,12 +53,10 @@ public class IncomeTracker {
         this.username = username;
         this.customerName = customerName;
 
-        //To connect to the AWS MySQL Database Instance
+        /*To connect to the AWS MySQL Database Instance*/
         String schemaName = "user";
         String databaseUser = "dumanyoroporc";
         String databasePassword = "lbycpd2PROJECT";
-
-        //url of the database instance host
         String databaseURL = "jdbc:mysql://cpd2-database.c42q90fut081.ap-southeast-1.rds.amazonaws.com:3306/"+schemaName;
 
         try{
@@ -77,26 +72,8 @@ public class IncomeTracker {
         newCategory.getItems().addAll("Allowance", "Work");
         save.disableProperty().bind(newAmount.textProperty().isEmpty().or(newCategory.valueProperty().isNull()));
 
-        loggedInUser();
-
-        System.out.println(username);
-
         loadGeneralTable();
 
-    }
-
-    private void loggedInUser(){
-        //to check which user is currently logged in
-        String checkLog = "SELECT * FROM logs ORDER BY log_no DESC LIMIT 1";
-        try{
-
-            Statement line = dbLink.createStatement();
-            ResultSet queryRes = line.executeQuery(checkLog);
-            while(queryRes.next()) username =queryRes.getString("username");
-        }catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
     }
 
     public void loadGeneralTable(){
@@ -210,15 +187,10 @@ public class IncomeTracker {
     }
 
     public void removeIncome(){
-
+        if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
+        else if(categoricalTable.isVisible()) added=categoricalTable.getSelectionModel().getSelectedItem();
 
         try{
-
-            if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
-            else if(categoricalTable.isVisible()) added=categoricalTable.getSelectionModel().getSelectedItem();
-
-            System.out.println(added.getAmount());
-
             String delete = "DELETE FROM income WHERE date='"+added.getDatetime()+"' AND username='"+ username +"'";
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
@@ -235,8 +207,8 @@ public class IncomeTracker {
 
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
         try{
-            Statement readPesonalInfoStatement = dbLink.createStatement();
-            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            Statement readPersonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPersonalInfoStatement.executeQuery(readPersonalInfoUpdate);
             while(readPersonalInfoQuery.next()){
                 readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
             }
@@ -267,19 +239,70 @@ public class IncomeTracker {
         save.setVisible(true);
         edit.disableProperty().bind(Bindings.isNotEmpty(generalTable.getSelectionModel().getSelectedItems()));
 
-
         if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
         else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
 
     }
 
     public void save(){
+        String inc = newAmount.getText();
+        String categ = newCategory.getSelectionModel().getSelectedItem();
+        double amt = Double.parseDouble(inc);
+        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
 
+        /* 1. UPDATE the selected item from the database */
+        try{
+            String update = "UPDATE income SET amount="+amt+", category='"+categ+"' WHERE date='"+added.getDatetime()+"' AND username='"+ username +"'";
+            Statement updateThis = dbLink.createStatement();
+            updateThis.executeUpdate(update);
+            loadGeneralTable();
+            refreshCategory();
+        }catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        /* 2. UPDATE the budget/initial savings from the personal_info table */
+        String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
+        try{
+            Statement readPersonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPersonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            while(readPersonalInfoQuery.next()){
+                readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newBudgetPersonalInfo = readInitPersonal + (amt - added.getAmount()) ;
+        String writePersonalInfoUpdate = "UPDATE personal_info SET initialSavings= "+newBudgetPersonalInfo+" WHERE username='"+ username +"'";
+
+        try{
+            Statement writePersonalInfoStatement = dbLink.createStatement();
+            writePersonalInfoStatement.executeUpdate(writePersonalInfoUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+
+        /* UI feature for buttons */
         newCategory.setVisible(false);
         newAmount.setVisible(false);
         save.setVisible(false);
-        generalTable.getSelectionModel().clearSelection();
+
         edit.disableProperty().bind(Bindings.isEmpty(generalTable.getSelectionModel().getSelectedItems()));
+        if(generalTable.isVisible()) {
+            generalTable.getSelectionModel().clearSelection();
+            edit.disableProperty().bind(Bindings.isEmpty(generalTable.getSelectionModel().getSelectedItems()));
+        }
+        else if(categoricalTable.isVisible()){
+            categoricalTable.getSelectionModel().clearSelection();
+            edit.disableProperty().bind(Bindings.isEmpty(categoricalTable.getSelectionModel().getSelectedItems()));
+        }
 
     }
 

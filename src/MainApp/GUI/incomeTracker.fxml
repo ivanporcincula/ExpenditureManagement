@@ -71,7 +71,7 @@
        </HBox>
       <HBox layoutX="933.0" layoutY="682.0" prefHeight="31.0" prefWidth="333.0">
          <children>
-            <Button fx:id="save" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="SAVE" textFill="#a5fcea">
+            <Button fx:id="save" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="SAVE" textFill="#a5fcea">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

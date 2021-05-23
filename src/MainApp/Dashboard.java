@@ -361,7 +361,7 @@ public class Dashboard{
         //logout
         try {
             root = main.load();
-            Expenses sendUser = main.getController();
+            ExpenseTracker sendUser = main.getController();
             sendUser.initialize(username,customerName);
             Stage stage = (Stage) expensesTracker.getScene().getWindow();
             root.setOnMousePressed(e->{
