@@ -44,10 +44,12 @@ public class IncomeTracker {
     public Button allowance;
     public Button work;
     public Button edit;
+    public Button add;
 
     public ComboBox<String> newCategory;
     public TextField newAmount;
     public Button save;
+
 
     public Button dashboard;
     public Button incomeTracker;
@@ -215,7 +217,6 @@ public class IncomeTracker {
         }
 
         double readInitPersonal = 0, newBudgetPersonalInfo = 0;
-
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
         try{
             Statement readPersonalInfoStatement = dbLink.createStatement();
@@ -240,7 +241,6 @@ public class IncomeTracker {
             e.printStackTrace();
             e.getCause();
         }
-
     }
 
     public void editIncome(){
@@ -354,6 +354,37 @@ public class IncomeTracker {
                 closeMenu.setVisible(false);
             });
         });
+    }
+
+    public void income(){
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/incomeManager.fxml"));
+        Parent root;
+
+        try {
+            root = main.load();
+            Income sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) add.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /* BUTTONS FROM THE SIDE MENU */

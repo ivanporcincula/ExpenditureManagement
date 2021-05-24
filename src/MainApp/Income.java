@@ -81,7 +81,6 @@ public class Income {
             e.printStackTrace();
             e.getCause();
         }
-
         /*Reading and updating the budget left/initial savings*/
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
 
@@ -108,7 +107,6 @@ public class Income {
             e.printStackTrace();
             e.getCause();
         }
-
         amount.setText("");
     }
 
@@ -148,6 +146,8 @@ public class Income {
             });
         });
     }
+
+
 
     /* BUTTONS FROM THE SIDE MENU */
     public void dashboard() throws Exception {

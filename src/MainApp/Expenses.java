@@ -69,7 +69,6 @@ public class Expenses {
     }
 
     public void addExpense(){
-
         double readInitPersonal = 0, newBudgetPersonalInfo = 0;
 
         String inc = amount.getText();
@@ -111,7 +110,6 @@ public class Expenses {
             e.printStackTrace();
             e.getCause();
         }
-
         amount.setText("");
     }
 

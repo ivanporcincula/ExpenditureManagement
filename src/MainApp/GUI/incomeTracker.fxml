@@ -124,6 +124,11 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
          </children>
       </Pane>
+      <Button fx:id="add" layoutX="14.0" layoutY="683.0" mnemonicParsing="false" onMouseClicked="#income" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="ADD" textFill="#a5fcea">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
       <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />

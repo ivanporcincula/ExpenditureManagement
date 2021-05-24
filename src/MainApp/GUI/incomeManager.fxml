@@ -52,11 +52,6 @@
          </graphic>
         </Button>
       <ComboBox fx:id="category" layoutX="501.0" layoutY="386.0" prefHeight="70.0" prefWidth="277.0" promptText="Please select a category..." />
-        <Button layoutX="1138.0" layoutY="640.0" mnemonicParsing="false" style="-fx-background-color: ff64ce;" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
-            <font>
-                <Font name="Moon Light" size="20.0" />
-            </font>
-        </Button>
       <Pane fx:id="openMenu" prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
          <children>
             <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">

@@ -55,6 +55,7 @@ public class ExpenseTracker {
     public Button work;
     public Button miscellaneous;
     public Button edit;
+    public Button add;
 
     public ComboBox<String> newCategory;
     public TextField newAmount;
@@ -248,17 +249,13 @@ public class ExpenseTracker {
 
 
     public void removeExpense(){
+        if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
+        else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
 
         try{
-
-            if(generalTable.isVisible()) added = generalTable.getSelectionModel().getSelectedItem();
-            else if(categoricalTable.isVisible()) added = categoricalTable.getSelectionModel().getSelectedItem();
-
-
             String delete = "DELETE FROM expenses WHERE date='"+added.getDatetime()+"' AND username='"+ username +"'" ;
             Statement deleteThis = dbLink.createStatement();
             deleteThis.execute(delete);
-
             loadGeneralTable();
             refreshCategory();
 
@@ -266,8 +263,6 @@ public class ExpenseTracker {
             e.printStackTrace();
             e.getCause();
         }
-
-        //update the budget
 
         double readInitPersonal = 0, newBudgetPersonalInfo = 0;
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
@@ -295,7 +290,6 @@ public class ExpenseTracker {
             e.printStackTrace();
             e.getCause();
         }
-
     }
 
     public void editExpense(){
@@ -407,6 +401,37 @@ public class ExpenseTracker {
                 closeMenu.setVisible(false);
             });
         });
+    }
+
+    public void expense(){
+
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesManager.fxml"));
+        Parent root;
+
+        try {
+            root = main.load();
+            Expenses sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) add.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /* BUTTONS FROM THE SIDE MENU */

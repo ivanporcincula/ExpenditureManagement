@@ -133,9 +133,7 @@ public class Dashboard{
                 month_year = expensesSet.getString("Dates");
                 totalExpenses = expensesSet.getDouble("Total");
             }
-
             displayTotalExpenses.setText(roundOff.format(totalExpenses));
-
         }catch(Exception e){
             e.printStackTrace();
             e.getCause();
@@ -198,7 +196,8 @@ public class Dashboard{
             }
         }
         else{
-            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
+            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", " +
+                    "totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
             try{
                 Statement query = dbLink.createStatement();
                 query.executeUpdate(updateValues);
@@ -207,7 +206,6 @@ public class Dashboard{
                 e.getCause();
             }
         }
-
     }
 
     private boolean resetMonth(){
@@ -246,16 +244,17 @@ public class Dashboard{
     }
 
     public void saveNewGoal() throws ParseException {
+
         SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
+        DecimalFormat roundOff = new DecimalFormat("###0.00");
         Date current = new Date();
-        month_year = originalFormat.format(current);
+        month_year = originalFormat.format(current); // CURRENT DATE
 
         Date date = originalFormat.parse(month_year);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        DecimalFormat roundOff = new DecimalFormat("###0.00");
-
+        /* GET THE NUMBER OF DAYS AND WEEKS OF THE CURRENT MONTH */
         int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
         int count = 0;
@@ -269,9 +268,9 @@ public class Dashboard{
         displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
         displaySavingsDaily.setText(roundOff.format(savingsGoalDaily));
 
-
         String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+ username +"'";
 
+        /* CHECK WHETHER THE INFORMATION OF THE USER IN A SPECIFIC MONTH IN DASHBOARD TABLE ALREADY EXISTS */
         try{
             Statement dashboardStatement = dbLink.createStatement();
             ResultSet dashboardSet = dashboardStatement.executeQuery(dashboard);
@@ -284,6 +283,7 @@ public class Dashboard{
             e.getCause();
         }
 
+        /* IF-ELSE STATEMENT TO IDENTIFY WHETHER THE INFORMATION OF THE USER IN DASHBOARD TABLE ALREADY EXISTS */
         if (count == 0){
             String add = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
                     "VALUES ('"+ month_year +"','"+ username + "',"+(totalIncome - totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
@@ -294,7 +294,6 @@ public class Dashboard{
                 e.printStackTrace();
                 e.getCause();
             }
-
         }
         else{
             String updateValues = "UPDATE dashboard SET savingsGoalMonthly="+savingsGoalMonthly+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
@@ -314,8 +313,6 @@ public class Dashboard{
     }
 
     private void displayGoalsPeriodically() throws ParseException {
-
-
         int count = 0;
         DecimalFormat roundOff = new DecimalFormat("###0.00");
         SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
@@ -332,7 +329,6 @@ public class Dashboard{
             e.printStackTrace();
             e.getCause();
         }
-
 
         String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+ username +"'";
 
