@@ -186,7 +186,7 @@
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button layoutX="10.0" layoutY="82.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>

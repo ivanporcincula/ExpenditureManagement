@@ -537,7 +537,6 @@ public class Dashboard{
         FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/expensesTracker.fxml"));
         Parent root;
 
-        //logout
         try {
             root = main.load();
             ExpenseTracker sendUser = main.getController();
@@ -565,7 +564,32 @@ public class Dashboard{
 
     public void statisticalReport(){
 
+        FXMLLoader main = new FXMLLoader(getClass().getResource("GUI/statReport.fxml"));
+        Parent root;
 
+        try {
+            root = main.load();
+            StatisticalReport sendUser = main.getController();
+            sendUser.initialize(username,customerName);
+            Stage stage = (Stage) statisticalReport.getScene().getWindow();
+            root.setOnMousePressed(e->{
+                x = e.getSceneX();
+                y = e.getSceneY();
+            });
+
+            root.setOnMouseDragged(e->{
+                stage.setX(e.getScreenX()-x);
+                stage.setY(e.getScreenY()-y);
+            });
+            stage.setTitle("Monrec");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void logout(){
