@@ -162,9 +162,12 @@ public class Dashboard{
         }
         savingsProgress = totalIncome - totalExpenses;
         if(savingsProgress < 0){
-            savingsProgress = 0;
+            displaySavings.setText(roundOff.format(0));
         }
-        displaySavings.setText(roundOff.format(savingsProgress));
+        else{
+            displaySavings.setText(roundOff.format(savingsProgress));
+        }
+
     }
 
 
@@ -261,8 +264,8 @@ public class Dashboard{
 
         String monthlyGoalText = monthlyGoal.getText();
         savingsGoalMonthly = Double.parseDouble(monthlyGoalText);
-        savingsGoalWeekly = savingsGoalMonthly / weeks;
-        savingsGoalDaily = savingsGoalMonthly / days;
+        savingsGoalWeekly = (savingsGoalMonthly - (totalIncome - totalExpenses)) / weeks;
+        savingsGoalDaily = (savingsGoalMonthly - (totalIncome - totalExpenses)) / days;
 
         displaySavingsMonthly.setText(roundOff.format(savingsGoalMonthly));
         displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
@@ -352,8 +355,8 @@ public class Dashboard{
             int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
             int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
 
-            savingsGoalWeekly = savingsGoalMonthly / weeks;
-            savingsGoalDaily = savingsGoalMonthly / days;
+            savingsGoalWeekly = (savingsGoalMonthly - (totalIncome - totalExpenses)) / weeks;
+            savingsGoalDaily = (savingsGoalMonthly - (totalIncome - totalExpenses)) / days;
             displaySavingsMonthly.setText(roundOff.format(savingsGoalMonthly));
             displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
             displaySavingsDaily.setText(roundOff.format(savingsGoalDaily));
