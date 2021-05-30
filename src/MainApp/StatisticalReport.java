@@ -30,6 +30,20 @@ public class StatisticalReport {
     private double cumulativeBalance;
     private PieChart categoricalGraph;
 
+    public Button general1;
+    public Button allowance;
+    public Button work1;
+
+    public Button general2;
+    public Button food;
+    public Button transportation;
+    public Button grocery;
+    public Button health;
+    public Button education;
+    public Button utilities;
+    public Button work2;
+    public Button miscellaneous;
+
     public Button dashboard;
     public Button incomeTracker;
     public Button expensesTracker;
