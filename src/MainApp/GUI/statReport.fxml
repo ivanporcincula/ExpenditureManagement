@@ -177,7 +177,307 @@
          </image>
       </ImageView>
       <PieChart layoutX="523.0" layoutY="520.0" prefHeight="186.0" prefWidth="233.0" title="EXPENSES DISTRUBUTION" visible="false" />
-      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" visible="false">
+      <HBox fx:id="a" layoutY="153.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
+         <children>
+            <Button layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="1280.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#comprehensiveView" prefHeight="34.0" prefWidth="640.0" text="COMPREHENSIVE VIEW" textFill="#ff64ce">
+               <font>
+                  <Font name="Moon Light" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="437.0" layoutY="10.0" maxHeight="56.0" maxWidth="1280.0" minHeight="25.0" minWidth="421.0" mnemonicParsing="false" onMouseClicked="#graphRanking" prefHeight="31.0" prefWidth="640.0" text="GRAPH &amp; RANKING" textFill="#ff64ce">
+               <font>
+                  <Font name="Moon Light" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <HBox fx:id="incomeOrExpenses" layoutY="187.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
+         <children>
+            <Button maxHeight="44.0" maxWidth="699.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#all" prefHeight="31.0" prefWidth="640.0" text="ALL" textFill="#ff64ce">
+               <font>
+                  <Font name="Moon Light" size="15.0" />
+               </font>
+            </Button>
+            <Button maxHeight="44.0" maxWidth="699.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#income" prefHeight="31.0" prefWidth="640.0" text="INCOME" textFill="#ff64ce">
+               <font>
+                  <Font name="Moon Light" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="689.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#expenses" prefHeight="31.0" prefWidth="640.0" text="EXPENSES" textFill="#ff64ce">
+               <font>
+                  <Font name="Moon Light" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Pane fx:id="generalPane" layoutX="306.0" layoutY="261.0" prefHeight="438.0" prefWidth="773.0">
+         <children>
+            <Text fx:id="displayMonthYear" layoutX="84.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
+               <font>
+                  <Font size="75.0" />
+               </font>
+            </Text>
+            <Text layoutX="191.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INCOME" wrappingWidth="153.0">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="361.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayTotalIncome" fill="#ff64ce" layoutX="390.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+            <Text layoutX="175.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EXPENSES" wrappingWidth="233.0">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="361.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayTotalExpenses" fill="#ff64ce" layoutX="390.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+            <Text layoutX="175.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PERIOD BALANCE" textAlignment="CENTER" wrappingWidth="185.537109375">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="361.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayPeriodBalance" fill="#ff64ce" layoutX="390.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+            <Text layoutX="175.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUMULATIVE BALANCE" textAlignment="CENTER" wrappingWidth="185.537109375">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="361.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayCumulativeBalance" fill="#ff64ce" layoutX="390.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="incomePane" layoutX="298.0" layoutY="235.0" prefHeight="438.0" prefWidth="773.0" visible="false">
+         <children>
+            <Text fx:id="displayMonthYear1" layoutX="77.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
+               <font>
+                  <Font size="75.0" />
+               </font>
+            </Text>
+            <Text layoutX="88.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ALLOWANCE TOTAL" wrappingWidth="342.9999999999999">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="416.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayAllowance" fill="#ff64ce" layoutX="445.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+            <Text layoutX="190.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK TOTAL" wrappingWidth="214.9999999999999">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="416.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayWork1" fill="#ff64ce" layoutX="445.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+            <Text layoutX="99.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUMULATIVE TOTAL" textAlignment="CENTER" wrappingWidth="331.537109375">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="416.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayTotalInc" fill="#ff64ce" layoutX="445.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font name="Moon Light" size="40.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="expensesPane" layoutX="298.0" layoutY="235.0" prefHeight="478.0" prefWidth="773.0" visible="false">
+         <children>
+            <Text fx:id="displayMonthYear2" layoutX="77.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
+               <font>
+                  <Font size="75.0" />
+               </font>
+            </Text>
+            <Text layoutX="202.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FOOD TOTAL" wrappingWidth="171.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayFood" fill="#ff64ce" layoutX="416.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="37.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TRANSPORTATION TOTAL" wrappingWidth="342.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayTransportation" fill="#ff64ce" layoutX="416.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="156.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GROCERY TOTAL" wrappingWidth="222.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayGrocery" fill="#ff64ce" layoutX="416.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="176.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HEALTH TOTAL" wrappingWidth="197.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayHealth" fill="#ff64ce" layoutX="416.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="123.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDUCATION TOTAL" wrappingWidth="256.0">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayEducation" fill="#ff64ce" layoutX="416.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="164.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UTILITIES TOTAL" wrappingWidth="214.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayUtilities" fill="#ff64ce" layoutX="416.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="197.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK TOTAL" wrappingWidth="214.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayWork2" fill="#ff64ce" layoutX="416.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="59.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MISCELLANEOUS TOTAL" wrappingWidth="318.0">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayMisc" fill="#ff64ce" layoutX="416.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="108.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUMULATIVE TOTAL" wrappingWidth="268.0">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+            <Text fx:id="displayTotalExp" fill="#ff64ce" layoutX="416.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />
             <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
@@ -211,166 +511,5 @@
             </Button>
          </children>
       </VBox>
-      <HBox fx:id="a" layoutY="153.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
-         <children>
-            <Button fx:id="comprehensive" layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="1280.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="640.0" text="COMPREHENSIVE VIEW" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="graphis" layoutX="437.0" layoutY="10.0" maxHeight="56.0" maxWidth="1280.0" minHeight="25.0" minWidth="421.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="640.0" text="GRAPH &amp; RANKING" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-      <HBox layoutY="187.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
-         <children>
-            <Button fx:id="income" maxHeight="44.0" maxWidth="699.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="640.0" text="INCOME" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="expenses" layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="689.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="640.0" text="EXPENSES" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-      <HBox layoutY="220.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
-         <children>
-            <Button fx:id="general1" maxHeight="44.0" maxWidth="427.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="427.0" text="GENERAL" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="allowance" maxHeight="44.0" maxWidth="699.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="640.0" text="ALLOWANCE" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="work1" layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="689.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="640.0" text="WORK" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-      <HBox layoutY="221.0" maxHeight="53.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="28.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css" visible="false">
-         <children>
-            <Button fx:id="general2" maxHeight="47.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="142.0" text="GENERAL" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="food" layoutX="10.0" layoutY="10.0" maxHeight="41.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="142.0" text="FOOD" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="utilities" layoutX="437.0" layoutY="10.0" maxHeight="52.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="142.0" text="UTILITIES" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="grocery" layoutX="522.0" layoutY="10.0" maxHeight="34.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="142.0" text="GROCERY" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="health" layoutX="778.0" layoutY="10.0" maxHeight="36.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="142.0" text="HEALTH" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="education" layoutX="650.0" layoutY="10.0" maxHeight="52.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="142.0" text="EDUCATION" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="work2" layoutX="810.0" layoutY="10.0" maxHeight="44.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="142.0" text="WORK" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="13.7" />
-               </font>
-            </Button>
-            <Button fx:id="miscellaneous" layoutX="970.0" layoutY="10.0" maxHeight="36.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="142.0" text="MISCELLANEOUS" textFill="#ff64ce">
-               <font>
-                  <Font name="Moon Light" size="13.7" />
-               </font>
-            </Button>
-            <Button fx:id="transportation" maxHeight="39.0" maxWidth="147.0" minHeight="25.0" minWidth="130.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="146.0" text="TRANSPORTATION" textFill="#ff64ce">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-      <Text layoutX="440.0" layoutY="629.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUMULATIVE BALANCE" textAlignment="CENTER" wrappingWidth="185.537109375">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="456.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INCOME" wrappingWidth="153.0">
-         <font>
-            <Font size="39.0" />
-         </font>
-      </Text>
-      <Text layoutX="441.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EXPENSES" wrappingWidth="233.0">
-         <font>
-            <Font size="39.0" />
-         </font>
-      </Text>
-      <Text fx:id="displayTotalIncome" fill="#ff64ce" layoutX="670.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="640.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Text>
-      <Text fx:id="displayTotalExpenses" fill="#ff64ce" layoutX="670.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="640.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Text>
-      <Text fx:id="dIsplayTotalBudget" fill="#ff64ce" layoutX="670.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="640.0" layoutY="654.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Text>
-      <Text layoutX="363.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
-         <font>
-            <Font size="75.0" />
-         </font>
-      </Text>
-      <Text layoutX="440.0" layoutY="531.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PERIOD BALANCE" textAlignment="CENTER" wrappingWidth="185.537109375">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Text>
-      <Text fx:id="displayPeriodBalance" fill="#ff64ce" layoutX="669.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="639.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Text>
     </children>
 </Pane>

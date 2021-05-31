@@ -10,10 +10,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Register {
     private double x;
@@ -75,7 +74,7 @@ public class Register {
     }
 
     public void register(){
-        /* Get the text that the user typed*/
+        /* Get the text that the user typed */
         String user = username.getText();
         String pass = password.getText();
         String pName = personalName.getText();
@@ -121,6 +120,26 @@ public class Register {
                 password.setText("");
                 initialSavings.setText("");
                 personalName.setText("");
+
+
+                /* TO INITIALIZE THE INCOME AND EXPENSES TABLE AND STAT REPORT*/
+                SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+                Date date = new Date();
+                String newDashboard = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
+                        "VALUES ('"+formatter.format(date)+"','"+ user +"',"+0+","+0+","+0+","+0+")";
+                String newStatReport = "INSERT INTO statistical_report(month_year, username, allowance, work1, food, transportation, grocery,health, education, utilities, work2, miscellaneous) " +
+                        "VALUES ('"+formatter.format(date)+"','"+ user +"',"+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+")";
+
+                try{
+                    Statement newStatement = dbLink.createStatement();
+                    Statement new1Statement = dbLink.createStatement();
+                    newStatement.executeUpdate(newDashboard);
+                    new1Statement.executeUpdate(newStatReport);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    e.getCause();
+                }
             }
         }
         catch(Exception e){
@@ -128,6 +147,7 @@ public class Register {
             e.getCause();
         }
     }
+
 
     /* Method to check whether if one field is empty. if one field is empty then the login button is disabled */
     public void infoFilled(){

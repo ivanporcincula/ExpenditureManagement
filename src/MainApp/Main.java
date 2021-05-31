@@ -23,6 +23,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+        Date date = new Date();
+        System.out.println(formatter.format(date));
+
         Parent root = FXMLLoader.load(getClass().getResource("GUI/login.fxml"));
 
         root.setOnMousePressed(e->{

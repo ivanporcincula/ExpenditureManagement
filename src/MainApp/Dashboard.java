@@ -108,8 +108,8 @@ public class Dashboard{
         DecimalFormat roundOff = new DecimalFormat("###0.00");
 
         try{
-            Statement readPesonalInfoStatement = dbLink.createStatement();
-            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            Statement readPersonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPersonalInfoStatement.executeQuery(readPersonalInfoUpdate);
 
             while(readPersonalInfoQuery.next()){
                 readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
@@ -173,43 +173,34 @@ public class Dashboard{
 
     private void updatedDashboardDb(){
 
-        String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+ username +"'";
-        int count=0;
+        String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", " +
+                "totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
         try{
-            Statement dashboardStatement = dbLink.createStatement();
-            ResultSet dashboardSet = dashboardStatement.executeQuery(dashboard);
-            while(dashboardSet.next()){
-                count++;
-            }
-
-        }catch(Exception e){
+            Statement query = dbLink.createStatement();
+            query.executeUpdate(updateValues);
+        }catch (Exception e){
             e.printStackTrace();
             e.getCause();
         }
-
-        if(count==0 && month_year != null){
-            String update = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
-                    "VALUES ('"+ month_year +"','"+ username + "',"+(totalIncome - totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
-            try{
-                Statement query = dbLink.createStatement();
-                query.executeUpdate(update);
-            }catch (Exception e){
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
-        else{
-            String updateValues = "UPDATE dashboard SET savingsProgress="+(totalIncome - totalExpenses)+", totalExpenses="+totalExpenses+", " +
-                    "totalIncome="+totalIncome+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
-            try{
-                Statement query = dbLink.createStatement();
-                query.executeUpdate(updateValues);
-            }catch (Exception e){
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
     }
+
+    /*private void initNewMonth() throws Exception{
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+        Date date = new Date();
+        int count = 0;
+
+        String checkTable = "SELECT * FROM statistical_report WHERE month_year='"+formatter.format(date)+"'";
+        Statement checkQuery = dbLink.createStatement();
+        ResultSet checking = checkQuery.executeQuery(checkTable);
+        while(checking.next()){
+            count++;
+        }
+        if(count == 0){
+            String newMonth = "INSERT INTO dashboard(month_year, username, allowance, work1, food, transportation, grocery,health, education, utilities, work2, miscellaneous) " +
+                    "VALUES ('"+formatter.format(date)+"','"+ username +"',"+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+")";
+        }
+
+    }*/
 
     private boolean resetMonth(){
 
@@ -271,44 +262,14 @@ public class Dashboard{
         displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
         displaySavingsDaily.setText(roundOff.format(savingsGoalDaily));
 
-        String dashboard = "SELECT * FROM dashboard WHERE month_year='"+month_year+"' AND username='"+ username +"'";
-
-        /* CHECK WHETHER THE INFORMATION OF THE USER IN A SPECIFIC MONTH IN DASHBOARD TABLE ALREADY EXISTS */
+        String updateValues = "UPDATE dashboard SET savingsGoalMonthly="+savingsGoalMonthly+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
         try{
-            Statement dashboardStatement = dbLink.createStatement();
-            ResultSet dashboardSet = dashboardStatement.executeQuery(dashboard);
-            while(dashboardSet.next()){
-                count++;
-            }
-
-        }catch(Exception e){
+            Statement query = dbLink.createStatement();
+            query.executeUpdate(updateValues);
+        }catch (Exception e){
             e.printStackTrace();
             e.getCause();
         }
-
-        /* IF-ELSE STATEMENT TO IDENTIFY WHETHER THE INFORMATION OF THE USER IN DASHBOARD TABLE ALREADY EXISTS */
-        if (count == 0){
-            String add = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
-                    "VALUES ('"+ month_year +"','"+ username + "',"+(totalIncome - totalExpenses)+","+totalExpenses+","+totalIncome+","+savingsGoalMonthly+")";
-            try{
-                Statement query = dbLink.createStatement();
-                query.executeUpdate(add);
-            }catch (Exception e){
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
-        else{
-            String updateValues = "UPDATE dashboard SET savingsGoalMonthly="+savingsGoalMonthly+" WHERE month_year='"+month_year+"' AND username='"+ username +"'";
-            try{
-                Statement query = dbLink.createStatement();
-                query.executeUpdate(updateValues);
-            }catch (Exception e){
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
-
 
         monthlyGoal.setVisible(false);
         save.setVisible(false);
