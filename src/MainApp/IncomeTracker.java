@@ -18,6 +18,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class IncomeTracker {
@@ -241,6 +242,7 @@ public class IncomeTracker {
             e.printStackTrace();
             e.getCause();
         }
+
     }
 
     public void editIncome(){

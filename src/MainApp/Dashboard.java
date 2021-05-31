@@ -86,8 +86,7 @@ public class Dashboard{
         sideMenu();
 
         /*Every money displayed on the dashboard is reset to 0 if a new month emerges, except for the budget*/
-        if(resetMonth()) reset();
-
+        initNewMonth();
         displayTotalExpenses();
         displayTotalIncome();
         updatedDashboardDb();
@@ -184,7 +183,7 @@ public class Dashboard{
         }
     }
 
-    /*private void initNewMonth() throws Exception{
+    private void initNewMonth() throws Exception{
         SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
         Date date = new Date();
         int count = 0;
@@ -196,37 +195,10 @@ public class Dashboard{
             count++;
         }
         if(count == 0){
-            String newMonth = "INSERT INTO dashboard(month_year, username, allowance, work1, food, transportation, grocery,health, education, utilities, work2, miscellaneous) " +
-                    "VALUES ('"+formatter.format(date)+"','"+ username +"',"+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+")";
-        }
-
-    }*/
-
-    private boolean resetMonth(){
-
-        Calendar compare = Calendar.getInstance();
-        DateFormat dateFormat = new SimpleDateFormat("MM");
-        String today = dateFormat.format(compare.getTime());
-        compare.add(Calendar.DATE, -1);
-        String yesterday = dateFormat.format(compare.getTime());
-
-        return !today.equals(yesterday);
-
-    }
-
-    private void reset(){
-
-        String statement = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','None', 0)";
-        String statement1 = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+ username +"','None', 0)";
-
-        try{
-            Statement line = dbLink.createStatement();
-            Statement line1 = dbLink.createStatement();
-            line.executeUpdate(statement);
-            line1.executeUpdate(statement1);
-        }catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
+            String newMonthRow = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
+                        "VALUES ('"+formatter.format(date)+"','"+ username +"',"+0+","+0+","+0+","+0+")";
+            Statement newQuery = dbLink.createStatement();
+            newQuery.executeUpdate(newMonthRow);
         }
 
     }
@@ -255,8 +227,8 @@ public class Dashboard{
 
         String monthlyGoalText = monthlyGoal.getText();
         savingsGoalMonthly = Double.parseDouble(monthlyGoalText);
-        savingsGoalWeekly = (savingsGoalMonthly - (totalIncome - totalExpenses)) / weeks;
-        savingsGoalDaily = (savingsGoalMonthly - (totalIncome - totalExpenses)) / days;
+        savingsGoalWeekly = (savingsGoalMonthly) / weeks;
+        savingsGoalDaily = (savingsGoalMonthly) / days;
 
         displaySavingsMonthly.setText(roundOff.format(savingsGoalMonthly));
         displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
@@ -316,8 +288,8 @@ public class Dashboard{
             int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
             int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
 
-            savingsGoalWeekly = (savingsGoalMonthly - (totalIncome - totalExpenses)) / weeks;
-            savingsGoalDaily = (savingsGoalMonthly - (totalIncome - totalExpenses)) / days;
+            savingsGoalWeekly = (savingsGoalMonthly) / weeks;
+            savingsGoalDaily = (savingsGoalMonthly) / days;
             displaySavingsMonthly.setText(roundOff.format(savingsGoalMonthly));
             displaySavingsWeekly.setText(roundOff.format(savingsGoalWeekly));
             displaySavingsDaily.setText(roundOff.format(savingsGoalDaily));

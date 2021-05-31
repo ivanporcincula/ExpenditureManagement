@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class ExpenseTracker {
@@ -267,8 +269,8 @@ public class ExpenseTracker {
         double readInitPersonal = 0, newBudgetPersonalInfo = 0;
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
         try{
-            Statement readPesonalInfoStatement = dbLink.createStatement();
-            ResultSet readPersonalInfoQuery = readPesonalInfoStatement.executeQuery(readPersonalInfoUpdate);
+            Statement readPersonalInfoStatement = dbLink.createStatement();
+            ResultSet readPersonalInfoQuery = readPersonalInfoStatement.executeQuery(readPersonalInfoUpdate);
 
             while(readPersonalInfoQuery.next()){
                 readInitPersonal = readPersonalInfoQuery.getDouble("initialSavings");
@@ -290,6 +292,7 @@ public class ExpenseTracker {
             e.printStackTrace();
             e.getCause();
         }
+
     }
 
     public void editExpense(){
@@ -347,6 +350,7 @@ public class ExpenseTracker {
             e.printStackTrace();
             e.getCause();
         }
+
 
 
         /* UI feature for buttons */

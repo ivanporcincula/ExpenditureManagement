@@ -19,11 +19,26 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
-        <Text layoutX="575.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
+      <Pane fx:id="graphRankings" layoutX="7.0" layoutY="187.0" prefHeight="530.0" prefWidth="1267.0" visible="false">
+         <children>
+            <Text fx:id="displayMonthYearGraph" layoutX="379.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
+               <font>
+                  <Font size="75.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="888.0" layoutY="39.0" onMouseClicked="#nextGraph" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@right%20arrow%20button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="317.0" layoutY="39.0" onMouseClicked="#previousGraph" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@left%20arrow%20button.png" />
+               </image>
+            </ImageView>
+            <PieChart fx:id="categoricalGraph" layoutX="8.0" layoutY="117.0" prefHeight="413.0" prefWidth="520.0" title="EXPENSES DISTRUBUTION" />
+         </children>
+      </Pane>
       <Pane fx:id="openMenu" prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
          <children>
             <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
@@ -56,127 +71,6 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
          </children>
       </Pane>
-        <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="226.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-                <Image url="@icon-income.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="150.0" fitWidth="40.0" layoutX="684.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-                <Image url="@icon-expenses.png" />
-            </image>
-        </ImageView>
-        <Text layoutX="331.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Savings" textAlignment="CENTER" visible="false">
-            <font>
-                <Font name="Moon Light" size="40.0" />
-            </font>
-        </Text>
-        <Text layoutX="294.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="daily" textAlignment="CENTER" visible="false">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
-        <Text fill="#ff64ce" layoutX="453.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
-        <Text layoutX="294.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="weekly" textAlignment="CENTER" visible="false">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
-        <Text fill="#ff64ce" layoutX="453.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
-        <Text layoutX="294.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monthly" textAlignment="CENTER" visible="false">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
-        <Text fill="#ff64ce" layoutX="453.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-            <font>
-                <Font name="Moon Light" size="30.0" />
-            </font>
-        </Text>
-      <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="226.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@icon-income.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="226.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@icon-income.png" />
-         </image>
-      </ImageView>
-      <Text layoutX="294.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="453.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="769.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EXPENSES" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Moon Light" size="40.0" />
-         </font>
-      </Text>
-      <Text layoutX="741.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="daily" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="900.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="741.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="weekly" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="900.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="741.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monthly" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="900.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text layoutX="741.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <Text fill="#ff64ce" layoutX="900.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$XXXXX" visible="false">
-         <font>
-            <Font name="Moon Light" size="30.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="150.0" fitWidth="40.0" layoutX="684.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@icon-expenses.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="40.0" layoutX="684.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@icon-expenses.png" />
-         </image>
-      </ImageView>
-      <PieChart layoutX="523.0" layoutY="520.0" prefHeight="186.0" prefWidth="233.0" title="EXPENSES DISTRUBUTION" visible="false" />
       <HBox fx:id="a" layoutY="153.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
          <children>
             <Button layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="1280.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#comprehensiveView" prefHeight="34.0" prefWidth="640.0" text="COMPREHENSIVE VIEW" textFill="#ff64ce">
@@ -191,7 +85,7 @@
             </Button>
          </children>
       </HBox>
-      <HBox fx:id="incomeOrExpenses" layoutY="187.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
+      <HBox fx:id="incomeOrExpenses" layoutY="187.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css" visible="false">
          <children>
             <Button maxHeight="44.0" maxWidth="699.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#all" prefHeight="31.0" prefWidth="640.0" text="ALL" textFill="#ff64ce">
                <font>
@@ -210,7 +104,7 @@
             </Button>
          </children>
       </HBox>
-      <Pane fx:id="generalPane" layoutX="306.0" layoutY="261.0" prefHeight="438.0" prefWidth="773.0">
+      <Pane fx:id="generalPane" layoutX="306.0" layoutY="261.0" prefHeight="438.0" prefWidth="773.0" visible="false">
          <children>
             <Text fx:id="displayMonthYear" layoutX="84.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
                <font>
@@ -277,6 +171,16 @@
                   <Font name="Moon Light" size="40.0" />
                </font>
             </Text>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="14.0" layoutY="25.0" onMouseClicked="#previousAll" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@left%20arrow%20button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="593.0" layoutY="25.0" onMouseClicked="#nextAll" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@right%20arrow%20button.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <Pane fx:id="incomePane" layoutX="298.0" layoutY="235.0" prefHeight="438.0" prefWidth="773.0" visible="false">
@@ -331,6 +235,16 @@
                   <Font name="Moon Light" size="40.0" />
                </font>
             </Text>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="14.0" layoutY="25.0" onMouseClicked="#previousIncome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@left%20arrow%20button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="593.0" layoutY="25.0" onMouseClicked="#nextIncome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@right%20arrow%20button.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <Pane fx:id="expensesPane" layoutX="298.0" layoutY="235.0" prefHeight="478.0" prefWidth="773.0" visible="false">
@@ -340,141 +254,151 @@
                   <Font size="75.0" />
                </font>
             </Text>
-            <Text layoutX="202.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FOOD TOTAL" wrappingWidth="171.9999999999999">
+            <Text layoutX="202.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FOOD TOTAL" wrappingWidth="171.9999999999999">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayFood" fill="#ff64ce" layoutX="416.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayFood" fill="#ff64ce" layoutX="416.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="37.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TRANSPORTATION TOTAL" wrappingWidth="342.9999999999999">
+            <Text layoutX="37.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TRANSPORTATION TOTAL" wrappingWidth="342.9999999999999">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayTransportation" fill="#ff64ce" layoutX="416.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayTransportation" fill="#ff64ce" layoutX="416.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="156.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GROCERY TOTAL" wrappingWidth="222.9999999999999">
+            <Text layoutX="156.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GROCERY TOTAL" wrappingWidth="222.9999999999999">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayGrocery" fill="#ff64ce" layoutX="416.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayGrocery" fill="#ff64ce" layoutX="416.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="176.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HEALTH TOTAL" wrappingWidth="197.9999999999999">
+            <Text layoutX="176.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HEALTH TOTAL" wrappingWidth="197.9999999999999">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayHealth" fill="#ff64ce" layoutX="416.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayHealth" fill="#ff64ce" layoutX="416.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="123.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDUCATION TOTAL" wrappingWidth="256.0">
+            <Text layoutX="123.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDUCATION TOTAL" wrappingWidth="256.0">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayEducation" fill="#ff64ce" layoutX="416.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayEducation" fill="#ff64ce" layoutX="416.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="164.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UTILITIES TOTAL" wrappingWidth="214.9999999999999">
+            <Text layoutX="164.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UTILITIES TOTAL" wrappingWidth="214.9999999999999">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayUtilities" fill="#ff64ce" layoutX="416.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayUtilities" fill="#ff64ce" layoutX="416.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="197.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK TOTAL" wrappingWidth="214.9999999999999">
+            <Text layoutX="197.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK TOTAL" wrappingWidth="214.9999999999999">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayWork2" fill="#ff64ce" layoutX="416.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayWork2" fill="#ff64ce" layoutX="416.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="59.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MISCELLANEOUS TOTAL" wrappingWidth="318.0">
+            <Text layoutX="59.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MISCELLANEOUS TOTAL" wrappingWidth="318.0">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayMisc" fill="#ff64ce" layoutX="416.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayMisc" fill="#ff64ce" layoutX="416.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text layoutX="108.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUMULATIVE TOTAL" wrappingWidth="268.0">
+            <Text layoutX="108.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUMULATIVE TOTAL" wrappingWidth="268.0">
                <font>
                   <Font size="29.0" />
                </font>
             </Text>
-            <Text fill="#ff64ce" layoutX="387.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
+            <Text fill="#ff64ce" layoutX="387.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="₱" wrappingWidth="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Text fx:id="displayTotalExp" fill="#ff64ce" layoutX="416.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
+            <Text fx:id="displayTotalExp" fill="#ff64ce" layoutX="416.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" wrappingWidth="343.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="12.0" layoutY="23.0" onMouseClicked="#previousExpenses" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@left%20arrow%20button.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="62.0" fitWidth="62.0" layoutX="591.0" layoutY="23.0" onMouseClicked="#nextExpenses" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@right%20arrow%20button.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">

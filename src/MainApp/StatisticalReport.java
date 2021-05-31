@@ -1,6 +1,8 @@
 package MainApp;
 
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,10 +32,21 @@ public class StatisticalReport {
 
     private double expensesSummary;
     private double incomeSummary;
-    private PieChart categoricalGraph;
+    private double totalAllowance;
+    private double totalWork1;
+    private double totalFood;
+    private double totalTransportation;
+    private double totalGrocery;
+    private double totalHealth;
+    private double totalEducation;
+    private double totalUtilities;
+    private double totalWork2;
+    private double totalMiscellaneous;
+
     private ResultSet all;
     private ResultSet incOrExp;
     private String month_year;
+
 
     public Button dashboard;
     public Button incomeTracker;
@@ -41,7 +54,11 @@ public class StatisticalReport {
     public Button statisticalReport;
     public Button logout;
 
+    public PieChart categoricalGraph;
+    public Text displayMonthYearGraph;
+
     public HBox incomeOrExpenses;
+    public Pane graphRankings;
     public Pane generalPane;
     public Pane incomePane;
     public Pane expensesPane;
@@ -98,9 +115,12 @@ public class StatisticalReport {
         generalPane.setVisible(false);
         incomePane.setVisible(false);
         expensesPane.setVisible(false);
+        graphRankings.setVisible(false);
+
         initNewMonth();
-        updateCategoryIncome();
-        updateCategoryExpenses();
+        readCategoryIncome();
+        readCategoryExpenses();
+        updateStatReportDb();
 
 
     }
@@ -144,16 +164,111 @@ public class StatisticalReport {
 
     public void comprehensiveView(){
         incomeOrExpenses.setVisible(true);
+        graphRankings.setVisible(false);
     }
 
-    public void graphRanking(){
+    public void graphRanking() throws SQLException {
         incomeOrExpenses.setVisible(false);
         generalPane.setVisible(false);
         incomePane.setVisible(false);
         expensesPane.setVisible(false);
+        graphRankings.setVisible(true);
+
+        double food, transportation, grocery, health, education, utilities, work,miscellaneous;
+
+        String query = "SELECT * FROM statistical_report WHERE username='"+username+"'";
+        Statement statement = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        incOrExp = statement.executeQuery(query);
+
+        incOrExp.first();
+        month_year = incOrExp.getString("month_year");
+        food = incOrExp.getDouble("food");
+        transportation = incOrExp.getDouble("transportation");
+        grocery = incOrExp.getDouble("grocery");
+        health = incOrExp.getDouble("health");
+        education = incOrExp.getDouble("education");
+        utilities = incOrExp.getDouble("utilities");
+        work = incOrExp.getDouble("work2");
+        miscellaneous = incOrExp.getDouble("miscellaneous");
+
+        ObservableList<PieChart.Data> list = FXCollections.observableArrayList(
+                new PieChart.Data("Food", food),
+                new PieChart.Data("Transportation",transportation),
+                new PieChart.Data("Grocery",grocery),
+                new PieChart.Data("Health",health),
+                new PieChart.Data("Education", education),
+                new PieChart.Data("Utilities", utilities),
+                new PieChart.Data("Work", work),
+                new PieChart.Data("Miscellaneous",miscellaneous));
+
+        displayMonthYearGraph.setText(month_year);
+        categoricalGraph.setData(list);
     }
 
-    public void all() throws SQLException {
+    public void nextGraph() throws SQLException {
+
+        double food, transportation, grocery, health, education, utilities, work,miscellaneous;
+
+        String query = "SELECT * FROM statistical_report WHERE username='"+username+"'";
+        Statement statement = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        incOrExp = statement.executeQuery(query);
+
+        incOrExp.next();
+        month_year = incOrExp.getString("month_year");
+        food = incOrExp.getDouble("food");
+        transportation = incOrExp.getDouble("transportation");
+        grocery = incOrExp.getDouble("grocery");
+        health = incOrExp.getDouble("health");
+        education = incOrExp.getDouble("education");
+        utilities = incOrExp.getDouble("utilities");
+        work = incOrExp.getDouble("work2");
+        miscellaneous = incOrExp.getDouble("miscellaneous");
+
+        ObservableList<PieChart.Data> list = FXCollections.observableArrayList(
+                new PieChart.Data("Food", food),
+                new PieChart.Data("Transportation",transportation),
+                new PieChart.Data("Grocery",grocery),
+                new PieChart.Data("Health",health),
+                new PieChart.Data("Education", education),
+                new PieChart.Data("Utilities", utilities),
+                new PieChart.Data("Work", work),
+                new PieChart.Data("Miscellaneous",miscellaneous));
+        categoricalGraph.setData(list);
+
+    }
+    public void previousGraph() throws SQLException{
+
+        double food, transportation, grocery, health, education, utilities, work,miscellaneous;
+
+        String query = "SELECT * FROM statistical_report WHERE username='"+username+"'";
+        Statement statement = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        incOrExp = statement.executeQuery(query);
+
+        incOrExp.previous();
+        month_year = incOrExp.getString("month_year");
+        food = incOrExp.getDouble("food");
+        transportation = incOrExp.getDouble("transportation");
+        grocery = incOrExp.getDouble("grocery");
+        health = incOrExp.getDouble("health");
+        education = incOrExp.getDouble("education");
+        utilities = incOrExp.getDouble("utilities");
+        work = incOrExp.getDouble("work2");
+        miscellaneous = incOrExp.getDouble("miscellaneous");
+
+        ObservableList<PieChart.Data> list = FXCollections.observableArrayList(
+                new PieChart.Data("Food", food),
+                new PieChart.Data("Transportation",transportation),
+                new PieChart.Data("Grocery",grocery),
+                new PieChart.Data("Health",health),
+                new PieChart.Data("Education", education),
+                new PieChart.Data("Utilities", utilities),
+                new PieChart.Data("Work", work),
+                new PieChart.Data("Miscellaneous",miscellaneous));
+        categoricalGraph.setData(list);
+
+    }
+
+    public void all() throws Exception {
         incomePane.setVisible(false);
         expensesPane.setVisible(false);
         generalPane.setVisible(true);
@@ -376,21 +491,16 @@ public class StatisticalReport {
     }
 
 
-    private void updateCategoryIncome() throws Exception{
-
-        double total;
-        String date;
+    private void readCategoryIncome() throws Exception{
 
         String extractWorkIncome = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM income WHERE username='"+ username +"' AND category='Work' GROUP BY MONTH(date), YEAR(date)";
         Statement workIncomeStatement = dbLink.createStatement();
         ResultSet workSet = workIncomeStatement.executeQuery(extractWorkIncome);
 
         while(workSet.next()){
-            total = workSet.getDouble("Total");
-            date = workSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET work1='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalWork1 = workSet.getDouble("Total");
+            month_year = workSet.getString("Dates");
+
         }
 
         String extractAllowanceIncome = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM income WHERE username='"+ username +"' AND category='Allowance' GROUP BY MONTH(date), YEAR(date)";
@@ -398,31 +508,23 @@ public class StatisticalReport {
         ResultSet allowanceSet = allowanceIncomeStatement.executeQuery(extractAllowanceIncome);
 
         while(allowanceSet.next()){
-            total = workSet.getDouble("Total");
-            date = workSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET allowance='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalAllowance = workSet.getDouble("Total");
+            month_year = workSet.getString("Dates");
+
         }
 
 
     }
-    private void updateCategoryExpenses() throws Exception{
-
-        double total;
-        String date;
-
+    private void readCategoryExpenses() throws Exception{
         /* FOOD */
         String extractFoodExpenses = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM expenses WHERE username='"+ username +"' AND category='Food' GROUP BY MONTH(date), YEAR(date)";
         Statement foodExpensesStatement = dbLink.createStatement();
         ResultSet foodSet = foodExpensesStatement.executeQuery(extractFoodExpenses);
 
         while(foodSet.next()){
-            total = foodSet.getDouble("Total");
-            date = foodSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET food='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalFood = foodSet.getDouble("Total");
+            month_year = foodSet.getString("Dates");
+
         }
 
         /* GROCERY */
@@ -432,11 +534,8 @@ public class StatisticalReport {
         ResultSet grocerySet = groceryExpensesStatement.executeQuery(extractGroceryExpenses);
 
         while(grocerySet.next()){
-            total = grocerySet.getDouble("Total");
-            date = grocerySet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET grocery='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalGrocery = grocerySet.getDouble("Total");
+            month_year = grocerySet.getString("Dates");
         }
 
         /* HEALTH */
@@ -446,11 +545,8 @@ public class StatisticalReport {
         ResultSet healthSet = healthExpensesStatement.executeQuery(healthGroceryExpenses);
 
         while(healthSet.next()){
-            total = healthSet.getDouble("Total");
-            date = healthSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET health='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalHealth = healthSet.getDouble("Total");
+            month_year = healthSet.getString("Dates");
         }
 
         /* EDUCATION */
@@ -460,11 +556,8 @@ public class StatisticalReport {
         ResultSet educationSet = educationExpensesStatement.executeQuery(extractEducationExpenses);
 
         while(educationSet.next()){
-            total = educationSet.getDouble("Total");
-            date = educationSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET education='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalEducation = educationSet.getDouble("Total");
+            month_year = educationSet.getString("Dates");
         }
 
         /* UTILITIES */
@@ -474,11 +567,8 @@ public class StatisticalReport {
         ResultSet utilitiesSet = utilitiesExpensesStatement.executeQuery(extractUtilitiesExpenses);
 
         while(utilitiesSet.next()){
-            total = utilitiesSet.getDouble("Total");
-            date = utilitiesSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET utilities='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalUtilities = utilitiesSet.getDouble("Total");
+            month_year = utilitiesSet.getString("Dates");
         }
 
         /* WORK */
@@ -488,11 +578,9 @@ public class StatisticalReport {
         ResultSet workSet = workExpensesStatement.executeQuery(extractWorkExpenses);
 
         while(workSet.next()){
-            total = workSet.getDouble("Total");
-            date = workSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET work2='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalWork2 = workSet.getDouble("Total");
+            month_year = workSet.getString("Dates");
+
         }
 
         /* MISC */
@@ -501,14 +589,26 @@ public class StatisticalReport {
         ResultSet miscSet = groceryMiscStatement.executeQuery(extractMiscExpenses);
 
         while(miscSet.next()){
-            total = miscSet.getDouble("Total");
-            date = miscSet.getString("Dates");
-            String updateTable = "UPDATE statistical_report SET miscellaneous='"+total+"' WHERE username='"+username+"' AND month_year='"+date+"'";
-            Statement query = dbLink.createStatement();
-            query.executeUpdate(updateTable);
+            totalMiscellaneous = miscSet.getDouble("Total");
+            month_year = miscSet.getString("Dates");
         }
 
+    }
 
+
+    private void updateStatReportDb(){
+        String updateValues = "UPDATE statistical_report SET " +
+                "allowance="+totalAllowance+", work1="+totalWork1+", " +
+                "food="+totalFood+", transportation="+totalTransportation+", grocery="+totalGrocery+", health="+totalHealth+", " +
+                "education="+totalEducation+", utilities="+totalUtilities+", work2="+totalWork2+", miscellaneous="+totalMiscellaneous+"  " +
+                "WHERE month_year='"+month_year+"' AND username='"+ username +"'";
+        try{
+            Statement query = dbLink.createStatement();
+            query.executeUpdate(updateValues);
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
 
     }
 
