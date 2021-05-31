@@ -19,7 +19,7 @@
                 <Image url="@vector-bg.jpg" />
             </image>
         </ImageView>
-      <Pane fx:id="graphRankings" layoutX="7.0" layoutY="187.0" prefHeight="530.0" prefWidth="1267.0" visible="false">
+      <Pane fx:id="graphRankings" layoutX="7.0" layoutY="187.0" prefHeight="530.0" prefWidth="1267.0">
          <children>
             <Text fx:id="displayMonthYearGraph" layoutX="379.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH YEAR" textAlignment="CENTER" wrappingWidth="509.0">
                <font>
@@ -37,6 +37,51 @@
                </image>
             </ImageView>
             <PieChart fx:id="categoricalGraph" layoutX="8.0" layoutY="117.0" prefHeight="413.0" prefWidth="520.0" title="EXPENSES DISTRUBUTION" />
+            <Text layoutX="675.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANKING" textAlignment="CENTER" wrappingWidth="509.0">
+               <font>
+                  <Font size="53.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank1" layoutX="629.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 1" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank2" layoutX="629.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 2" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank3" layoutX="629.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 3" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank4" layoutX="629.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 4" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank5" layoutX="629.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 5" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank6" layoutX="629.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 6" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank7" layoutX="629.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 7" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <Text fx:id="rank8" layoutX="629.0" layoutY="498.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANK 8" textAlignment="CENTER" wrappingWidth="580.9999999999999">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <Pane fx:id="openMenu" prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
@@ -71,7 +116,7 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a5fcea" height="30.0" layoutX="25.0" layoutY="23.0" rotate="90.0" stroke="#a5fcea" strokeType="INSIDE" width="10.0" />
          </children>
       </Pane>
-      <HBox fx:id="a" layoutY="153.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css">
+      <HBox fx:id="a" layoutY="153.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@buttonStyle.css">
          <children>
             <Button layoutX="10.0" layoutY="10.0" maxHeight="34.0" maxWidth="1280.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#comprehensiveView" prefHeight="34.0" prefWidth="640.0" text="COMPREHENSIVE VIEW" textFill="#ff64ce">
                <font>
@@ -85,7 +130,7 @@
             </Button>
          </children>
       </HBox>
-      <HBox fx:id="incomeOrExpenses" layoutY="187.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@statisticalReportStyle.css" visible="false">
+      <HBox fx:id="incomeOrExpenses" layoutY="187.0" maxHeight="31.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="31.0" prefWidth="1280.0" stylesheets="@buttonStyle.css" visible="false">
          <children>
             <Button maxHeight="44.0" maxWidth="699.0" minHeight="25.0" minWidth="427.0" mnemonicParsing="false" onMouseClicked="#all" prefHeight="31.0" prefWidth="640.0" text="ALL" textFill="#ff64ce">
                <font>
@@ -401,34 +446,34 @@
             </ImageView>
          </children>
       </Pane>
-      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
+      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" stylesheets="@sideMenu.css">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" style="-fx-background-color: ff64ce;" />
-            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="logout" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="logout" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>

@@ -85,6 +85,14 @@ public class StatisticalReport {
     public Text displayMisc;
     public Text displayTotalExp;
 
+    public Text rank1;
+    public Text rank2;
+    public Text rank3;
+    public Text rank4;
+    public Text rank5;
+    public Text rank6;
+    public Text rank7;
+    public Text rank8;
 
     public Pane openMenu;
     public Pane closeMenu;
@@ -203,6 +211,33 @@ public class StatisticalReport {
 
         displayMonthYearGraph.setText(month_year);
         categoricalGraph.setData(list);
+
+        double tmp;
+        String strTmp;
+        double[] values = {food, transportation, grocery, health, education, utilities, work,miscellaneous};
+        String[] category = {"Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work","Miscellaneous"};
+        for(int i = 0 ; i < values.length ; i++){
+            for (int j = i+1 ; j < values.length ; j++){
+                if(values[i] < values[j]){
+                    tmp = values[i];
+                    strTmp = category[i];
+                    values[i] = values[j];
+                    category[i] = category[j];
+                    values[j] = tmp;
+                    category[j] = strTmp;
+                }
+            }
+        }
+        rank1.setText(category[0]);
+        rank2.setText(category[1]);
+        rank3.setText(category[2]);
+        rank4.setText(category[3]);
+        rank5.setText(category[4]);
+        rank6.setText(category[5]);
+        rank7.setText(category[6]);
+        rank8.setText(category[7]);
+
+
     }
 
     public void nextGraph() throws SQLException {
@@ -471,7 +506,7 @@ public class StatisticalReport {
 
     private void initNewMonth() throws Exception{
         int count = 0;
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
         Date date = new Date();
 
         String checkTable = "SELECT * FROM statistical_report WHERE month_year='"+formatter.format(date)+"' AND username='"+username+"'";
@@ -622,11 +657,6 @@ public class StatisticalReport {
         }
 
     }
-
-
-
-
-
 
     /* BUTTONS FROM THE SIDE MENU */
     public void dashboard() throws Exception {

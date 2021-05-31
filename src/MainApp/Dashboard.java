@@ -184,7 +184,7 @@ public class Dashboard{
     }
 
     private void initNewMonth() throws Exception{
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
         Date date = new Date();
         int count = 0;
 
@@ -197,8 +197,14 @@ public class Dashboard{
         if(count == 0){
             String newMonthRow = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
                         "VALUES ('"+formatter.format(date)+"','"+ username +"',"+0+","+0+","+0+","+0+")";
+            String newIncome = "INSERT INTO income(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+username+"', 'None',"+0+")";
+            String newExpenses = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+new Timestamp(System.currentTimeMillis())+"','"+username+"', 'None',"+0+")";
             Statement newQuery = dbLink.createStatement();
+            Statement newQuery1 = dbLink.createStatement();
+            Statement newQuery2 = dbLink.createStatement();
             newQuery.executeUpdate(newMonthRow);
+            newQuery1.executeUpdate(newIncome);
+            newQuery2.executeUpdate(newExpenses);
         }
 
     }
@@ -211,7 +217,7 @@ public class Dashboard{
 
     public void saveNewGoal() throws ParseException {
 
-        SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MMMMMMMMM yyyy");
         DecimalFormat roundOff = new DecimalFormat("###0.00");
         Date current = new Date();
         month_year = originalFormat.format(current); // CURRENT DATE
@@ -251,7 +257,7 @@ public class Dashboard{
     private void displayGoalsPeriodically() throws ParseException {
         int count = 0;
         DecimalFormat roundOff = new DecimalFormat("###0.00");
-        SimpleDateFormat originalFormat = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat originalFormat = new SimpleDateFormat("MMMMMMMMM yyyy");
 
         String extractMonthYear = "SELECT * FROM dashboard WHERE username='"+ username +"'";
         try{

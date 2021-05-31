@@ -266,7 +266,7 @@ public class ExpenseTracker {
             e.getCause();
         }
 
-        double readInitPersonal = 0, newBudgetPersonalInfo = 0;
+        double readInitPersonal = 0, newBudgetPersonalInfo;
         String readPersonalInfoUpdate = "SELECT initialSavings FROM personal_info WHERE username='"+ username +"'";
         try{
             Statement readPersonalInfoStatement = dbLink.createStatement();
@@ -287,6 +287,36 @@ public class ExpenseTracker {
         try{
             Statement writePersonalInfoStatement = dbLink.createStatement();
             writePersonalInfoStatement.executeUpdate(writePersonalInfoUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
+
+        double readDashboard = 0, newDashboardInfo;
+        String readDashboardUpdate = "SELECT totalExpenses FROM dashboard WHERE username='"+ username +"' AND month_year='"+formatter.format(added.getDatetime())+"'";
+        try{
+            Statement readDashboardStatement = dbLink.createStatement();
+            ResultSet readDashboardQuery = readDashboardStatement.executeQuery(readDashboardUpdate);
+
+            while(readDashboardQuery.next()){
+                readDashboard = readDashboardQuery.getDouble("totalExpenses");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newDashboardInfo = readDashboard - added.getAmount();
+        String writeDashboardUpdate = "UPDATE dashboard SET totalExpenses= "+newDashboardInfo+" WHERE username='"+ username +"'AND month_year='"+formatter.format(added.getDatetime())+"'";
+
+        try{
+            Statement writeDashboardStatement = dbLink.createStatement();
+            writeDashboardStatement.executeUpdate(writeDashboardUpdate);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -351,7 +381,34 @@ public class ExpenseTracker {
             e.getCause();
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
 
+        double readDashboard = 0, newDashboardInfo;
+        String readDashboardUpdate = "SELECT totalExpenses FROM dashboard WHERE username='"+ username +"' AND month_year='"+formatter.format(added.getDatetime())+"'";
+        try{
+            Statement readDashboardStatement = dbLink.createStatement();
+            ResultSet readDashboardQuery = readDashboardStatement.executeQuery(readDashboardUpdate);
+
+            while(readDashboardQuery.next()){
+                readDashboard = readDashboardQuery.getDouble("totalExpenses");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newDashboardInfo = readDashboard - (added.getAmount() - amt);
+        String writeDashboardUpdate = "UPDATE dashboard SET totalExpenses= "+newDashboardInfo+" WHERE username='"+ username +"'AND month_year='"+formatter.format(added.getDatetime())+"'";
+
+        try{
+            Statement writeDashboardStatement = dbLink.createStatement();
+            writeDashboardStatement.executeUpdate(writeDashboardUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
 
         /* UI feature for buttons */
         newCategory.setVisible(false);

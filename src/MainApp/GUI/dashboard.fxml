@@ -219,47 +219,47 @@
             <Font size="40.0" />
          </font>
       </Text>
-      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
+      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" stylesheets="@sideMenu.css">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" style="-fx-background-color: ff64ce;" />
-            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="logout" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="logout" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="133.0" prefWidth="306.0" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
          </children>
       </VBox>
-      <Button fx:id="edit" layoutX="791.0" layoutY="280.0" mnemonicParsing="false" onAction="#editGoal" prefHeight="25.0" prefWidth="105.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="EDIT" textFill="#a5fcea">
+      <Button fx:id="edit" layoutX="791.0" layoutY="280.0" mnemonicParsing="false" onAction="#editGoal" prefHeight="25.0" prefWidth="105.0" stylesheets="@sideMenu.css" text="EDIT" textFill="#a5fcea">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
       <TextField fx:id="monthlyGoal" alignment="CENTER" layoutX="742.0" layoutY="483.0" prefHeight="30.0" prefWidth="202.0" promptText="MONTHLY GOAL ONLY" style="-fx-background-radius: 20;" />
-      <Button fx:id="save" layoutX="787.0" layoutY="520.0" mnemonicParsing="false" onAction="#saveNewGoal" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="SAVE" textFill="#a5fcea">
+      <Button fx:id="save" layoutX="787.0" layoutY="520.0" mnemonicParsing="false" onAction="#saveNewGoal" prefHeight="25.0" prefWidth="114.0" stylesheets="@sideMenu.css" text="SAVE" textFill="#a5fcea">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

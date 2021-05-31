@@ -52,55 +52,55 @@
       </TableView>
         <HBox layoutY="159.0" maxHeight="53.0" maxWidth="1280.0" minHeight="25.0" minWidth="1280.0" prefHeight="28.0" prefWidth="1280.0" style="-fx-background-color: a5fcea;">
             <children>
-                <Button fx:id="general" maxHeight="47.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadGeneralTable" prefHeight="47.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="GENERAL" textFill="#ff64ce">
+                <Button fx:id="general" maxHeight="47.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadGeneralTable" prefHeight="47.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="GENERAL" textFill="#ff64ce">
                     <font>
                         <Font name="Moon Light" size="15.0" />
                     </font>
                 </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="0.1" orientation="VERTICAL" prefHeight="25.0" />
-                <Button fx:id="food" layoutX="10.0" layoutY="10.0" maxHeight="41.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="FOOD" textFill="#ff64ce">
+                <Button fx:id="food" layoutX="10.0" layoutY="10.0" maxHeight="41.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="FOOD" textFill="#ff64ce">
                     <font>
                         <Font name="Moon Light" size="15.0" />
                     </font>
                 </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="1.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="1.0" />
-                <Button fx:id="utilities" layoutX="437.0" layoutY="10.0" maxHeight="52.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="52.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="UTILITIES" textFill="#ff64ce">
+                <Button fx:id="utilities" layoutX="437.0" layoutY="10.0" maxHeight="52.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="52.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="UTILITIES" textFill="#ff64ce">
                     <font>
                         <Font name="Moon Light" size="15.0" />
                     </font>
                 </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="1.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="1.0" />
-            <Button fx:id="grocery" layoutX="522.0" layoutY="10.0" maxHeight="34.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="GROCERY" textFill="#ff64ce">
+            <Button fx:id="grocery" layoutX="522.0" layoutY="10.0" maxHeight="34.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="GROCERY" textFill="#ff64ce">
                <font>
                   <Font name="Moon Light" size="15.0" />
                </font>
             </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="1.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="1.0" />
-            <Button fx:id="health" layoutX="778.0" layoutY="10.0" maxHeight="36.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="36.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="HEALTH" textFill="#ff64ce">
+            <Button fx:id="health" layoutX="778.0" layoutY="10.0" maxHeight="36.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="36.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="HEALTH" textFill="#ff64ce">
                <font>
                   <Font name="Moon Light" size="15.0" />
                </font>
             </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="1.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="1.0" />
-            <Button fx:id="education" layoutX="650.0" layoutY="10.0" maxHeight="52.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="52.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="EDUCATION" textFill="#ff64ce">
+            <Button fx:id="education" layoutX="650.0" layoutY="10.0" maxHeight="52.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="52.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="EDUCATION" textFill="#ff64ce">
                <font>
                   <Font name="Moon Light" size="15.0" />
                </font>
             </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="1.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="1.0" />
-            <Button fx:id="work" layoutX="810.0" layoutY="10.0" maxHeight="44.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="44.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="WORK" textFill="#ff64ce">
+            <Button fx:id="work" layoutX="810.0" layoutY="10.0" maxHeight="44.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="44.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="WORK" textFill="#ff64ce">
                <font>
                   <Font name="Moon Light" size="13.7" />
                </font>
             </Button>
             <Separator maxHeight="25.0" maxWidth="1.0" minHeight="25.0" minWidth="1.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="1.0" />
-            <Button fx:id="miscellaneous" layoutX="970.0" layoutY="10.0" maxHeight="25.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="25.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" text="MISCELLANEOUS" textFill="#ff64ce">
+            <Button fx:id="miscellaneous" layoutX="970.0" layoutY="10.0" maxHeight="25.0" maxWidth="142.0" minHeight="25.0" minWidth="142.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="25.0" prefWidth="142.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="MISCELLANEOUS" textFill="#ff64ce">
                <font>
                   <Font name="Moon Light" size="13.7" />
                </font>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button fx:id="transportation" maxHeight="25.0" maxWidth="147.0" minHeight="25.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: a5fcea;" text="TRANSPORTATION" textFill="#ff64ce">
+            <Button fx:id="transportation" maxHeight="25.0" maxWidth="147.0" minHeight="25.0" minWidth="130.0" mnemonicParsing="false" onMouseClicked="#loadCategoryTable" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: a5fcea;" stylesheets="@buttonStyle.css" text="TRANSPORTATION" textFill="#ff64ce">
                <font>
                   <Font size="13.0" />
                </font>
@@ -109,17 +109,17 @@
         </HBox>
       <HBox layoutX="933.0" layoutY="682.0" prefHeight="31.0" prefWidth="333.0">
          <children>
-            <Button fx:id="save" mnemonicParsing="false" onMouseClicked="#save" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="SAVE" textFill="#a5fcea">
+            <Button fx:id="save" mnemonicParsing="false" onMouseClicked="#save" prefHeight="25.0" prefWidth="114.0" stylesheets="@sideMenu.css" text="SAVE" textFill="#a5fcea">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="edit" mnemonicParsing="false" onMouseClicked="#editExpense" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="EDIT" textFill="#a5fcea">
+            <Button fx:id="edit" mnemonicParsing="false" onMouseClicked="#editExpense" prefHeight="25.0" prefWidth="114.0" stylesheets="@sideMenu.css" text="EDIT" textFill="#a5fcea">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#removeExpense" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: ff64ce; -fx-background-radius: 20;" text="DELETE" textFill="#a5fcea">
+            <Button mnemonicParsing="false" onMouseClicked="#removeExpense" prefHeight="25.0" prefWidth="114.0" stylesheets="@sideMenu.css" text="DELETE" textFill="#a5fcea">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -165,34 +165,34 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;">
+      <VBox fx:id="menu" layoutY="56.0" prefHeight="666.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" stylesheets="@sideMenu.css">
          <children>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#dashboard" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="DASHBOARD" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" style="-fx-background-color: ff64ce;" />
-            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="incomeTracker" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#incomeTracker" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="INCOME TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="expensesTracker" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#expensesTracker" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="EXPENSES TRACKER" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="statisticalReport" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#statisticalReport" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="STATISTICAL REPORT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>
             </Button>
             <Separator opacity="0.2" prefWidth="200.0" />
-            <Button fx:id="logout" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="133.0" prefWidth="306.0" style="-fx-background-color: ff64ce;" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
+            <Button fx:id="logout" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="133.0" prefWidth="306.0" stylesheets="@sideMenu.css" text="LOGOUT" textAlignment="CENTER" textFill="#a5fcea">
                <font>
                   <Font name="Moon Bold" size="27.0" />
                </font>

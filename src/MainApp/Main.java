@@ -23,7 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
         Date date = new Date();
         System.out.println(formatter.format(date));
 

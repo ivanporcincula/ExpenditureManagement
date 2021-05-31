@@ -243,6 +243,35 @@ public class IncomeTracker {
             e.getCause();
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
+
+        double readDashboard = 0, newDashboardInfo;
+        String readDashboardUpdate = "SELECT totalIncome FROM dashboard WHERE username='"+ username +"' AND month_year='"+formatter.format(added.getDatetime())+"'";
+        try{
+            Statement readDashboardStatement = dbLink.createStatement();
+            ResultSet readDashboardQuery = readDashboardStatement.executeQuery(readDashboardUpdate);
+
+            while(readDashboardQuery.next()){
+                readDashboard = readDashboardQuery.getDouble("totalIncome");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newDashboardInfo = readDashboard - added.getAmount();
+        String writeDashboardUpdate = "UPDATE dashboard SET totalIncome FROM= "+newDashboardInfo+" WHERE username='"+ username +"'AND month_year='"+formatter.format(added.getDatetime())+"'";
+
+        try{
+            Statement writeDashboardStatement = dbLink.createStatement();
+            writeDashboardStatement.executeUpdate(writeDashboardUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
     }
 
     public void editIncome(){
@@ -295,6 +324,35 @@ public class IncomeTracker {
         try{
             Statement writePersonalInfoStatement = dbLink.createStatement();
             writePersonalInfoStatement.executeUpdate(writePersonalInfoUpdate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
+
+        double readDashboard = 0, newDashboardInfo;
+        String readDashboardUpdate = "SELECT totalIncome FROM dashboard WHERE username='"+ username +"' AND month_year='"+formatter.format(added.getDatetime())+"'";
+        try{
+            Statement readDashboardStatement = dbLink.createStatement();
+            ResultSet readDashboardQuery = readDashboardStatement.executeQuery(readDashboardUpdate);
+
+            while(readDashboardQuery.next()){
+                readDashboard = readDashboardQuery.getDouble("totalIncome");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        newDashboardInfo = readDashboard - (added.getAmount() - amt);
+        String writeDashboardUpdate = "UPDATE dashboard SET totalIncome= "+newDashboardInfo+" WHERE username='"+ username +"'AND month_year='"+formatter.format(added.getDatetime())+"'";
+
+        try{
+            Statement writeDashboardStatement = dbLink.createStatement();
+            writeDashboardStatement.executeUpdate(writeDashboardUpdate);
 
         }catch (Exception e){
             e.printStackTrace();

@@ -123,18 +123,25 @@ public class Register {
 
 
                 /* TO INITIALIZE THE INCOME AND EXPENSES TABLE AND STAT REPORT*/
-                SimpleDateFormat formatter = new SimpleDateFormat("MMM yyyy");
+                SimpleDateFormat formatter = new SimpleDateFormat("MMMMMMMMM yyyy");
                 Date date = new Date();
+
                 String newDashboard = "INSERT INTO dashboard(month_year, username, savingsProgress, totalExpenses, totalIncome, savingsGoalMonthly) " +
                         "VALUES ('"+formatter.format(date)+"','"+ user +"',"+0+","+0+","+0+","+0+")";
                 String newStatReport = "INSERT INTO statistical_report(month_year, username, allowance, work1, food, transportation, grocery,health, education, utilities, work2, miscellaneous) " +
                         "VALUES ('"+formatter.format(date)+"','"+ user +"',"+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+","+0+")";
+                String newIncome = "INSERT INTO income(date, username, category, amount) VALUES ('"+formatter.format(date)+"','"+user+"', 'None',"+0+")";
+                String newExpenses = "INSERT INTO expenses(date, username, category, amount) VALUES ('"+formatter.format(date)+"','"+user+"', 'None',"+0+")";
 
                 try{
                     Statement newStatement = dbLink.createStatement();
                     Statement new1Statement = dbLink.createStatement();
+                    Statement new2Statement = dbLink.createStatement();
+                    Statement new3Statement = dbLink.createStatement();
                     newStatement.executeUpdate(newDashboard);
                     new1Statement.executeUpdate(newStatReport);
+                    new2Statement.executeUpdate(newIncome);
+                    new3Statement.executeUpdate(newExpenses);
 
                 }catch (Exception e){
                     e.printStackTrace();
