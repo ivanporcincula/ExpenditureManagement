@@ -61,6 +61,15 @@ Scene Builder can be downloaded here: https://gluonhq.com/products/scene-builder
 
 
 <4/19/2021| v0.1 beta> Added codes for the login, register, with corresponding GUI code for the Dashboard.
+<5/03/2021| v0.2 beta> Added income manager and update create account GUI.
+<5/20/2021| v1.0> Added codes to add to database for income tracker and expenses tracker, Dashboard backend update, Added income manager and expenses manager GUI, Edited side menu
+<5/21/2021| v1.1> Updated GUI for login, dashboard, account creation, income manager, expenses manager, Backend update on monthly income and expenses and user budget, Updated monthly reset of user goals etc., Backend update on monthly income and expenses and user budget.
+<5/22/2021| v1.2> UPDATED DATABASE WHEN DELETING, ADDED DELETE FUNCTION ON INCOME AND EXPENSE, Update on query statements of income, expenses, budget left, Update on GUI Display, Proper integration of back end to front end of the software, Updated monthly automatic reset
+<5/23/2021| v2.0> User can now fully use the Side Menu to navigate between different screens, User can now edit both of their income and expenses
+<5/24/2021| v2.1> User can now edit and save their target savings monthly. The system will provide the requested target savings for daily and weekly. Added add button in income tracker and expenses tracker (the user can now add income and expenses while in income tracker and expenses tracker GUI), Updated monthly savings logical process.
+<5/30/2021| v3.0> Daily and Weekly savings goal now update every time an expense or income is added/removed/edited, Added Statistical Report Interface.
+<5/31/2021| v3.1> Added Comprehensive View in StatisticalReport.java (functional), Added buttons to the GUI of StatisticalReport
+
 
 Yuan Patrick E Dumandan - currently taking up BS Computer Engineering in De La Salle University-Manila. He completed his Secondary Education in Marist School Marikina.
 
