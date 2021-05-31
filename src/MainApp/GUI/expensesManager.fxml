@@ -51,7 +51,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <ComboBox fx:id="category" layoutX="490.0" layoutY="381.0" prefHeight="70.0" prefWidth="300.0" />
+        <ComboBox fx:id="category" layoutX="490.0" layoutY="381.0" prefHeight="70.0" prefWidth="300.0" promptText="Please select a category.." style="-fx-background-radius: 20;" />
       <Pane fx:id="openMenu" prefHeight="56.0" prefWidth="306.0" style="-fx-background-color: white;">
          <children>
             <ImageView fitHeight="60.0" fitWidth="50.0" layoutX="59.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
