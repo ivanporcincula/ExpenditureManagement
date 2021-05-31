@@ -1,0 +1,285 @@
+@startuml
+
+title __EXPENDITURE MANAGEMENT PROJECT's UML Class Diagram__\n
+
+  namespace MainApp {
+    class MainApp.Dashboard {
+    -customerName : String
+        -username : String
+        -monthYear : String
+        -dbLink : Connection
+        -x : double
+        -y : double
+        -totalExpenses : double
+        -totalIncome : double
+        -savingsGoalDaily : double
+        -savingsGoalWeekly : double
+        -savingsGoalMonthly : double
+        -savingsProgress : double
+
+        +initialize()
+        +editGoal()
+        +saveNewGoal()
+        +income()
+        +expense()
+        +dashboard()
+        +incomeTracker()
+        +expensesTracker()
+        +statisticalReport()
+        +logout()
+        -displayBudgetLeft()
+        -displayTotalExpenses()
+        -displayTotalIncome()
+        -updatedDashboardDb()
+        -initNewMonth()
+        -displayGoalsPeriodically()
+        -sideMenu()
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.ExpenseTracker {
+
+    -username : String
+    -customerName : String
+    -added : Money
+    -x : double
+    -y: double
+    -dbLink : Connection
+    -moneyList : ObservableList<Money>
+    +initialize()
+    +loadGeneralTable()
+    +loadCategoryTable()
+    +refreshCategory()
+    +removeExpense()
+    +editExpense()
+    +save()
+    +income()
+    +expense()
+    +dashboard()
+    +incomeTracker()
+    +expensesTracker()
+    +statisticalReport()
+    +logout()
+    -sideMenu()
+
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.Expenses {
+
+            -username : String
+            -customerName : String
+            -dbLink : Connection
+            -x : double
+            -y : double
+         +initialize()
+         +addExpense()
+         +dashboard()
+         +incomeTracker()
+         +expensesTracker()
+         +statisticalReport()
+         +logout()
+         -sideMenu()
+
+
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.Income {
+
+        -username : String
+                    -customerName : String
+                    -dbLink : Connection
+                    -x : double
+                    -y : double
+                 +initialize()
+                 +addIncome()
+                 +dashboard()
+                 +incomeTracker()
+                 +expensesTracker()
+                 +statisticalReport()
+                 +logout()
+                 -sideMenu()
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.IncomeTracker {
+    -username : String
+        -customerName : String
+        -added : Money
+        -x : double
+        -y: double
+        -dbLink : Connection
+        -moneyList : ObservableList<Money>
+        +initialize()
+        +loadGeneralTable()
+        +loadCategoryTable()
+        +refreshCategory()
+        +removeIncome()
+        +editIncome()
+        +save()
+        +income()
+        +expense()
+        +dashboard()
+        +incomeTracker()
+        +expensesTracker()
+        +statisticalReport()
+        +logout()
+        -sideMenu()
+
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.Login {
+    -x : double
+    -y : double
+    -dbLink : Connection
+
+    +initialize()
+    +infoFilled()
+    +login()
+
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.Main {
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.Money {
+    -datetime : Timestamp
+    -category : String
+    -amount : double
+
+    +Money()
+    +Money()
+    +getDatetime()
+    +getCategory()
+    +getAmount()
+    +setDatetime()
+    +setCategory()
+    +setAmount()
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.Register {
+    -x : double
+        -y : double
+        -dbLink : Connection
+
+    +initialize()
+        +infoFilled()
+        +register()
+
+    }
+  }
+  
+
+  namespace MainApp {
+    class MainApp.StatisticalReport {
+            -username : String
+            -customerName : String
+            -dbLink : Connection
+            -x : double
+            -y : double
+            -expensesSummary : double
+            -incomeSummary : double
+            -totalAllowance : double
+            -totalWork1 : double
+            -totalFood : double
+            -totalTransportation : double
+            -totalGrocery: double
+            -totalHealth : double
+            -totalEducation : double
+            -totalUtilities : double
+            -totalWork2 : double
+            -totalMiscellaneous : double
+            -all : ResultSet
+            -incOrExp : ResultSet
+            -month_year : String
+
+            +initialize()
+            +comprehensiveView()
+            +graphRanking()
+            +nextGraph()
+            +previousGraph()
+            +all()
+            +nextAll()
+            +previousAll
+            +income()
+            +nextIncome()
+            +previousIncome
+            +expenses()
+            +nextExpenses()
+            +previousExpenses
+            +dashboard()
+            +incomeTracker()
+            +expensesTracker()
+            +statisticalReport()
+            +logout()
+            -sideMenu()
+            -initNewMonth()
+            -readCategoryIncome()
+            -readCategoryExpenses()
+            -updatedStatReportDb()
+    }
+  }
+  
+
+
+  MainApp.ExpenseTracker o-- MainApp.Money : added
+  MainApp.ExpenseTracker o-- MainApp.Dashboard : sendUser
+  MainApp.ExpenseTracker o-- MainApp.IncomeTracker : sendUser
+  MainApp.ExpenseTracker o-- MainApp.Income : sendUser
+  MainApp.ExpenseTracker o-- MainApp.Expenses : sendUser
+  MainApp.ExpenseTracker o-- MainApp.StatisticalReport : sendUser
+  MainApp.ExpenseTracker o-- MainApp.Dashboard : sendUser
+
+   MainApp.IncomeTracker o-- MainApp.Dashboard : sendUser
+    MainApp.IncomeTracker o-- MainApp.ExpenseTracker : sendUser
+    MainApp.IncomeTracker o-- MainApp.Income : sendUser
+    MainApp.IncomeTracker o-- MainApp.Expenses : sendUser
+    MainApp.IncomeTracker o-- MainApp.StatisticalReport : sendUser
+    MainApp.IncomeTracker o-- MainApp.Dashboard : sendUser
+
+    MainApp.Dashboard o-- MainApp.IncomeTracker : sendUser
+    MainApp.Dashboard o-- MainApp.ExpenseTracker : sendUser
+    MainApp.Dashboard o-- MainApp.Income : sendUser
+    MainApp.Dashboard o-- MainApp.Expenses : sendUser
+    MainApp.Dashboard o-- MainApp.StatisticalReport : sendUser
+
+    MainApp.Login o-- MainApp.Dashboard : sendUser
+
+    MainApp.Login o-- MainApp.Register
+
+    MainApp.Main o-- MainApp.Login
+
+
+
+  MainApp.Main -up-|> javafx.application.Application
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -527,6 +527,17 @@ public class StatisticalReport {
 
         }
 
+        /* TRANSPORTATION */
+        String extractTransportationExpenses = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM expenses WHERE username='"+ username +"' AND category='Food' GROUP BY MONTH(date), YEAR(date)";
+        Statement transportationExpensesStatement = dbLink.createStatement();
+        ResultSet transportationSet = transportationExpensesStatement.executeQuery(extractTransportationExpenses);
+
+        while(transportationSet.next()){
+            totalTransportation= transportationSet.getDouble("Total");
+            month_year = transportationSet.getString("Dates");
+
+        }
+
         /* GROCERY */
 
         String extractGroceryExpenses = "SELECT DATE_FORMAT(date, '%M %Y') as Dates, SUM(amount) as Total FROM expenses WHERE username='"+ username +"' AND category='Grocery' GROUP BY MONTH(date), YEAR(date)";

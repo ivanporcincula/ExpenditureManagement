@@ -1,0 +1,615 @@
+@startuml
+
+title __CJ's Class Diagram__\n
+
+  namespace com.mysql.cj {
+    abstract class com.mysql.cj.AbstractPreparedQuery {
+        # autoClosePStmtStreams : RuntimeProperty<Boolean>
+        # batchCommandIndex : int
+        # originalSql : String
+        # parameterCount : int
+        # parseInfo : ParseInfo
+        # useStreamLengthsInPrepStmts : RuntimeProperty<Boolean>
+        - streamConvertBuf : byte[]
+        - usingAnsiMode : boolean
+        + AbstractPreparedQuery()
+        + asSql()
+        + asSql()
+        + checkNullOrEmptyQuery()
+        + closeQuery()
+        + computeBatchSize()
+        + fillSendPacket()
+        + fillSendPacket()
+        + getBatchCommandIndex()
+        + getOriginalSql()
+        + getParameterCount()
+        + getParseInfo()
+        + getQueryBindings()
+        + setBatchCommandIndex()
+        + setOriginalSql()
+        + setParameterCount()
+        + setParseInfo()
+        + setQueryBindings()
+        {abstract} # computeMaxParameterSetSizeAndBatchSize()
+        - escapeblockFast()
+        - streamToBytes()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    abstract class com.mysql.cj.AbstractQuery {
+        + session : NativeSession
+        # batchedArgs : List<Object>
+        # cancelTimeoutMutex : Object
+        # charEncoding : String
+        # clearWarningsCalled : boolean
+        # currentDb : String
+        # fetchSize : int
+        # maxAllowedPacket : RuntimeProperty<Integer>
+        # resultSetType : Type
+        # statementExecuting : AtomicBoolean
+        # statementId : int
+        # timeoutInMillis : int
+        {static} ~ statementCounter : int
+        - cancelStatus : CancelStatus
+        - executeTime : long
+        + AbstractQuery()
+        + addBatch()
+        + checkCancelTimeout()
+        + clearBatchedArgs()
+        + closeQuery()
+        + getBatchedArgs()
+        + getCancelTimeoutMutex()
+        + getCurrentDatabase()
+        + getExecuteTime()
+        + getId()
+        + getResultFetchSize()
+        + getResultSetFactory()
+        + getResultType()
+        + getSession()
+        + getStatementExecuting()
+        + getTimeoutInMillis()
+        + isClearWarningsCalled()
+        + resetCancelledState()
+        + setCancelStatus()
+        + setClearWarningsCalled()
+        + setCurrentDatabase()
+        + setExecuteTime()
+        + setResultFetchSize()
+        + setResultType()
+        + setTimeoutInMillis()
+        + startQueryTimer()
+        + statementBegins()
+        + stopQueryTimer()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    abstract class com.mysql.cj.AbstractQueryBindings {
+        {static} # DEFAULT_DATE : LocalDate
+        {static} # DEFAULT_TIME : LocalTime
+        {static} # HEX_DIGITS : byte[]
+        # bindValues : T[]
+        # charEncoding : String
+        # columnDefinition : ColumnDefinition
+        # isLoadDataQuery : boolean
+        # numberOfExecutions : int
+        # preserveInstants : RuntimeProperty<Boolean>
+        # sendFractionalSeconds : RuntimeProperty<Boolean>
+        # sendFractionalSecondsForTime : RuntimeProperty<Boolean>
+        # session : Session
+        # useStreamLengthsInPrepStmts : RuntimeProperty<Boolean>
+        {static} ~ DEFAULT_MYSQL_TYPES : Map<Class<?>, MysqlType>
+        - streamConvertBuf : byte[]
+        - treatUtilDateAsTimestamp : RuntimeProperty<Boolean>
+        + AbstractQueryBindings()
+        + checkAllParametersSet()
+        {abstract} + checkParameterSet()
+        + clearBindValues()
+        {abstract} + clone()
+        + getBindValues()
+        + getBytesRepresentation()
+        + getNumberOfExecutions()
+        + getOrigBytes()
+        + hexEscapeBlock()
+        + isLoadDataQuery()
+        + isNull()
+        + setBindValues()
+        + setColumnDefinition()
+        + setLoadDataQuery()
+        + setNumberOfExecutions()
+        + setObject()
+        + setObject()
+        + setObject()
+        + setOrigValue()
+        + setTimestamp()
+        + setTimestamp()
+        + setTimestamp()
+        + setValue()
+        + setValue()
+        {abstract} # initBindValues()
+        # setSerializableObject()
+        - streamToBytes()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.CancelQueryTaskImpl {
+        ~ caughtWhileCancelling : Throwable
+        ~ queryTimeoutKillsConnection : boolean
+        ~ queryToCancel : Query
+        + CancelQueryTaskImpl()
+        + cancel()
+        + getCaughtWhileCancelling()
+        + getQueryToCancel()
+        + run()
+        + setCaughtWhileCancelling()
+        + setQueryToCancel()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ClientPreparedQuery {
+        + ClientPreparedQuery()
+        # computeMaxParameterSetSizeAndBatchSize()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ClientPreparedQueryBindValue {
+        + origValue : Object
+        + value : Object
+        # isNull : boolean
+        # isSet : boolean
+        # isStream : boolean
+        # parameterType : MysqlType
+        # streamLength : long
+        + ClientPreparedQueryBindValue()
+        + clone()
+        + getByteValue()
+        + getMysqlType()
+        + getOrigByteValue()
+        + getStreamLength()
+        + getStreamValue()
+        + isNull()
+        + isSet()
+        + isStream()
+        + reset()
+        + setByteValue()
+        + setIsStream()
+        + setMysqlType()
+        + setNull()
+        + setOrigByteValue()
+        + setStreamValue()
+        # ClientPreparedQueryBindValue()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ClientPreparedQueryBindings {
+        - charsetEncoder : CharsetEncoder
+        - ddf : SimpleDateFormat
+        - tdf : SimpleDateFormat
+        - tsdf : SimpleDateFormat
+        + ClientPreparedQueryBindings()
+        + bindTimestamp()
+        + checkParameterSet()
+        + clone()
+        + setAsciiStream()
+        + setAsciiStream()
+        + setAsciiStream()
+        + setBigDecimal()
+        + setBigInteger()
+        + setBinaryStream()
+        + setBinaryStream()
+        + setBinaryStream()
+        + setBlob()
+        + setBlob()
+        + setBlob()
+        + setBoolean()
+        + setByte()
+        + setBytes()
+        + setBytes()
+        + setBytesNoEscape()
+        + setBytesNoEscapeNoQuotes()
+        + setCharacterStream()
+        + setCharacterStream()
+        + setCharacterStream()
+        + setClob()
+        + setClob()
+        + setClob()
+        + setDate()
+        + setDate()
+        + setDouble()
+        + setFloat()
+        + setInt()
+        + setLocalDate()
+        + setLocalDateTime()
+        + setLocalTime()
+        + setLong()
+        + setNCharacterStream()
+        + setNCharacterStream()
+        + setNClob()
+        + setNClob()
+        + setNClob()
+        + setNString()
+        + setNull()
+        + setShort()
+        + setString()
+        + setTime()
+        + setTime()
+        # initBindValues()
+        - isEscapeNeededForString()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    abstract class com.mysql.cj.CoreSession {
+        {static} # NULL_LOGGER : Log
+        # autoReconnect : RuntimeProperty<Boolean>
+        # autoReconnectForPools : RuntimeProperty<Boolean>
+        # cacheServerConfiguration : RuntimeProperty<Boolean>
+        # characterEncoding : RuntimeProperty<String>
+        # connectionCreationTimeMillis : long
+        # disconnectOnExpiredPasswords : RuntimeProperty<Boolean>
+        # exceptionInterceptor : ExceptionInterceptor
+        # gatherPerfMetrics : RuntimeProperty<Boolean>
+        # hostInfo : HostInfo
+        # log : Log
+        # maintainTimeStats : RuntimeProperty<Boolean>
+        # messageBuilder : MessageBuilder<? extends Message>
+        # propertySet : PropertySet
+        # protocol : Protocol<? extends Message>
+        # sessionMaxRows : int
+        - eventSink : ProfilerEventHandler
+        + CoreSession()
+        + addListener()
+        + changeUser()
+        + forceClose()
+        + getDataStoreMetadata()
+        + getExceptionInterceptor()
+        + getHostInfo()
+        + getIdentifierQuoteString()
+        + getLog()
+        + getMessageBuilder()
+        + getProfilerEventHandler()
+        + getPropertySet()
+        + getQueryTimingUnits()
+        + getRemoteSocketAddress()
+        + getServerSession()
+        + getThreadId()
+        + isSSLEstablished()
+        + isSetNeededForAutoCommitMode()
+        + quit()
+        + removeListener()
+        + setExceptionInterceptor()
+        + versionMeetsMinimum()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.DataStoreMetadataImpl {
+        - session : Session
+        + DataStoreMetadataImpl()
+        + getTableRowCount()
+        + schemaExists()
+        + tableExists()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.LicenseConfiguration {
+        {static} + checkLicenseType()
+        - LicenseConfiguration()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.MysqlxSession {
+        + MysqlxSession()
+        + MysqlxSession()
+        + failedPreparingStatement()
+        + freePreparedStatementId()
+        + getNewPreparedStatementId()
+        + getPort()
+        + getProcessHost()
+        + getProtocol()
+        + isClosed()
+        + query()
+        + query()
+        + queryAsync()
+        + quit()
+        + readyForPreparingStatements()
+        + supportsPreparedStatements()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.NativeSession {
+        {static} - SERVER_VERSION_STRING_VAR_NAME : String
+        - cancelTimer : Timer
+        - commandBuilder : NativeMessageBuilder
+        {static} - customCharsetToMblenMapByUrl : Map<String, Map<String, Integer>>
+        {static} - customIndexToCharsetMapByUrl : Map<String, Map<Integer, String>>
+        - forceClosedReason : Throwable
+        - isClosed : boolean
+        - lastQueryFinishedTime : long
+        - listeners : CopyOnWriteArrayList<WeakReference<SessionEventListener>>
+        - needsPing : boolean
+        - requiresEscapingEncoder : boolean
+        {static} - serialVersionUID : long
+        - serverConfigCache : CacheAdapter<String, Map<String, String>>
+        + NativeSession()
+        + addListener()
+        + buildCollationMapping()
+        + checkClosed()
+        + checkForCharsetMismatch()
+        + clearInputStream()
+        + configureClientCharacterSet()
+        + connect()
+        + disableMultiQueries()
+        + dumpPacketRingBuffer()
+        + enableMultiQueries()
+        + execSQL()
+        + forceClose()
+        + getCancelTimer()
+        + getCommandCount()
+        + getConnectionCreationTimeMillis()
+        + getCurrentTimeNanosOrMillis()
+        + getForceClosedReason()
+        + getIdentifierQuoteString()
+        + getIdleFor()
+        + getLocalInfileInputStream()
+        + getNetworkResources()
+        + getProcessHost()
+        + getProtocol()
+        + getRemoteSocketAddress()
+        + getRequiresEscapingEncoder()
+        + getSessionMaxRows()
+        + getSharedSendPacket()
+        + getSlowQueryThreshold()
+        + getSocketTimeout()
+        + hadWarnings()
+        + invokeCleanupListeners()
+        + invokeQueryInterceptorsPost()
+        + invokeQueryInterceptorsPre()
+        + isClosed()
+        + isNeedsPing()
+        + isSSLEstablished()
+        + isServerLocal()
+        + isSetNeededForAutoCommitMode()
+        + loadServerVariables()
+        + ping()
+        + queryServerVariable()
+        + quit()
+        + removeListener()
+        + sendCommand()
+        + setConnectionCreationTimeMillis()
+        + setForceClosedReason()
+        + setLocalInfileInputStream()
+        + setNeedsPing()
+        + setQueryInterceptors()
+        + setSessionMaxRows()
+        + setSessionVariables()
+        + setSocketTimeout()
+        + shouldIntercept()
+        + shutdownServer()
+        # invokeNormalCloseListeners()
+        # invokeReconnectListeners()
+        - configureCharsetProperties()
+        - createConfigCacheIfNeeded()
+        - findProcessHost()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.NoSubInterceptorWrapper {
+        - underlyingInterceptor : QueryInterceptor
+        + NoSubInterceptorWrapper()
+        + destroy()
+        + executeTopLevelOnly()
+        + getUnderlyingInterceptor()
+        + init()
+        + postProcess()
+        + postProcess()
+        + preProcess()
+        + preProcess()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ServerPreparedQuery {
+        {static} + BLOB_STREAM_READ_BUF_SIZE : int
+        {static} + OPEN_CURSOR_FLAG : byte
+        # commandBuilder : NativeMessageBuilder
+        # explainSlowQueries : RuntimeProperty<Boolean>
+        # gatherPerfMetrics : boolean
+        # logSlowQueries : boolean
+        # profileSQL : boolean
+        # queryWasSlow : boolean
+        # slowQueryThresholdMillis : RuntimeProperty<Integer>
+        # useCursorFetch : boolean
+        - parameterFields : Field[]
+        - resultFields : ColumnDefinition
+        - serverStatementId : long
+        - useAutoSlowLog : boolean
+        + clearParameters()
+        + closeQuery()
+        + fillSendPacket()
+        + fillSendPacket()
+        {static} + getInstance()
+        + getParameterFields()
+        + getResultFields()
+        + getServerStatementId()
+        + prepareExecutePacket()
+        + readExecuteResult()
+        + sendExecutePacket()
+        + serverExecute()
+        + serverPrepare()
+        + serverResetStatement()
+        + setParameterFields()
+        + setResultFields()
+        + setServerStatementId()
+        + statementBegins()
+        + storeReader()
+        + storeStream()
+        # ServerPreparedQuery()
+        # computeMaxParameterSetSizeAndBatchSize()
+        - serverLongData()
+        - truncateQueryToLog()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ServerPreparedQueryBindValue {
+        + boundBeforeExecutionNum : long
+        + bufferType : int
+        + calendar : Calendar
+        # charEncoding : String
+        ~ pset : PropertySet
+        - cacheDefaultTimeZone : RuntimeProperty<Boolean>
+        - connectionTimeZone : TimeZone
+        - defaultTimeZone : TimeZone
+        + ServerPreparedQueryBindValue()
+        + clone()
+        + getBoundLength()
+        + getByteValue()
+        + reset()
+        + resetToType()
+        + storeBinding()
+        + toString()
+        + toString()
+        - ServerPreparedQueryBindValue()
+        - storeDate()
+        - storeDateTime()
+        - storeTime()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ServerPreparedQueryBindings {
+        - longParameterSwitchDetected : boolean
+        - sendTypesToServer : AtomicBoolean
+        + ServerPreparedQueryBindings()
+        + bindTimestamp()
+        + checkParameterSet()
+        + clone()
+        + getBinding()
+        + getSendTypesToServer()
+        + isLongParameterSwitchDetected()
+        + setAsciiStream()
+        + setAsciiStream()
+        + setAsciiStream()
+        + setBigDecimal()
+        + setBigInteger()
+        + setBinaryStream()
+        + setBinaryStream()
+        + setBinaryStream()
+        + setBlob()
+        + setBlob()
+        + setBlob()
+        + setBoolean()
+        + setByte()
+        + setBytes()
+        + setBytes()
+        + setBytesNoEscape()
+        + setBytesNoEscapeNoQuotes()
+        + setCharacterStream()
+        + setCharacterStream()
+        + setCharacterStream()
+        + setClob()
+        + setClob()
+        + setClob()
+        + setDate()
+        + setDate()
+        + setDouble()
+        + setFloat()
+        + setInt()
+        + setLocalDate()
+        + setLocalDateTime()
+        + setLocalTime()
+        + setLong()
+        + setLongParameterSwitchDetected()
+        + setNCharacterStream()
+        + setNCharacterStream()
+        + setNClob()
+        + setNClob()
+        + setNClob()
+        + setNString()
+        + setNull()
+        + setShort()
+        + setString()
+        + setTime()
+        + setTime()
+        # initBindValues()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.ServerPreparedQueryTestcaseGenerator {
+        + ServerPreparedQueryTestcaseGenerator()
+        + closeQuery()
+        + serverExecute()
+        + serverPrepare()
+        - dumpCloseForTestcase()
+        - dumpExecuteForTestcase()
+        - dumpPrepareForTestcase()
+    }
+  }
+  
+
+  namespace com.mysql.cj {
+    class com.mysql.cj.SimpleQuery {
+        + SimpleQuery()
+    }
+  }
+  
+
+  com.mysql.cj.AbstractPreparedQuery .up.|> com.mysql.cj.PreparedQuery
+  com.mysql.cj.AbstractPreparedQuery -up-|> com.mysql.cj.AbstractQuery
+  com.mysql.cj.AbstractPreparedQuery o-- T : queryBindings
+  com.mysql.cj.AbstractQuery .up.|> com.mysql.cj.Query
+  com.mysql.cj.AbstractQueryBindings .up.|> com.mysql.cj.QueryBindings
+  com.mysql.cj.CancelQueryTaskImpl .up.|> com.mysql.cj.CancelQueryTask
+  com.mysql.cj.CancelQueryTaskImpl -up-|> java.util.TimerTask
+  com.mysql.cj.ClientPreparedQuery -up-|> com.mysql.cj.AbstractPreparedQuery
+  com.mysql.cj.ClientPreparedQueryBindValue .up.|> com.mysql.cj.BindValue
+  com.mysql.cj.ClientPreparedQueryBindings -up-|> com.mysql.cj.AbstractQueryBindings
+  com.mysql.cj.CoreSession .up.|> com.mysql.cj.Session
+  com.mysql.cj.DataStoreMetadataImpl .up.|> com.mysql.cj.DataStoreMetadata
+  com.mysql.cj.MysqlxSession -up-|> com.mysql.cj.CoreSession
+  com.mysql.cj.NativeSession .up.|> java.io.Serializable
+  com.mysql.cj.NativeSession -up-|> com.mysql.cj.CoreSession
+  com.mysql.cj.NoSubInterceptorWrapper .up.|> com.mysql.cj.interceptors.QueryInterceptor
+  com.mysql.cj.ServerPreparedQuery -up-|> com.mysql.cj.AbstractPreparedQuery
+  com.mysql.cj.ServerPreparedQueryBindValue .up.|> com.mysql.cj.BindValue
+  com.mysql.cj.ServerPreparedQueryBindValue -up-|> com.mysql.cj.ClientPreparedQueryBindValue
+  com.mysql.cj.ServerPreparedQueryBindings -up-|> com.mysql.cj.AbstractQueryBindings
+  com.mysql.cj.ServerPreparedQueryTestcaseGenerator -up-|> com.mysql.cj.ServerPreparedQuery
+  com.mysql.cj.SimpleQuery -up-|> com.mysql.cj.AbstractQuery
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
