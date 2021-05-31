@@ -78,6 +78,8 @@ Scene Builder can be downloaded here: https://gluonhq.com/products/scene-builder
 
 <5/31/2021| v3.1> Added Comprehensive View in StatisticalReport.java (functional), Added buttons to the GUI of StatisticalReport
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 Yuan Patrick E Dumandan - currently taking up BS Computer Engineering in De La Salle University-Manila. He completed his Secondary Education in Marist School Marikina.
 
