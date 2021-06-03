@@ -244,12 +244,9 @@ public class StatisticalReport {
 
         double food, transportation, grocery, health, education, utilities, work,miscellaneous;
 
-        String query = "SELECT * FROM statistical_report WHERE username='"+username+"'";
-        Statement statement = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        incOrExp = statement.executeQuery(query);
-
         incOrExp.next();
         month_year = incOrExp.getString("month_year");
+        System.out.println(month_year);
         food = incOrExp.getDouble("food");
         transportation = incOrExp.getDouble("transportation");
         grocery = incOrExp.getDouble("grocery");
@@ -268,16 +265,37 @@ public class StatisticalReport {
                 new PieChart.Data("Utilities", utilities),
                 new PieChart.Data("Work", work),
                 new PieChart.Data("Miscellaneous",miscellaneous));
+        displayMonthYearGraph.setText(month_year);
         categoricalGraph.setData(list);
+        double tmp;
+        String strTmp;
+        double[] values = {food, transportation, grocery, health, education, utilities, work,miscellaneous};
+        String[] category = {"Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work","Miscellaneous"};
+        for(int i = 0 ; i < values.length ; i++){
+            for (int j = i+1 ; j < values.length ; j++){
+                if(values[i] < values[j]){
+                    tmp = values[i];
+                    strTmp = category[i];
+                    values[i] = values[j];
+                    category[i] = category[j];
+                    values[j] = tmp;
+                    category[j] = strTmp;
+                }
+            }
+        }
+        rank1.setText(category[0]);
+        rank2.setText(category[1]);
+        rank3.setText(category[2]);
+        rank4.setText(category[3]);
+        rank5.setText(category[4]);
+        rank6.setText(category[5]);
+        rank7.setText(category[6]);
+        rank8.setText(category[7]);
 
     }
     public void previousGraph() throws SQLException{
 
         double food, transportation, grocery, health, education, utilities, work,miscellaneous;
-
-        String query = "SELECT * FROM statistical_report WHERE username='"+username+"'";
-        Statement statement = dbLink.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        incOrExp = statement.executeQuery(query);
 
         incOrExp.previous();
         month_year = incOrExp.getString("month_year");
@@ -299,7 +317,33 @@ public class StatisticalReport {
                 new PieChart.Data("Utilities", utilities),
                 new PieChart.Data("Work", work),
                 new PieChart.Data("Miscellaneous",miscellaneous));
+        displayMonthYearGraph.setText(month_year);
         categoricalGraph.setData(list);
+
+        double tmp;
+        String strTmp;
+        double[] values = {food, transportation, grocery, health, education, utilities, work,miscellaneous};
+        String[] category = {"Food", "Transportation", "Grocery", "Health", "Education", "Utilities", "Work","Miscellaneous"};
+        for(int i = 0 ; i < values.length ; i++){
+            for (int j = i+1 ; j < values.length ; j++){
+                if(values[i] < values[j]){
+                    tmp = values[i];
+                    strTmp = category[i];
+                    values[i] = values[j];
+                    category[i] = category[j];
+                    values[j] = tmp;
+                    category[j] = strTmp;
+                }
+            }
+        }
+        rank1.setText(category[0]);
+        rank2.setText(category[1]);
+        rank3.setText(category[2]);
+        rank4.setText(category[3]);
+        rank5.setText(category[4]);
+        rank6.setText(category[5]);
+        rank7.setText(category[6]);
+        rank8.setText(category[7]);
 
     }
 
@@ -543,8 +587,8 @@ public class StatisticalReport {
         ResultSet allowanceSet = allowanceIncomeStatement.executeQuery(extractAllowanceIncome);
 
         while(allowanceSet.next()){
-            totalAllowance = workSet.getDouble("Total");
-            month_year = workSet.getString("Dates");
+            totalAllowance = allowanceSet.getDouble("Total");
+            month_year = allowanceSet.getString("Dates");
 
         }
 
